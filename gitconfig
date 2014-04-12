@@ -1,0 +1,30 @@
+[user]
+	name = distroy
+	email = distroy@163.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[core]
+	autocrlf = true
+[alias]
+	lg = log --color --graph --date-order --pretty=\"format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset\"
+	co = checkout
+	ci = commit
+[log]
+	date = iso
+	quotepath = false
+[i18n]
+	filesEncoding = utf-8
+[credential]
+	helper = cache --timeout=28800
+[diff]
+	guitool = tmerge
+[merge]
+	tool = TortoiseMerge
+[mergetool "TortoiseMerge"]
+	path = D:/App/TortoiseMerge/cyggit-merge.sh
+	cmd = \"D:/App/TortoiseMerge/cyggit-merge.sh\" \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[difftool "tmerge"]
+	path = D:/App/TortoiseMerge/cyggit-diff.sh
+	cmd = \"D:/App/TortoiseMerge/cyggit-diff.sh\" \"$LOCAL\" \"$REMOTE\"
