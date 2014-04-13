@@ -29,3 +29,6 @@ alias vi='vim'
 alias pu='ps f -fj -u $USER -U $USER'
 
 
+tabs 4
+
+
