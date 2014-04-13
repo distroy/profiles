@@ -3,14 +3,14 @@
 LDRC="$(pwd)"
 LD_ZSHRC=$HOME/.zshrc
 LD_VIMRC=$HOME/.vimrc
-LD_GITRC=etc/gitconfig
+LD_GITRC=/etc/gitconfig
 
 
 cat >>"$LD_ZSHRC" <<EOF
 # ld zshrc
 LDRC="$LDRC"
 #ZSH=
-#ZSH_DISABLE_GIT_DIRTY="$my_orange!%{$reset_color%}"
+#ZSH_DISABLE_GIT_DIRTY="\$my_orange!%{\$reset_color%}"
 source "$LDRC/zshrc"
 unset LDRC ZSH
 EOF
