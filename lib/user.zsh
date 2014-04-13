@@ -17,12 +17,14 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
+export SVN_EDITOR=vim
+
 
 alias ls='ls --color=auto --escape --time-style=+%Y-%m-%d\ %H:%M:%S'
+alias la='ls -a'
 alias ll='ls -l'
 alias l.='ls -d .*'
 alias vi='vim'
-
 
 alias pu='ps f -fj -u $USER -U $USER'
 

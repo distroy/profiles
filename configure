@@ -3,20 +3,21 @@
 LDRC="$(pwd)"
 LD_ZSHRC=$HOME/.zshrc
 LD_VIMRC=$HOME/.vimrc
-LD_GITRC=$HOME/.gitconfig
+LD_GITRC=etc/gitconfig
 
 
 cat >>"$LD_ZSHRC" <<EOF
 # ld zshrc
 LDRC="$LDRC"
 #ZSH=
+#ZSH_DISABLE_GIT_DIRTY="$my_orange!%{$reset_color%}"
 source "$LDRC/zshrc"
 unset LDRC ZSH
 EOF
 
 cat >>"$LD_VIMRC" <<EOF
 " ld vimrc
-source $LDRC/vimrc"
+source $LDRC/vimrc
 EOF
 
 # cat >>"$LD_GITRC" <<EOF
@@ -24,7 +25,6 @@ EOF
 # 	path = "$LDRC/gitconfig"
 # EOF
 
-mv "$LD_GITRC" "${LD_GITRC}_bak" &>/dev/null
-
+test -f "$LD_GITRC" && mv "$LD_GITRC" "${LD_GITRC}_bak" &>/dev/null
 ln -s "$LDRC/gitconfig" "$LD_GITRC"
 

@@ -6,14 +6,15 @@
 	status = auto
 	branch = auto
 [core]
-	autocrlf = true
+	autocrlf = input
+	quotepath = false
+	editor = vim
 [alias]
 	lg = log --color --graph --date-order --pretty=\"format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset\"
 	co = checkout
 	ci = commit
 [log]
 	date = iso
-	quotepath = false
 [i18n]
 	filesEncoding = utf-8
 [credential]
