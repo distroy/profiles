@@ -15,6 +15,8 @@
 	ci = commit
 [log]
 	date = iso
+[push]
+	default = current
 [i18n]
 	filesEncoding = utf-8
 [credential]
