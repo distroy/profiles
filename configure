@@ -10,9 +10,9 @@ cat >>"$LD_ZSHRC" <<EOF
 # ld zshrc
 LDRC="$LDRC"
 #ZSH=
-#ZSH_DISABLE_GIT_DIRTY="\$my_orange!%{\$reset_color%}"
 source "\$LDRC/zshrc"
 unset LDRC ZSH
+#ZSH_DISABLE_GIT_DIRTY="\$my_orange!%{\$reset_color%}"
 EOF
 
 exit
