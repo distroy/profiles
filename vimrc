@@ -1,6 +1,6 @@
 
 "set autoindent
-"set expandtab
+set expandtab
 
 set number
 set tabstop=4
@@ -54,30 +54,29 @@ let Tlist_WinWidth = 40
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call _ld_set_title()"
 ""定义函数SetTitle，自动插入文件头
 func _ld_set_title()
-	if &filetype == 'sh'
-		call append(0, '#!/bin/bash')
-		call append(1, '')
-		call append(2, '#')
-		call append(3, '# Copyright (C) distroy')
-		call append(4, '#')
-		call append(5, '')
-	else
-		call append(0, '')
-		call append(1, '/*')
-		call append(2, ' * Copyright (C) distroy')
-		call append(3, ' */')
-		call append(4, '')
-	endif
-	if &filetype == 'cpp'
-		call append(5, '#include <iostream>')
-		call append(6, '')
-	endif
-	if &filetype == 'c'
-		call append(5, '#include <stdio.h>')
-		call append(6, '')
-	endif
-	"新建文件后，自动定位到文件末尾
-	autocmd BufNewFile * normal G
+    if &filetype == 'sh'
+        call append(0, '#!/bin/bash')
+        call append(1, '')
+        call append(2, '#')
+        call append(3, '# Copyright (C) distroy')
+        call append(4, '#')
+        call append(5, '')
+    else
+        call append(0, '')
+        call append(1, '/*')
+        call append(2, ' * Copyright (C) distroy')
+        call append(3, ' */')
+        call append(4, '')
+    endif
+    if &filetype == 'h'
+        call append(5, '#ifndef __LOLY_H__')
+        call append(6, '#define __LOLY_H__')
+        call append(7, '')
+        call append(8, '#endif /* __LOLY_H__ */')
+        call append(9, '')
+    endif
+    "新建文件后，自动定位到文件末尾
+    autocmd BufNewFile * normal G
 endfunc
 
 
