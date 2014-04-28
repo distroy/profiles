@@ -7,7 +7,7 @@ export LANG=zh_CN.utf-8
 export LANGUAGE=$LANG
 
 export GREP_COLOR='1;32'
-export GREP_OPTIONS=--color=auto
+export GREP_OPTIONS='--color=auto --exclude=tags'
 
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
