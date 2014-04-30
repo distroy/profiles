@@ -16,7 +16,7 @@
 [log]
 	date = iso
 [push]
-	default = current
+	default = simple
 [i18n]
 	filesEncoding = utf-8
 [credential]
