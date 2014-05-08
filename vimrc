@@ -27,6 +27,7 @@ set scrolloff=3
 
 set list
 set listchars=tab:>-,trail:-
+set nowrap
 
 
 " ctags
