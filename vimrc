@@ -52,7 +52,7 @@ let Tlist_WinWidth = 40
 
 
 "新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call _ld_set_title()"
+autocmd BufNewFile *.[ch]pp,*.[ch],*.sh,*.java exec ":call _ld_set_title()"
 ""定义函数SetTitle，自动插入文件头
 func _ld_set_title()
     if &filetype == 'sh'
@@ -68,14 +68,15 @@ func _ld_set_title()
         call append(2, ' * Copyright (C) distroy')
         call append(3, ' */')
         call append(4, '')
+
+        if expand("%:e") == 'h'
+            call append(5, '#ifndef __LOLY_H__')
+            call append(6, '#define __LOLY_H__')
+            call append(7, '')
+            call append(8, '#endif /* __LOLY_H__ */')
+        endif
     endif
-    if &filetype == 'h'
-        call append(5, '#ifndef __LOLY_H__')
-        call append(6, '#define __LOLY_H__')
-        call append(7, '')
-        call append(8, '#endif /* __LOLY_H__ */')
-        call append(9, '')
-    endif
+
     "新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G
 endfunc
