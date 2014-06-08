@@ -63,15 +63,15 @@ func _ld_set_title()
         call append(4, '#')
         call append(5, '')
     else
-        call append(0, '')
-        call append(1, '/*')
-        call append(2, ' * Copyright (C) distroy')
-        call append(3, ' */')
-        call append(4, '')
+        call append(0, '/*')
+        call append(1, ' * Copyright (C) distroy')
+        call append(2, ' */')
+        call append(3, '')
 
         if expand("%:e") == 'h'
-            call append(5, '#ifndef __LOLY_H__')
-            call append(6, '#define __LOLY_H__')
+            call append(4, '#ifndef __LOLY_H__')
+            call append(5, '#define __LOLY_H__')
+            call append(6, '')
             call append(7, '')
             call append(8, '#endif /* __LOLY_H__ */')
         endif
