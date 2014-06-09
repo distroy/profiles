@@ -26,10 +26,6 @@ EOF
 
 
 # gitconfig
-#cat >>$LD_GITRC <<EOF
-#[include]
-#	path = ${LDRC/#$HOME/~}/gitconfig
-#EOF
-git config --global inlude.path ${LDRC/#$HOME/~}/gitconfig
+git config --global include.path ${LDRC/#$HOME/\~}/gitconfig
 
 

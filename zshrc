@@ -7,6 +7,9 @@
 #
 
 
+LDRC=$(dirname $0)
+
+
 # oh my zsh
 if [ -n "$ZSH" ]; then
     ZSH_THEME=distroy
@@ -35,5 +38,8 @@ unset config_file
 
 
 # alias git='nocorrect git'
+
+
+unset LDRC
 
 

@@ -1,5 +1,5 @@
 
-"set autoindent
+set noautoindent
 set expandtab
 
 set number
@@ -15,6 +15,8 @@ set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb2312,big5,euc-jp,euc-kr,latin1
 
 syntax on
+"set foldmethod=syntax
+
 set hlsearch
 set incsearch
 set ignorecase
@@ -51,10 +53,14 @@ let Tlist_WinWidth = 40
 "let Tlist_Use_Right_Window = 1
 
 
-"新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.[ch]pp,*.[ch],*.sh,*.java exec ":call _ld_set_title()"
-""定义函数SetTitle，自动插入文件头
-func _ld_set_title()
+if has("autocmd")
+    "新建.c,.h,.sh,.java文件，自动插入文件头
+    autocmd BufNewFile *.[ch]pp,*.[ch],*.sh,*.java exec ":call _ld_set_title()"
+endif
+
+
+"定义函数SetTitle，自动插入文件头
+function _ld_set_title()
     if &filetype == 'sh'
         call append(0, '#!/bin/bash')
         call append(1, '')
