@@ -1,6 +1,7 @@
 
 set noautoindent
 set expandtab
+autocmd FileType * set formatoptions-=cro
 
 set number
 set tabstop=4
