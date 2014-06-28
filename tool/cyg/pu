@@ -1,30 +1,48 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 #
 # Copyright (C) distroy
 #
 
+import os
 import sys
 import commands
 
 widths = [1, 8, 8, 8, 11, 6, 8, 9]
 
-def print_bcmd(arr):
+def get_bcmd(arr):
     fmt = ''.join(['%%%ds' % i for i in widths]) + ' '
-    sys.stdout.write(fmt % tuple(arr[: -1]))
+    return fmt % tuple(arr[: len(widths)])
 
-def print_depth(depth):
+def get_depth(depth):
+    buff = ''
+
     for i in range(0, len(depth) - 1):
-        fill = "    "
         if depth[i]:
-            fill = " |  "
-        sys.stdout.write(fill)
+            buff += ' |  '
+        else:
+            buff += '    '
     if len(depth):
-        fill = " \_ "
-        sys.stdout.write(fill)
+        buff += ' \_ '
 
-def print_cmd(cmd):
-    sys.stdout.write('%s\n' % cmd)
+    return buff
+
+def get_cmd(cmd):
+    return cmd
+
+
+def print_line(text):
+    fd = sys.stdout.fileno()
+    s = text
+
+    try:
+        w = int(os.environ['COLUMNS'])
+        s = s[: w]
+    except:
+        pass
+
+    os.write(fd, '%s\r\n' % s)
+
 
 def parse_line(line):
     l = []
@@ -39,16 +57,20 @@ def parse_line(line):
     return l
 
 def print_head(head):
-    print_bcmd(head)
-    print_cmd(head[-1])
+    buff = ''
+    buff += get_bcmd(head)
+    buff += get_cmd(head[-1])
+    print_line(buff)
 
 def print_tree(root, depth = []):
     text = root['text']
     childs = root['childs']
 
-    print_bcmd(text)
-    print_depth(depth)
-    print_cmd(text[-1])
+    buff = ''
+    buff += get_bcmd(text)
+    buff += get_depth(depth)
+    buff += get_cmd(text[-1])
+    print_line(buff)
 
     depth.append(1)
     for i in range(0, len(childs)):
@@ -85,6 +107,14 @@ def main():
 
         proc    = {'info': info, 'childs': [], 'root': 1, 'text': text}
         pid     = info['PID']
+
+        try:
+            fd = os.open('/proc/%s/cmdline' % pid, os.O_RDONLY)
+            cmd = os.read(fd, 2048)
+            cmd = cmd.replace('\0', ' ')
+            text[-1] = cmd
+        except:
+            pass
 
         tree[pid] = proc
         list.append(proc)
