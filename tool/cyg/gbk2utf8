@@ -1,0 +1,13 @@
+#!/bin/bash
+
+stderr=$(mktemp -u)
+mkfifo $stderr
+
+iconv -f GBK -t UTF-8 <"$stderr" >&2 &
+"$@" 2>"$stderr" | iconv -f GBK -t UTF-8
+ret=$?
+
+rm $stderr
+
+exit $ret
+

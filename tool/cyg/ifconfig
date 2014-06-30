@@ -1,6 +1,6 @@
 #!/bin/bash
 
-exe=/cygdrive/c/Windows/system32/ipconfig
+exe=/cygdrive/c/windows/system32/ipconfig
 
-"$exe" "$@" 2>&1 | iconv -f GBK -t UTF-8
+gbk2utf8 "$exe" "$@"
 

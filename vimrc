@@ -64,11 +64,10 @@ endif
 function _ld_set_title()
     if &filetype == 'sh'
         call append(0, '#!/bin/bash')
-        call append(1, '')
-        call append(2, '#')
-        call append(3, '# Copyright (C) distroy')
-        call append(4, '#')
-        call append(5, '')
+        call append(1, '#')
+        call append(2, '# Copyright (C) distroy')
+        call append(3, '#')
+        call append(4, '')
     else
         call append(0, '/*')
         call append(1, ' * Copyright (C) distroy')

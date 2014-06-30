@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 #
 # Copyright (C) distroy
 #
@@ -112,7 +111,8 @@ def main():
             fd = os.open('/proc/%s/cmdline' % pid, os.O_RDONLY)
             cmd = os.read(fd, 2048)
             cmd = cmd.replace('\0', ' ')
-            text[-1] = cmd
+            if cmd != '<defunct> ':
+                text[-1] = cmd
         except:
             pass
 
