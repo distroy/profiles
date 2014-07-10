@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+exe=/cygdrive/c/windows/system32/cmd
+
+args=("$@")
+
+for ((i = 0; i < ${#args[@]}; i++)); do
+    case "${args[$i]}" in
+    /[DdHhJj\?])
+        ;;
+    *)
+        args[$i]="$(cygpath -w "${args[$i]}" | iconv -c -t GBK -f UTF-8)"
+        ;;
+    esac
+done
+
+exec gbk2utf8 "$exe" /c mklink "${args[@]}"
+

@@ -7,7 +7,7 @@
 #
 
 
-LDRC=$(dirname $0)
+pushd $(dirname $0) &>/dev/null
 
 
 # oh my zsh
@@ -22,24 +22,12 @@ if [ -n "$ZSH" ]; then
 fi
 
 
-for config_file ($LDRC/lib/*.zsh); do
+for config_file (lib/*.zsh); do
     source $config_file
 done
-
 unset config_file
 
 
-# vim风格 键绑定
-#bindkey -v
-
-
-# autoload -U compinit
-# compinit
-
-
-# alias git='nocorrect git'
-
-
-unset LDRC
+popd &>/dev/null
 
 

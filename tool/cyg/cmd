@@ -2,5 +2,5 @@
 
 exe=/cygdrive/c/windows/system32/cmd
 
-gbk2utf8 "$exe" "$@"
+exec gbk2utf8 "$exe" "$@"
 

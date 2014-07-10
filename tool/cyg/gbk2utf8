@@ -1,13 +1,28 @@
 #!/bin/bash
+#
+# Copyright (C) distroy
+#
 
-stderr=$(mktemp -u)
+
+function ld_atexit()
+{
+    test -e "$stderr" && rm "$stderr"
+    test -e "$stdin" && rm "$stdin"
+}
+
+
+trap "ld_atexit" SIGHUP SIGINT SIGTERM
+stderr=/tmp/gbk2utf8.$$.stderr
+stdin=/tmp/gbk2utf8.$$.stdin
+
 mkfifo $stderr
+mkfifo $stdin
 
-iconv -f GBK -t UTF-8 <"$stderr" >&2 &
-"$@" 2>"$stderr" | iconv -f GBK -t UTF-8
-ret=$?
+export LANG=zh_CN.gbk
 
-rm $stderr
+iconv -c -f GBK -t UTF-8 <$stderr >&2 &
+"$@" 2>$stderr | iconv -c -f GBK -t UTF-8
+ld_atexit
 
 exit $ret
 
