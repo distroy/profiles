@@ -8,13 +8,22 @@ exe=/cygdrive/c/windows/system32/cmd
 args=("$@")
 
 for ((i = 0; i < ${#args[@]}; i++)); do
-    case "${args[$i]}" in
+    op=${args[$i]}
+    case "$op" in
     /[DdHhJj\?])
         ;;
+    --help|-h)
+        op="/?"
+        ;;
+    -*)
+        op="/${op:1}"
+        ;;
     *)
-        args[$i]="$(cygpath -w "${args[$i]}" | iconv -c -t GBK -f UTF-8)"
+        op="$(cygpath -w "${op}" | iconv -c -t GBK -f UTF-8)"
         ;;
     esac
+
+    args[i]="$op"
 done
 
 exec gbk2utf8 "$exe" /c mklink "${args[@]}"
