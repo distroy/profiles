@@ -1,3 +1,6 @@
+#
+# Copyright (C) distroy
+#
 
 # paths
 export PATH=$HOME/local/bin:$PATH

@@ -1,3 +1,6 @@
+"
+" Copyright (C) distroy
+"
 
 set noautoindent
 set expandtab
@@ -54,37 +57,73 @@ let Tlist_WinWidth = 40
 "let Tlist_Use_Right_Window = 1
 
 
-if has("autocmd")
-    "新建.c,.h,.sh,.java文件，自动插入文件头
-    autocmd BufNewFile *.[ch]pp,*.[ch],*.sh,*.java exec ":call _ld_set_title()"
+if has('autocmd')
+    autocmd BufNewFile *.[ch]pp,*.[ch] exec ':call s:ld_nf_c(0)'
+    autocmd BufNewFile *.java exec ':call s:ld_nf_c(0)'
+    autocmd BufNewFile *.sh exec ':call s:ld_nf_shell(0)'
+    autocmd BufNewFile *.py exec ':call s:ld_nf_python(0)'
 endif
 
 
-"定义函数SetTitle，自动插入文件头
-function _ld_set_title()
-    if &filetype == 'sh'
-        call append(0, '#!/bin/bash')
-        call append(1, '#')
-        call append(2, '# Copyright (C) distroy')
-        call append(3, '#')
-        call append(4, '')
-    else
-        call append(0, '/*')
-        call append(1, ' * Copyright (C) distroy')
-        call append(2, ' */')
-        call append(3, '')
-
-        if expand("%:e") == 'h'
-            call append(4, '#ifndef __LOLY_H__')
-            call append(5, '#define __LOLY_H__')
-            call append(6, '')
-            call append(7, '')
-            call append(8, '#endif /* __LOLY_H__ */')
-        endif
+function! s:ld_append(line, text)
+    if a:line < 0 || append(a:line, a:text) != 0
+        return -1
     endif
 
-    "新建文件后，自动定位到文件末尾
+    return a:line + 1
+endfunction
+
+
+function! s:ld_nf_c(line)
+    let l:l = a:line
+    let l:l = s:ld_append(l:l, '/*')
+    let l:l = s:ld_append(l:l, ' * Copyright (C) distroy')
+    let l:l = s:ld_append(l:l, ' */')
+    let l:l = s:ld_append(l:l, '')
+
+    if expand("%:e") == 'h'
+        let l:l = s:ld_append(l:l, '#ifndef __LOLY_H__')
+        let l:l = s:ld_append(l:l, '#define __LOLY_H__')
+        let l:l = s:ld_append(l:l, '')
+        let l:l = s:ld_append(l:l, '')
+        let l:l = s:ld_append(l:l, '#endif /* __LOLY_H__ */')
+    endif
+
     autocmd BufNewFile * normal G
-endfunc
+    return l:l
+endfunction
+
+
+function! s:ld_shell_header(line)
+    let l:l = a:line
+    let l:l = s:ld_append(l:l, '#')
+    let l:l = s:ld_append(l:l, '# Copyright (C) distroy')
+    let l:l = s:ld_append(l:l, '#')
+
+    return l:l
+endfunction
+
+
+function! s:ld_nf_shell(line)
+    let l:l = a:line
+    let l:l = s:ld_append(l:l, '#!/bin/bash')
+    let l:l = s:ld_shell_header(l:l)
+    let l:l = s:ld_append(l:l, '')
+
+    autocmd BufNewFile * normal G
+    return l:l
+endfunction
+
+
+function! s:ld_nf_python(line)
+    let l:l = a:line
+    let l:l = s:ld_append(l:l, '#!/usr/bin/env python')
+    let l:l = s:ld_append(l:l, '# -*- coding: utf-8 -*-')
+    let l:l = s:ld_shell_header(l:l)
+    let l:l = s:ld_append(l:l, '')
+
+    autocmd BufNewFile * normal G
+    return l:l
+endfunction
 
 
