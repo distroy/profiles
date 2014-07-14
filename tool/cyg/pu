@@ -9,9 +9,21 @@ import commands
 
 widths = [1, 8, 8, 8, 11, 6, 8, 9]
 
+scr_width = 0
+bcmd_fmt = ""
+
+def init():
+    global scr_width
+    try:
+        scr_width = int(os.environ['COLUMNS'])
+    except:
+        scr_width = 0
+
+    global bcmd_fmt
+    bcmd_fmt = ''.join(['%%%ds' % i for i in widths]) + ' '
+
 def get_bcmd(arr):
-    fmt = ''.join(['%%%ds' % i for i in widths]) + ' '
-    return fmt % tuple(arr[: len(widths)])
+    return bcmd_fmt % tuple(arr[: len(widths)])
 
 def get_depth(depth):
     buff = ''
@@ -34,11 +46,8 @@ def print_line(text):
     fd = sys.stdout.fileno()
     s = text
 
-    try:
-        w = int(os.environ['COLUMNS'])
-        s = s[: w]
-    except:
-        pass
+    if scr_width != 0:
+        s = s[: scr_width]
 
     os.write(fd, '%s\r\n' % s)
 
@@ -81,6 +90,8 @@ def print_tree(root, depth = []):
     depth.pop()
 
 def main():
+    init()
+
     cmd = 'ps ' + ' '.join(sys.argv)
     (ret, output) = commands.getstatusoutput(cmd)
     if ret != 0:
