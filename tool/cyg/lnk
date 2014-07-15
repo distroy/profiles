@@ -1,0 +1,151 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+exe=/cygdrive/c/windows/system32/cmd
+
+symbolic=1
+directory=0         # 创建指向目录的硬链接(只适用于超级用户)
+force=0
+verbose=0
+
+
+function link()
+{
+    if ((verbose)); then
+        gbk2utf8 "$exe" /c mklink "$@"
+    else
+        gbk2utf8 "$exe" /c mklink "$@" >/dev/null
+    fi
+}
+
+function winpath()
+{
+    cygpath -w "$@" | iconv -c -t GBK -f UTF-8
+}
+
+
+# 用法：ln [选项]... [-T] 目标 链接名     (第一种格式)
+# 　或：ln [选项]... 目标         (第二种格式)
+# 　或：ln [选项]... 目标... 目录 (第三种格式)
+# 　或：ln [选项]... -t 目录 目标...      (第四种格式)
+# In the 1st form, create a link to TARGET with the name LINK_NAME.
+# In the 2nd form, create a link to TARGET in the current directory.
+# In the 3rd and 4th forms, create links to each TARGET in DIRECTORY.
+# Create hard links by default, symbolic links with --symbolic.
+# By default, each destination (name of new link) should not already exist.
+# When creating hard links, each TARGET must exist.  Symbolic links
+# can hold arbitrary text; if later resolved, a relative link is
+# interpreted in relation to its parent directory.
+form=0      # 2 or 3
+
+files=()
+nfile=0
+next_dst=0
+destination=
+
+
+for i in "$@"; do
+    case "$i" in
+    --help|-h)
+        ln --help 2>&1 | sed -e 's/\<ln\>/lnk/g' >&2
+        exit $?
+        ;;
+    -s)
+        symbolic=1
+        ;;
+    -d|-F|--directory)
+        directory=1
+        ;;
+    -f|--force)
+        force=1
+        ;;
+    -v|--verbose)
+        verbose=1
+        ;;
+    -T|--no-target-directory)
+        form=1
+        next_dst=1
+        ;;
+    -t)
+        form=4
+        next_dst=1
+        ;;
+    *)
+        file="$i"
+        if ((next_dst)); then
+            destination="$file"
+            next_dst=0
+        else
+            files[$((nfile++))]="$file"
+        fi
+        ;;
+    esac
+
+done
+
+
+if ((nfile == 0)); then
+    echo 'lnk: missing file operand'
+    exit -1
+fi
+
+
+if ((form == 0)); then
+    case $nfile in
+    1)
+        form=2
+        ;;
+    2)
+        destination=${files[$((--nfile))]}
+        if [ -d "$destination" ]; then
+            form=3
+        elif [ -e "$destination" ]; then
+            echo "lnk: failed to create symbolic link \`$destination': File exists"
+            exit -1
+        fi
+        ;;
+    *)
+        form=3
+        destination=${files[$((--nfile))]}
+        if [ ! -d "$destination" ]; then
+            echo "lnk: target \`$destination' is not a directory"
+            exit -1
+        fi
+        ;;
+    esac
+fi
+
+
+if [ -n "$destination" ]; then
+    windst="$(winpath "$destination")"
+fi
+
+
+# 用法：ln [选项]... [-T] 目标 链接名     (第一种格式)
+# 　或：ln [选项]... 目标         (第二种格式)
+# 　或：ln [选项]... 目标... 目录 (第三种格式)
+# 　或：ln [选项]... -t 目录 目标...      (第四种格式)
+for ((i = 0; i < nfile; i++)); do
+    file=${files[$i]}
+    winsrc="$(winpath "$file")"
+    argv=()
+    argc=0
+
+    test -d "$file" && argv[$((argc++))]=/d
+
+    case $form in
+    1)
+        link "${argv[@]}" "$windst" "$winsrc"
+        ;;
+    2)
+        link "${argv[@]}" "$(basename "$file")" "$winsrc"
+        ;;
+    3|4)
+        link "${argv[@]}" "$windst\\$(basename "$file")" "$winsrc"
+        ;;
+    esac
+done
+
+
