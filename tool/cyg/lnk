@@ -104,6 +104,8 @@ if ((form == 0)); then
         elif [ -e "$destination" ]; then
             echo "lnk: failed to create symbolic link \`$destination': File exists"
             exit -1
+        else
+            form=1
         fi
         ;;
     *)
