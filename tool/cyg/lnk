@@ -5,6 +5,8 @@
 
 exe=/cygdrive/c/windows/system32/cmd
 
+self=lnk
+
 symbolic=1
 directory=0         # 创建指向目录的硬链接(只适用于超级用户)
 force=0
@@ -48,29 +50,68 @@ destination=
 
 for i in "$@"; do
     case "$i" in
-    --help|-h)
-        ln --help 2>&1 | sed -e 's/\<ln\>/lnk/g' >&2
-        exit $?
+    --*)
+        case "${i:2}" in
+        help)
+            ln --help 2>&1 | sed -e "s/\\<ln\\>/$self/g" >&2
+            exit $?
+            ;;
+        directory)
+            directory=1
+            ;;
+        force)
+            force=1
+            ;;
+        verbose)
+            verbose=1
+            ;;
+        no-target-directory)
+            form=1
+            next_dst=1
+            ;;
+        *)
+            ;;
+        esac
         ;;
-    -s)
-        symbolic=1
-        ;;
-    -d|-F|--directory)
-        directory=1
-        ;;
-    -f|--force)
-        force=1
-        ;;
-    -v|--verbose)
-        verbose=1
-        ;;
-    -T|--no-target-directory)
-        form=1
-        next_dst=1
-        ;;
-    -t)
-        form=4
-        next_dst=1
+    -*)
+        if [[ "$i" = "-" ]]; then
+            echo "$self: invalid option:" >&2
+            exit -1
+        fi
+        i=${i:1}
+        for ((j = 0; j < ${#i}; ++j)); do
+            op=${i:j:1}
+            case "$op" in
+            h)
+                ln --help 2>&1 | sed -e "s/\\<ln\\>/$self/g" >&2
+                exit $?
+                ;;
+            s)
+                symbolic=1
+                ;;
+            d|F)
+                directory=1
+                ;;
+            f)
+                force=1
+                ;;
+            v)
+                verbose=1
+                ;;
+            T)
+                form=1
+                next_dst=1
+                ;;
+            t)
+                form=4
+                next_dst=1
+                ;;
+            *)
+                echo "$self: invalid option character: $op" >&2
+                exit -1
+                ;;
+            esac
+        done
         ;;
     *)
         file="$i"
@@ -87,7 +128,7 @@ done
 
 
 if ((nfile == 0)); then
-    echo 'lnk: missing file operand'
+    echo "$self: missing file operand"
     exit -1
 fi
 
@@ -102,7 +143,7 @@ if ((form == 0)); then
         if [ -d "$destination" ]; then
             form=3
         elif [ -e "$destination" ]; then
-            echo "lnk: failed to create symbolic link \`$destination': File exists"
+            echo "$self: failed to create symbolic link \`$destination': File exists"
             exit -1
         else
             form=1
@@ -112,7 +153,7 @@ if ((form == 0)); then
         form=3
         destination=${files[$((--nfile))]}
         if [ ! -d "$destination" ]; then
-            echo "lnk: target \`$destination' is not a directory"
+            echo "$self: target \`$destination' is not a directory"
             exit -1
         fi
         ;;
