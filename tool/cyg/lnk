@@ -5,7 +5,7 @@
 
 exe=/cygdrive/c/windows/system32/cmd
 
-self=lnk
+self=$(basename ${BASH_SOURCE[0]})
 
 symbolic=0
 directory=0         # allow the superuser to attempt to hard link directories
@@ -16,11 +16,12 @@ verbose=0
 function link()
 {
     gbk2utf8 "$exe" /c mklink "$@" >/dev/null
+    return $?
 }
 
 function winpath()
 {
-    cygpath -w "$@" | iconv -c -t GBK -f UTF-8
+    cygpath -w "$@"
 }
 
 
@@ -212,11 +213,22 @@ for ((i = 0; i < nfile; i++)); do
         argv[$((argc++))]=/h
     fi
 
+    if [ -e "$dst" ]; then
+        stderr "$self: failed to create symbolic link \`$dst': File exists"
+        exit -1
+    fi
+
     if [ -d "$src" ]; then
         argv[$((argc++))]=/d
     fi
 
-    link "${argv[@]}" "$(winpath $dst)" "$(winpath $src)"
+    link "${argv[@]}" "$(winpath "$dst")" "$(winpath "$src")"
+    ret=$?
+
+    if ((ret != 0)); then
+        exit $ret
+    fi
+
     if ((verbose)); then
         echo_link "$src" "$dst"
     fi

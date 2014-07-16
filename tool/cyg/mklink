@@ -19,7 +19,7 @@ for ((i = 0; i < ${#args[@]}; i++)); do
         op="/${op:1}"
         ;;
     *)
-        op="$(cygpath -w "${op}" | iconv -c -t GBK -f UTF-8)"
+        op="$(cygpath -w "${op}")"
         ;;
     esac
 
@@ -27,4 +27,5 @@ for ((i = 0; i < ${#args[@]}; i++)); do
 done
 
 exec gbk2utf8 "$exe" /c mklink "${args[@]}"
+exit $?
 

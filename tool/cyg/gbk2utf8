@@ -7,21 +7,27 @@
 function ld_atexit()
 {
     test -e "$stderr" && rm "$stderr"
+    test -e "$stderr" && rm "$stderr"
     test -e "$stdin" && rm "$stdin"
 }
 
 
 trap "ld_atexit" SIGHUP SIGINT SIGTERM
+
 stderr=/tmp/gbk2utf8.$$.stderr
+stdout=/tmp/gbk2utf8.$$.stdout
 stdin=/tmp/gbk2utf8.$$.stdin
 
 mkfifo $stderr
+mkfifo $stdout
 mkfifo $stdin
 
 export LANG=zh_CN.gbk
 
 iconv -c -f GBK -t UTF-8 <$stderr >&2 &
-"$@" 2>$stderr | iconv -c -f GBK -t UTF-8
+iconv -c -f GBK -t UTF-8 <$stdout &
+"$@" 2>$stderr 1>$stdout
+ret=$?
 ld_atexit
 
 exit $ret
