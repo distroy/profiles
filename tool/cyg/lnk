@@ -7,19 +7,15 @@ exe=/cygdrive/c/windows/system32/cmd
 
 self=lnk
 
-symbolic=1
-directory=0         # 创建指向目录的硬链接(只适用于超级用户)
+symbolic=0
+directory=0         # allow the superuser to attempt to hard link directories
 force=0
 verbose=0
 
 
 function link()
 {
-    if ((verbose)); then
-        gbk2utf8 "$exe" /c mklink "$@"
-    else
-        gbk2utf8 "$exe" /c mklink "$@" >/dev/null
-    fi
+    gbk2utf8 "$exe" /c mklink "$@" >/dev/null
 }
 
 function winpath()
@@ -28,10 +24,32 @@ function winpath()
 }
 
 
-# 用法：ln [选项]... [-T] 目标 链接名     (第一种格式)
-# 　或：ln [选项]... 目标         (第二种格式)
-# 　或：ln [选项]... 目标... 目录 (第三种格式)
-# 　或：ln [选项]... -t 目录 目标...      (第四种格式)
+function echo_link()
+{
+    local dst src
+    src="$1"
+    dst="$2"
+    echo "\`$dst' => \`$src'"
+}
+
+
+function stderr()
+{
+    echo "$@" >&2
+}
+
+
+function echo_help()
+{
+    ln --help 2>&1 | sed -e "s/\\<ln\\>/$self/g" >&2
+    exit $?
+}
+
+
+# Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
+#   or:  ln [OPTION]... TARGET                  (2nd form)
+#   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
+#   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
 # In the 1st form, create a link to TARGET with the name LINK_NAME.
 # In the 2nd form, create a link to TARGET in the current directory.
 # In the 3rd and 4th forms, create links to each TARGET in DIRECTORY.
@@ -53,8 +71,7 @@ for i in "$@"; do
     --*)
         case "${i:2}" in
         help)
-            ln --help 2>&1 | sed -e "s/\\<ln\\>/$self/g" >&2
-            exit $?
+            echo_help
             ;;
         directory)
             directory=1
@@ -75,7 +92,7 @@ for i in "$@"; do
         ;;
     -*)
         if [[ "$i" = "-" ]]; then
-            echo "$self: invalid option:" >&2
+            stderr "$self: invalid option:"
             exit -1
         fi
         i=${i:1}
@@ -83,8 +100,7 @@ for i in "$@"; do
             op=${i:j:1}
             case "$op" in
             h)
-                ln --help 2>&1 | sed -e "s/\\<ln\\>/$self/g" >&2
-                exit $?
+                echo_help
                 ;;
             s)
                 symbolic=1
@@ -107,7 +123,7 @@ for i in "$@"; do
                 next_dst=1
                 ;;
             *)
-                echo "$self: invalid option character: $op" >&2
+                stderr "$self: invalid option character: $op"
                 exit -1
                 ;;
             esac
@@ -128,7 +144,7 @@ done
 
 
 if ((nfile == 0)); then
-    echo "$self: missing file operand"
+    stderr "$self: missing file operand"
     exit -1
 fi
 
@@ -143,7 +159,7 @@ if ((form == 0)); then
         if [ -d "$destination" ]; then
             form=3
         elif [ -e "$destination" ]; then
-            echo "$self: failed to create symbolic link \`$destination': File exists"
+            stderr "$self: failed to create symbolic link \`$destination': File exists"
             exit -1
         else
             form=1
@@ -153,7 +169,7 @@ if ((form == 0)); then
         form=3
         destination=${files[$((--nfile))]}
         if [ ! -d "$destination" ]; then
-            echo "$self: target \`$destination' is not a directory"
+            stderr "$self: target \`$destination' is not a directory"
             exit -1
         fi
         ;;
@@ -161,34 +177,49 @@ if ((form == 0)); then
 fi
 
 
-if [ -n "$destination" ]; then
-    windst="$(winpath "$destination")"
-fi
-
-
-# 用法：ln [选项]... [-T] 目标 链接名     (第一种格式)
-# 　或：ln [选项]... 目标         (第二种格式)
-# 　或：ln [选项]... 目标... 目录 (第三种格式)
-# 　或：ln [选项]... -t 目录 目标...      (第四种格式)
+# Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
+#   or:  ln [OPTION]... TARGET                  (2nd form)
+#   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
+#   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
 for ((i = 0; i < nfile; i++)); do
-    file=${files[$i]}
-    winsrc="$(winpath "$file")"
+    src=${files[$i]}
     argv=()
     argc=0
 
-    test -d "$file" && argv[$((argc++))]=/d
-
     case $form in
     1)
-        link "${argv[@]}" "$windst" "$winsrc"
+        dst="$destination"
         ;;
     2)
-        link "${argv[@]}" "$(basename "$file")" "$winsrc"
+        dst="$(basename "$src")"
         ;;
     3|4)
-        link "${argv[@]}" "$windst\\$(basename "$file")" "$winsrc"
+        dst="$destination/$(basename "$src")"
         ;;
     esac
+
+    if [ ! -e "$src" ]; then
+        stderr "$self: accessing \`$src': No such file or directory"
+        exit -1
+    fi
+
+    if ((!symbolic)); then
+        if [ -d "$src" ]; then
+            stderr "$self: failed to create hard link $(echo_link "$src" "$dst"): Permission denied"
+            exit -1
+        fi
+
+        argv[$((argc++))]=/h
+    fi
+
+    if [ -d "$src" ]; then
+        argv[$((argc++))]=/d
+    fi
+
+    link "${argv[@]}" "$(winpath $dst)" "$(winpath $src)"
+    if ((verbose)); then
+        echo_link "$src" "$dst"
+    fi
 done
 
 
