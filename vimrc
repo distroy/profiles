@@ -121,6 +121,13 @@ function! s:ld_nf_python(line)
     let l:l = s:ld_append(l:l, '# -*- coding: utf-8 -*-')
     let l:l = s:ld_shell_header(l:l)
     let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, 'import sys')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, 'def main(argc, argv):')
+    let l:l = s:ld_append(l:l, '    return 0')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, 'if __name__ == "__main__":')
+    let l:l = s:ld_append(l:l, '    exit(main(len(sys.argv), sys.argv))')
 
     autocmd BufNewFile * normal G
     return l:l
