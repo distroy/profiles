@@ -11,7 +11,7 @@ pushd $(dirname $0) &>/dev/null
 if [ -n "$ZSH" ]; then
     ZSH_THEME=distroy
     DISABLE_AUTO_UPDATE=true
-    ZSH_HIST_STAMPS="%Y-%m-%d %H:%M:%S"
+    ZSH_HIST_STAMPS="%F %T"
 
     source "$ZSH/oh-my-zsh.sh"
 

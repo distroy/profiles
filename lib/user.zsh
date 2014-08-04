@@ -23,7 +23,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'         # begin underline
 export SVN_EDITOR=vim
 
 
-alias ls='ls --color=auto --escape --time-style=+%Y-%m-%d\ %H:%M:%S'
+alias ls='ls --color=auto --escape --time-style=+%F\ %T'
 alias la='ls -a'
 alias ll='ls -l'
 alias l.='ls -d .*'

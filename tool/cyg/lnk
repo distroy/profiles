@@ -8,6 +8,7 @@ exe=/cygdrive/c/windows/system32/cmd
 self=$(basename ${BASH_SOURCE[0]})
 
 symbolic=0
+symbolic_n=hard
 directory=0         # allow the superuser to attempt to hard link directories
 force=0
 verbose=0
@@ -105,6 +106,7 @@ for i in "$@"; do
                 ;;
             s)
                 symbolic=1
+                symbolic_n=symbolic
                 ;;
             d|F)
                 directory=1
@@ -160,7 +162,7 @@ if ((form == 0)); then
         if [ -d "$destination" ]; then
             form=3
         elif [ -e "$destination" ]; then
-            stderr "$self: failed to create symbolic link \`$destination': File exists"
+            stderr "$self: failed to create $symbolic_n link \`$destination': File exists"
             exit -1
         else
             form=1
@@ -206,7 +208,7 @@ for ((i = 0; i < nfile; i++)); do
 
     if ((!symbolic)); then
         if [ -d "$src" ]; then
-            stderr "$self: failed to create hard link $(echo_link "$src" "$dst"): Permission denied"
+            stderr "$self: failed to create $symbolic_n link $(echo_link "$src" "$dst"): Permission denied"
             exit -1
         fi
 
@@ -214,7 +216,7 @@ for ((i = 0; i < nfile; i++)); do
     fi
 
     if [ -e "$dst" ]; then
-        stderr "$self: failed to create symbolic link \`$dst': File exists"
+        stderr "$self: failed to create $symbolic_n link \`$dst': File exists"
         exit -1
     fi
 

@@ -122,6 +122,7 @@ def main():
             fd = os.open('/proc/%s/cmdline' % pid, os.O_RDONLY)
             cmd = os.read(fd, 2048)
             cmd = cmd.replace('\0', ' ')
+            cmd = cmd.replace('\n', ' ')
             if cmd != '<defunct> ':
                 text[-1] = cmd
         except:
