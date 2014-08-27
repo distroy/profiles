@@ -39,22 +39,22 @@ set nowrap
 " ctags
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
 imap <C-F12> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
-set tags=tags
-set tags+=./tags
-set tags+=/usr/include/tags
+setlocal tags=tags
+setlocal tags+=./tags
+setlocal tags+=/usr/include/tags
 
 
 " taglist
-let Tlist_Show_One_File = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_File_Fold_Auto_Close = 1
-let Tlist_Auto_Open = 1
-let Tlist_Auto_Update = 1
-"let Tlist_GainFocus_On_ToggleOpen = 1
-"let Tlist_WinHeight = 40
-let Tlist_WinWidth = 40
-"let Tlist_Show_Menu = 1
-"let Tlist_Use_Right_Window = 1
+let Tlist_Show_One_File     = 1
+let Tlist_Exit_OnlyWindow   = 1
+let Tlist_File_Fold_Auto_Close  = 1
+let Tlist_Auto_Open         = 1
+let Tlist_Auto_Update       = 1
+"let Tlist_GainFocus_On_ToggleOpen   = 1
+"let Tlist_WinHeight         = 40
+let Tlist_WinWidth          = 40
+"let Tlist_Show_Menu         = 1
+"let Tlist_Use_Right_Window  = 1
 
 
 if has('autocmd')
@@ -134,6 +134,14 @@ function! s:ld_nf_python(line)
 
     autocmd BufNewFile * normal G
     return l:l
+endfunction
+
+
+function! s:ld_set_tab(w)
+    let l:w = a:w
+    let &l:tabstop      = l:w
+    let &l:shiftwidth   = l:w
+    let &l:softtabstop  = l:w
 endfunction
 
 
