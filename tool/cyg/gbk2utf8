@@ -6,7 +6,7 @@
 
 function ld_atexit()
 {
-    test -e "$stderr" && rm "$stderr"
+    test -e "$stdout" && rm "$stdout"
     test -e "$stderr" && rm "$stderr"
     test -e "$stdin" && rm "$stdin"
 }

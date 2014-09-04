@@ -19,6 +19,9 @@ EOF
 
 
 # vimrc
+test -d ~/.vim && mv ~/.vim ~/.vim.$(date +%Y%m%d_%H%M%S)
+ln -s $LDRC/vim ~/.vim
+
 cat >>$LD_VIMRC <<EOF
 " ld vimrc
 source ${LDRC/#$HOME/\$HOME}/vimrc
