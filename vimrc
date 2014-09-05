@@ -4,7 +4,6 @@
 
 set noautoindent
 set expandtab
-autocmd FileType * set formatoptions-=cro
 
 set number
 set tabstop=4
@@ -38,7 +37,8 @@ set nowrap
 " filetype
 filetype on
 filetype plugin on
-filetype indent on
+"filetype indent on
+autocmd FileType * set formatoptions-=cro
 
 
 " ctags
