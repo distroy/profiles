@@ -3,14 +3,14 @@
 "
 
 
-nnoremap <F12> :TlistUpdate<CR>
-inoremap <F12> <ESC>:TlistUpdate<CR>
+if g:ld_tagshow != 'taglist'
+    finish
+endif
 
-nnoremap <S-F12> :Tlist<CR>
-inoremap <S-F12> <ESC>:Tlist<CR>
 
-map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
-imap <C-F12> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+nnoremap <silent> <S-F12> :TlistUpdate<CR>
+nnoremap <silent> <F12> :Tlist<CR>
+nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
 
 setlocal tags=tags
 setlocal tags+=./tags

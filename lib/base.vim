@@ -43,7 +43,7 @@ filetype indent off
 autocmd FileType * set formatoptions-=cro
 
 
-nnoremap <F3> :exec ':grep' '-rnw' '--exclude=tags' expand('<cword>') '*'<CR> :cl <CR>
+nnoremap <F3> :exec ':grep' '-rnw' '--exclude=tags' expand('<cword>') '*'<CR><CR> :cl <CR>
 nnoremap <F4> :grep -n --exclude=tags<Space>
 
 
