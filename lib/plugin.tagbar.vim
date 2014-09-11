@@ -13,7 +13,7 @@ nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<C
 
 
 let g:tagbar_autofocus          = 0
-let g:tagbar_autopreview        = 1
+let g:tagbar_autopreview        = 0
 let g:tagbar_autoshowtag        = 1
 let g:tagbar_ctags_bin          = 'ctags'
 let g:tagbar_foldlevel          = 99
