@@ -43,13 +43,12 @@ def get_cmd(cmd):
 
 
 def print_line(text):
-    fd = sys.stdout.fileno()
     s = text
 
-    if scr_width != 0:
+    if sys.stdout.isatty() and scr_width != 0:
         s = s[: scr_width]
 
-    os.write(fd, '%s\r\n' % s)
+    sys.stdout.write('%s\r\n' % s)
 
 
 def parse_line(line):

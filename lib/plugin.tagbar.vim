@@ -8,8 +8,7 @@ if g:ld_tagshow != 'tagbar'
 endif
 
 
-nnoremap <silent> <F12> :TagbarToggle<CR>
-nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
+nnoremap <silent> <F2> :TagbarToggle<CR>
 
 
 let g:tagbar_autofocus          = 0

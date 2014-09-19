@@ -45,5 +45,7 @@ autocmd FileType * set formatoptions-=cro
 
 nnoremap <F3> :exec ':grep' '-rnw' '--exclude=tags' expand('<cword>') '*'<CR><CR> :cl <CR>
 nnoremap <F4> :grep -n --exclude=tags<Space>
+nnoremap <F5> :e<CR>
 
+nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
 

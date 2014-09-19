@@ -3,10 +3,10 @@
 "
 
 
-if exists('g:ld_load_vimrc')
+if exists('g:ld_loaded_vimrc')
     finish
 endif
-let g:ld_load_vimrc = 1
+let g:ld_loaded_vimrc = 1
 
 
 if !exists('g:ld_tagshow')
