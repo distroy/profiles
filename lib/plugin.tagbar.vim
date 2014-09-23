@@ -11,7 +11,8 @@ endif
 nnoremap <silent> <F2> :TagbarToggle<CR>
 
 
-let g:tagbar_autofocus          = 0
+let g:tagbar_autoclose          = 1
+let g:tagbar_autofocus          = 1
 let g:tagbar_autopreview        = 0
 let g:tagbar_autoshowtag        = 1
 let g:tagbar_ctags_bin          = 'ctags'
@@ -23,5 +24,5 @@ let g:tagbar_show_linenumbers   = 0
 let g:tagbar_width              = 40
 
 
-autocmd VimEnter * nested :call tagbar#autoopen(1)
+"autocmd VimEnter * nested :call tagbar#autoopen(1)
 
