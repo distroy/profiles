@@ -36,6 +36,8 @@ set nowrap
 
 set noautoindent
 
+set laststatus=2
+
 " filetype
 filetype on
 filetype plugin on
