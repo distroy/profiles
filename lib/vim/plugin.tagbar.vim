@@ -20,7 +20,7 @@ let g:tagbar_foldlevel          = 99
 let g:tagbar_indent             = 2
 let g:tagbar_left               = 1
 let g:tagbar_sort               = 1
-let g:tagbar_show_linenumbers   = 0
+let g:tagbar_show_linenumbers   = 1
 let g:tagbar_width              = 40
 
 

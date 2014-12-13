@@ -38,6 +38,10 @@ set noautoindent
 
 set laststatus=2
 
+" over length
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
 " filetype
 filetype on
 filetype plugin on
@@ -45,9 +49,9 @@ filetype indent off
 autocmd FileType * set formatoptions-=cro
 
 
-nnoremap <F3> :exec ':grep' '-rnw' '--exclude=tags' expand('<cword>') '*'<CR><CR> :cw <CR>
-nnoremap <F4> :grep -n --exclude=tags<Space>
-nnoremap <F5> :e<CR>
+nnoremap <F3> :exec ':grep' '-rnw' '--exclude-dir=.git' '--exclude-dir=.svn' '--exclude-dir=.hg' '--exclude=tags' expand('<cword>') '*'<CR><CR> :cw <CR>
+nnoremap <F4> :grep -n --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg --exclude=tags<Space>
+nnoremap <F5> :A<CR>
 
 nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
 

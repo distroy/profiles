@@ -19,7 +19,7 @@ if [ -n "$ZSH" ]; then
 fi
 
 
-for config_file (lib/*.zsh); do
+for config_file (lib/sh/*.zsh); do
     source $config_file
 done
 unset config_file

@@ -3,6 +3,9 @@
 "
 
 
+let g:ld_copyright = ['Copyright (C) ' . g:ld_user]
+
+
 if has('autocmd')
     autocmd BufNewFile *.[ch]pp,*.[ch] exec ':call s:ld_c(0)'
     autocmd BufNewFile *.java exec ':call s:ld_c(0)'
@@ -22,11 +25,29 @@ function! s:ld_append(line, text)
 endfunction
 
 
-function! s:ld_author_c(line)
+function! s:ld_file_info(line, ...)
     let l:l = a:line
-    let l:l = s:ld_append(l:l, '/*')
-    let l:l = s:ld_append(l:l, ' * Copyright (C) distroy')
-    let l:l = s:ld_append(l:l, ' */')
+
+    if a:0 == 1
+        let l:start = a:1
+        let l:end = a:1
+        let l:prefix = a:1
+    elseif a:0 == 3
+        let l:start = a:1
+        let l:end = a:2
+        let l:prefix = a:3
+    else
+        echomsg 'error: invalid paramters of ld_file_info: ' . a:0
+        return l:l
+    endif
+
+    let l:prefix = l:prefix . ' '
+
+    let l:l = s:ld_append(l:l, l:start)
+    for l:info in g:ld_copyright
+        let l:l = s:ld_append(l:l, l:prefix . l:info)
+    endfor
+    let l:l = s:ld_append(l:l, l:end)
 
     return l:l
 endfunction
@@ -34,7 +55,8 @@ endfunction
 
 function! s:ld_c(line)
     let l:l = a:line
-    let l:l = s:ld_author_c(l:l)
+
+    let l:l = s:ld_file_info(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
 
     if expand("%:e") == 'h'
@@ -49,20 +71,11 @@ function! s:ld_c(line)
 endfunction
 
 
-function! s:ld_author_shell(line)
-    let l:l = a:line
-    let l:l = s:ld_append(l:l, '#')
-    let l:l = s:ld_append(l:l, '# Copyright (C) distroy')
-    let l:l = s:ld_append(l:l, '#')
-
-    return l:l
-endfunction
-
-
 function! s:ld_shell(line)
     let l:l = a:line
+
     let l:l = s:ld_append(l:l, '#!/bin/bash')
-    let l:l = s:ld_author_shell(l:l)
+    let l:l = s:ld_file_info(l:l, '#')
     let l:l = s:ld_append(l:l, '')
 
     return l:l
@@ -71,9 +84,10 @@ endfunction
 
 function! s:ld_python(line)
     let l:l = a:line
+
     let l:l = s:ld_append(l:l, '#!/usr/bin/env python')
     let l:l = s:ld_append(l:l, '# -*- coding: utf-8 -*-')
-    let l:l = s:ld_author_shell(l:l)
+    let l:l = s:ld_file_info(l:l, '#')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, 'import sys')
@@ -92,9 +106,8 @@ endfunction
 
 function! s:ld_vim(line)
     let l:l = a:line
-    let l:l = s:ld_append(l:l, '"')
-    let l:l = s:ld_append(l:l, '" Copyright (C) distroy')
-    let l:l = s:ld_append(l:l, '"')
+
+    let l:l = s:ld_file_info(l:l, '"')
 
     return l:l
 endfunction
@@ -102,8 +115,9 @@ endfunction
 
 function! s:ld_php(line)
     let l:l = a:line
+
     let l:l = s:ld_append(l:l, '<?php')
-    let l:l = s:ld_author_c(l:l)
+    let l:l = s:ld_file_info(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '?>')
 
