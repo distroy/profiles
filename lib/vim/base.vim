@@ -39,8 +39,8 @@ set noautoindent
 set laststatus=2
 
 " over length
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
 
 " filetype
 filetype on
