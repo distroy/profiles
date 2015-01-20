@@ -92,7 +92,7 @@ function! s:ld_python(line)
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, 'def get_options():')
     let l:l = s:ld_append(l:l, '    import optparse')
-    let l:l = s:ld_append(l:l, '    parser = optparse.OptionParser()')
+    let l:l = s:ld_append(l:l, '    parser = optparse.OptionParser(version = "%prog 0.1")')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '    opts, args = parser.parse_args()')
     let l:l = s:ld_append(l:l, '    return opts, args')
@@ -123,7 +123,7 @@ function! s:ld_php(line)
     let l:l = a:line
 
     let l:l = s:ld_append(l:l, '<?php')
-    let l:l = s:ld_file_info(l:l, '/*', ' */', ' *')
+    let l:l = s:ld_file_info(l:l, '#')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '?>')
 
