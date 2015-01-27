@@ -49,8 +49,8 @@ filetype indent off
 autocmd FileType * set formatoptions-=cro
 
 
-nnoremap <F3> :exec ':grep' '-rnIw' '--exclude-dir={.git,.hg,.svn}' '--exclude="{tags,.*.swp}"' expand('<cword>') '*'<CR><CR> :cw <CR>
-nnoremap <F4> :grep -nI --exclude-dir={.git,.hg,.svn} --exclude="{tags,.*.swp}"<Space>
+nnoremap <F3> :exec ':grep' '-rnIw' '--exclude-dir={.git,.hg,.svn}' '--exclude={tags,".*.swp"}' expand('<cword>') '*'<CR><CR> :cw <CR>
+nnoremap <F4> :grep -nI --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"}<Space>
 nnoremap <F5> :A<CR>
 
 nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
