@@ -2,9 +2,19 @@
 # Copyright (C) distroy
 #
 
-# paths
-export PATH=$HOME/local/bin:$PATH
-export MANPATH=$HOME/local/share/man:$MANPATH
+# local
+ld_local=$HOME/local
+
+export PATH=$ld_local/bin:$PATH
+export MANPATH=$ld_local/share/man:$MANPATH
+
+export C_INCLUDE_PATH=$ld_local/include:$C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=$ld_local/include:$CPLUS_INCLUDE_PATH
+export LD_LIBRARY_PATH=$ld_local/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=$ld_local/lib:$LIBRARY_PATH
+
+unset ld_local
+
 
 export LANG=zh_CN.utf-8
 export LANGUAGE=$LANG
@@ -30,5 +40,4 @@ alias l.='ls -d .*'
 alias vi='vim'
 
 alias pu='ps f -fj -u $USER -U $USER'
-
 
