@@ -15,7 +15,6 @@ export LIBRARY_PATH=$ld_local/lib:$LIBRARY_PATH
 
 unset ld_local
 
-
 export LANG=zh_CN.utf-8
 export LANGUAGE=$LANG
 
@@ -31,6 +30,9 @@ export LESS_TERMCAP_ue=$'\E[0m'             # end underline
 export LESS_TERMCAP_us=$'\E[01;32m'         # begin underline
 
 export SVN_EDITOR=vim
+
+
+umask 022
 
 
 alias ls='ls --color=auto --escape --time-style=+%F\ %T'

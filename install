@@ -13,10 +13,9 @@ LD_GITRC=$HOME/gitconfig
 # zshrc
 cat >>$LD_ZSHRC <<EOF
 # ld zshrc
-LDRC=${LDRC/#$HOME/\$HOME}
 #ZSH=
 #ZSH_DISABLE_GIT_DIRTY=true
-source \$LDRC/zshrc
+source ${LDRC/#$HOME/\$HOME}/zshrc
 unset LDRC ZSH ZSH_DISABLE_GIT_DIRTY
 EOF
 
