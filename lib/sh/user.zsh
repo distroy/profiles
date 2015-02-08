@@ -19,7 +19,10 @@ export LANG=zh_CN.utf-8
 export LANGUAGE=$LANG
 
 export GREP_COLOR='1;32'
-alias grep='grep --color=auto --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp}"'
+GREP_OPTIONS="--color=auto --exclude-dir={.git,.hg,.svn} --exclude={tags,'.*.swp'}"
+alias grep="grep $GREP_OPTIONS"
+alias egrep="egrep $GREP_OPTIONS"
+unset GREP_OPTIONS
 
 export LESS_TERMCAP_mb=$'\E[01;31m'         # begin blinking
 export LESS_TERMCAP_md=$'\E[01;31m'         # begin bold
