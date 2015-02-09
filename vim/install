@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)"
+WRITE_FILE=$HOME/.vimrc
+
+
+# vimrc
+cat >>$WRITE_FILE <<EOF
+" ld vimrc
+source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
+EOF
+
+test -e ~/.vim && mv ~/.vim ~/.vim_$(date +'%Y%m%d_%H%M%S')
+ln -s $SOURCE_DIR/vim ~/.vim
+

@@ -23,7 +23,7 @@ endif
 
 
 let s:path = fnamemodify(expand('<sfile>:p'), ':p:h')
-let s:list = split(globpath(s:path, 'lib/vim/*.vim'), '\n')
+let s:list = split(globpath(s:path, 'lib/*.vim'), '\n')
 for s:i in s:list
     exec 'source' s:i
 endfor

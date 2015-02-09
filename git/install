@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+
+SOURCE_DIR="$(cd $(dirname "${BASH_SOURCE[0]}"); pwd)"
+LD_GITRC=$HOME/gitconfig
+
+
+# gitconfig
+git config --global include.path ${SOURCE_DIR/#$HOME/\~}/gitconfig
+
+
