@@ -1,239 +1,269 @@
-#!/bin/bash
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) distroy
 #
 
-exe=/cygdrive/c/windows/system32/cmd
 
-self=$(basename ${BASH_SOURCE[0]})
-
-symbolic=0
-symbolic_n=hard
-directory=0         # allow the superuser to attempt to hard link directories
-force=0
-verbose=0
+import commands
+import json
+import os
+import sys
 
 
-function link()
-{
-    gbk2utf8 "$exe" /c mklink "$@" >/dev/null
-    return $?
-}
+opts = None
+args = None
 
-function winpath()
-{
-    cygpath -w "$@"
-}
+usage = '''ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
+  or:  ln [OPTION]... TARGET                  (2nd form)
+  or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
+  or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
+In the 1st form, create a link to TARGET with the name LINK_NAME.
+In the 2nd form, create a link to TARGET in the current directory.
+In the 3rd and 4th forms, create links to each TARGET in DIRECTORY.
+Create hard links by default, symbolic links with --symbolic.
+By default, each destination (name of new link) should not already exist.
+When creating hard links, each TARGET must exist.  Symbolic links
+can hold arbitrary text; if later resolved, a relative link is
+interpreted in relation to its parent directory.
+Mandatory arguments to long options are mandatory for short options too.
+      --backup[=CONTROL]      make a backup of each existing destination file
+  -b                          like --backup but does not accept an argument
+  -d, -F, --directory         allow the superuser to attempt to hard link
+                                directories (note: will probably fail due to
+                                system restrictions, even for the superuser)
+  -f, --force                 remove existing destination files
+  -i, --interactive           prompt whether to remove destinations
+  -L, --logical               dereference TARGETs that are symbolic links
+  -n, --no-dereference        treat LINK_NAME as a normal file if
+                                it is a symbolic link to a directory
+  -P, --physical              make hard links directly to symbolic links
+  -r, --relative              create symbolic links relative to link location
+  -s, --symbolic              make symbolic links instead of hard links
+  -S, --suffix=SUFFIX         override the usual backup suffix
+  -t, --target-directory=DIRECTORY  specify the DIRECTORY in which to create
+                                the links
+  -T, --no-target-directory   treat LINK_NAME as a normal file always
+  -v, --verbose               print name of each linked file
+      --help     display this help and exit
+      --version  output version information and exit
+
+The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.
+The version control method may be selected via the --backup option or through
+the VERSION_CONTROL environment variable.  Here are the values:
+
+  none, off       never make backups (even if --backup is given)
+  numbered, t     make numbered backups
+  existing, nil   numbered if numbered backups exist, simple otherwise
+  simple, never   always make simple backups
+
+Using -s ignores -L and -P.  Otherwise, the last option specified controls
+behavior when a TARGET is a symbolic link, defaulting to -P.
+'''
+def print_help(file = sys.stdout):
+    info = usage.replace('ln', os.path.basename(sys.argv[0]))
+    file.write(info)
 
 
-function echo_link()
-{
-    local dst src
-    src="$1"
-    dst="$2"
-    echo "\`$dst' => \`$src'"
-}
+def get_options():
+    import optparse
+    parser = optparse.OptionParser(version = "%prog (distroy) 0.1")
+    parser.print_help = print_help
+
+    parser.add_option('-s', '--symbolic', default = False, action = 'store_true')
+    parser.add_option('-v', '--verbose', default = False, action = 'store_true')
+    parser.add_option('-T', '--no-target-directory', default = False, action = 'store_true')
+    parser.add_option('-t', '--target-directory', default = None)
+
+    parser.add_option('-f', '--force', default = False, action = 'store_true')
+
+    parser.add_option('-d', '--debug', default = False, action = 'store_true')
+
+    global opts
+    global args
+    opts, args = parser.parse_args()
+    return opts, args
 
 
-function stderr()
-{
-    echo "$@" >&2
-}
+def log_debug(fmt, *args):
+
+    if not opts.debug:
+        return
+
+    buff = []
+
+    buff.append(fmt % tuple(args))
+
+    print ''.join(buff)
 
 
-function echo_help()
-{
-    ln --help 2>&1 | sed -e "s/\\<ln\\>/$self/g" >&2
-    exit $?
-}
+def std_error(fmt, *args):
+    buff = []
+
+    buff.append(os.path.basename(sys.argv[0]))
+    buff.append(': ')
+    buff.append(fmt % tuple(args))
+
+    sys.stderr.write(''.join(buff))
+    sys.stderr.write('\n')
+
+
+def std_error_exit(fmt, *args):
+    std_error(fmt, *args)
+    exit(-1)
+
+
+def link_string(src, dst):
+    return "'%s' => '%s'" % (dst, src)
+
+
+def get_win_path(path):
+
+    if path[0] == '/':
+        cmd = 'cygpath -w "%s"' % (path)
+
+        log_debug('win path cmd: %s', cmd)
+        status, output = commands.getstatusoutput(cmd)
+
+    else:
+        output = path
+        output = output.replace('/', '\\')
+
+    output = output.replace('\\', '\\\\')
+    output = output.replace('"', '\\"')
+
+    return '"%s"' % output
+
+
+def mklink(src, dst):
+    exe = '/cygdrive/c/windows/system32/cmd'
+
+    argv = []
+
+    argv.append(exe)
+    argv.append('/c')
+    argv.append('mklink')
+
+    if not os.path.exists(src):
+        std_error_exit("accessing '%s': No such file or directory", src)
+
+    if os.path.exists(dst):
+        std_error_exit("failed to create %s link '%s': File exists", opts.symbolic_n, dst)
+
+    if opts.symbolic:
+        if os.path.isdir(src):
+            argv.append('/d')
+            #argv.append('/j')
+
+    else:
+        if os.path.isdir(src):
+            std_error_exit('failed to create %s link %s: Permission denied', opts.symbolic_n, link_string(src, dst))
+
+        argv.append('/h')
+
+    argv.append(get_win_path(dst))
+    argv.append(get_win_path(src))
+
+    cmd = ' '.join(argv)
+
+    log_debug('link cmd: %s', cmd)
+    if opts.debug:
+        print link_string(src, dst)
+        return 0
+
+    status, output = commands.getstatusoutput(cmd)
+
+    if opts.verbose:
+        print link_string(src, dst)
+
+    return status
+
+
+# Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
+def link_form1():
+
+    if len(args) == 1:
+        std_error_exit("missing destination file operand after '%s'", args[0])
+    elif len(args) > 2:
+        std_error_exit("extra operand '%s'", args[1])
+
+    src = args[0]
+    dst = args[1]
+
+    return mklink(src, dst)
+
+
+#   or:  ln [OPTION]... TARGET                  (2nd form)
+def link_form2():
+
+    src = args[0]
+    dst = os.path.basename(src)
+
+    return mklink(src, dst)
+
+
+#   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
+def link_form3():
+
+    directory = args[-1]
+    if not os.path.isdir(directory):
+        std_error_exit("target '%s' is not a directory", directory)
+
+    for src in args[ : -1]:
+        dst = '%s/%s' % (directory, os.path.basename(src))
+        mklink(src, dst)
+
+    return 0
+
+
+#   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
+def link_form4():
+
+    directory = opts.target_directory
+    if not os.path.isdir(directory):
+        std_error_exit("target '%s' is not a directory", directory)
+
+    for src in args:
+        dst = '%s/%s' % (directory, os.path.basename(src))
+        mklink(src, dst)
+
+    return 0
 
 
 # Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
 #   or:  ln [OPTION]... TARGET                  (2nd form)
 #   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
 #   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
-# In the 1st form, create a link to TARGET with the name LINK_NAME.
-# In the 2nd form, create a link to TARGET in the current directory.
-# In the 3rd and 4th forms, create links to each TARGET in DIRECTORY.
-# Create hard links by default, symbolic links with --symbolic.
-# By default, each destination (name of new link) should not already exist.
-# When creating hard links, each TARGET must exist.  Symbolic links
-# can hold arbitrary text; if later resolved, a relative link is
-# interpreted in relation to its parent directory.
-form=0      # 2 or 3
+def main(opts, args):
 
-files=()
-nfile=0
-next_dst=0
-destination=
+    if len(args) == 0:
+        std_error_exit('missing file operand')
 
+    if opts.symbolic:
+        opts.symbolic_n = 'symbolic'
+    else:
+        opts.symbolic_n = 'hard'
 
-for i in "$@"; do
-    case "$i" in
-    --*)
-        case "${i:2}" in
-        help)
-            echo_help
-            ;;
-        directory)
-            directory=1
-            ;;
-        force)
-            force=1
-            ;;
-        verbose)
-            verbose=1
-            ;;
-        no-target-directory)
-            form=1
-            next_dst=1
-            ;;
-        *)
-            ;;
-        esac
-        ;;
-    -*)
-        if [[ "$i" = "-" ]]; then
-            stderr "$self: invalid option:"
-            exit -1
-        fi
-        i=${i:1}
-        for ((j = 0; j < ${#i}; ++j)); do
-            op=${i:j:1}
-            case "$op" in
-            h)
-                echo_help
-                ;;
-            s)
-                symbolic=1
-                symbolic_n=symbolic
-                ;;
-            d|F)
-                directory=1
-                ;;
-            f)
-                force=1
-                ;;
-            v)
-                verbose=1
-                ;;
-            T)
-                form=1
-                next_dst=1
-                ;;
-            t)
-                form=4
-                next_dst=1
-                ;;
-            *)
-                stderr "$self: invalid option character: $op"
-                exit -1
-                ;;
-            esac
-        done
-        ;;
-    *)
-        file="$i"
-        if ((next_dst)); then
-            destination="$file"
-            next_dst=0
-        else
-            files[$((nfile++))]="$file"
-        fi
-        ;;
-    esac
+    if opts.no_target_directory and opts.target_directory != None:
+        std_error_exit('cannot combine --target-directory and --no-target-directory')
 
-done
+    if not opts.no_target_directory and opts.target_directory == None:
+        if len(args) == 2 and not os.path.isdir(args[1]):
+            opts.no_target_directory = True
+
+    if opts.no_target_directory:
+        return link_form1()
+
+    if opts.target_directory != None:
+        return link_form4()
+
+    if len(args) == 1:
+        return link_form2()
+
+    return link_form3()
 
 
-if ((nfile == 0)); then
-    stderr "$self: missing file operand"
-    exit -1
-fi
-
-
-if ((form == 0)); then
-    case $nfile in
-    1)
-        form=2
-        ;;
-    2)
-        destination=${files[$((--nfile))]}
-        if [ -d "$destination" ]; then
-            form=3
-        elif [ -e "$destination" ]; then
-            stderr "$self: failed to create $symbolic_n link \`$destination': File exists"
-            exit -1
-        else
-            form=1
-        fi
-        ;;
-    *)
-        form=3
-        destination=${files[$((--nfile))]}
-        if [ ! -d "$destination" ]; then
-            stderr "$self: target \`$destination' is not a directory"
-            exit -1
-        fi
-        ;;
-    esac
-fi
-
-
-# Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
-#   or:  ln [OPTION]... TARGET                  (2nd form)
-#   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
-#   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
-for ((i = 0; i < nfile; i++)); do
-    src=${files[$i]}
-    argv=()
-    argc=0
-
-    case $form in
-    1)
-        dst="$destination"
-        ;;
-    2)
-        dst="$(basename "$src")"
-        ;;
-    3|4)
-        dst="$destination/$(basename "$src")"
-        ;;
-    esac
-
-    if [ ! -e "$src" ]; then
-        stderr "$self: accessing \`$src': No such file or directory"
-        exit -1
-    fi
-
-    if ((!symbolic)); then
-        if [ -d "$src" ]; then
-            stderr "$self: failed to create $symbolic_n link $(echo_link "$src" "$dst"): Permission denied"
-            exit -1
-        fi
-
-        argv[$((argc++))]=/h
-    fi
-
-    if [ -e "$dst" ]; then
-        stderr "$self: failed to create $symbolic_n link \`$dst': File exists"
-        exit -1
-    fi
-
-    if [ -d "$src" ]; then
-        argv[$((argc++))]=/d
-    fi
-
-    link "${argv[@]}" "$(winpath "$dst")" "$(winpath "$src")"
-    ret=$?
-
-    if ((ret != 0)); then
-        exit $ret
-    fi
-
-    if ((verbose)); then
-        echo_link "$src" "$dst"
-    fi
-done
-
+if __name__ == "__main__":
+    (opts, args) = get_options()
+    exit(main(opts, args))
 
