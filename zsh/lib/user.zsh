@@ -17,6 +17,7 @@ unset ld_local
 
 export LANG=zh_CN.utf-8
 export LANGUAGE=$LANG
+export LC_ALL=$LANG
 
 export GREP_COLOR='1;32'
 GREP_OPTIONS="--color=auto --exclude-dir={.git,.hg,.svn} --exclude={tags,'.*.swp'}"
