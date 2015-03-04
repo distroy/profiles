@@ -15,10 +15,14 @@ if [ -n "$ZSH" ]; then
 
     source "$ZSH/oh-my-zsh.sh"
 
-    unset ZSH ZSH_THEME DISABLE_AUTO_UPDATE ZSH_HIST_STAMPS
+    unset ZSH
+    unset ZSH_THEME
+    unset DISABLE_AUTO_UPDATE
+    unset ZSH_HIST_STAMPS
 fi
 
 
+local config_file
 for config_file (lib/*.zsh); do
     source $config_file
 done

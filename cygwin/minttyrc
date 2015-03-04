@@ -1,0 +1,12 @@
+BoldAsFont          = no
+Font                = Source Code Pro
+FontHeight          = 10
+CursorType          = block
+PgUpDnScroll        = yes
+RightClickAction    = paste
+Transparency        = low
+Locale              =
+Charset             =
+BackspaceSendsBS    = no
+ConfirmExit         = yes
+OpaqueWhenFocused   = no

@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+
+function conv()
+{
+    local file temp
+
+    file="$1"
+    temp="$(mktemp)"
+
+    iconv -f GBK -t UTF-8 < "$file" > "$temp"
+    mv "$temp" "$file"
+}
+
+
+for i in "$@"; do
+    conv "$i"
+done
+
+

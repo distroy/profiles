@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+cygstart /usr/bin/mintty -i /Cygwin-Terminal.ico -w max -
+
