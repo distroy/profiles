@@ -8,13 +8,12 @@ SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)"
 ZSH_FILE=$HOME/.zshrc
 RC_FILE=$HOME/.minttyrc
 
-export PATH=$SOURCE_DIR/bin:$PATH
-
 
 # bin dir symbol link
 LOCAL_CYG=$HOME/local/cygwin
-mv $LOCAL_CYG/bin $LOCAL_CYG/bin.bak
-lnk -s $SOURCE_DIR/bin $LOCAL_CYG/bin
+test -e $LOCAL_CYG/bin && mv $LOCAL_CYG/bin $LOCAL_CYG/bin.bak
+ln -s $SOURCE_DIR/bin $LOCAL_CYG/bin
+
 
 # bin dir zshrc env
 cat >>$ZSH_FILE <<EOF
@@ -24,6 +23,6 @@ EOF
 
 
 # minttyrc
-mv $RC_FILE ${RC_FILE}.bak
-lnk -s $SOURCE_DIR/minttyrc $RC_FILE
+test -e $RC_FILE && mv $RC_FILE ${RC_FILE}.bak
+ln -s $SOURCE_DIR/minttyrc $RC_FILE
 
