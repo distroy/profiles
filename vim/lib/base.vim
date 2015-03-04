@@ -19,7 +19,9 @@ set fileencodings=ucs-bom,utf-8,cp936,gb2312,big5,euc-jp,euc-kr,latin1
 
 syntax on
 "set foldmethod=syntax
+
 highlight Comment ctermfg = blue
+highlight Directory ctermfg = blue
 
 set hlsearch
 set incsearch
