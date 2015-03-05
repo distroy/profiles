@@ -4,7 +4,11 @@
 #
 
 
-SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)"
+cd "$(dirname "${BASH_SOURCE[0]}")"
+SOURCE_DIR="$PWD"
+source ../install
+
+
 WRITE_FILE=$HOME/.vimrc
 
 
@@ -14,6 +18,5 @@ cat >>$WRITE_FILE <<EOF
 source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
 EOF
 
-test -e ~/.vim && mv ~/.vim ~/.vim_$(date +'%Y%m%d_%H%M%S')
-ln -s $SOURCE_DIR/vim ~/.vim
+ld_link $SOURCE_DIR/vim $HOME/.vim
 

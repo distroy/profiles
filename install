@@ -4,7 +4,21 @@
 #
 
 
-for i in "$@"; do
-    "$i/install"
-done
+function ld_link()
+{
+    local src="$1"
+    local dst="$2"
+
+    if [ -e "$dst" ]; then
+        mv "$dst" "$dst-bak-$(date +"%Y%m%d-%H%M%S")"
+    fi
+    ln -s "$src" "$dst"
+}
+
+
+if [[ "$0" == "${BASH_SOURCE[0]}" ]]; then
+    for i in "$@"; do
+        "$i/install"
+    done
+fi
 
