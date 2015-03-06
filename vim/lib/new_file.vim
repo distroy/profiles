@@ -7,12 +7,15 @@ let g:ld_copyright = ['Copyright (C) ' . g:ld_user]
 
 
 if has('autocmd')
-    autocmd BufNewFile *.[ch]pp,*.[ch] exec ':call s:ld_c(0)'
-    autocmd BufNewFile *.java exec ':call s:ld_c(0)'
-    autocmd BufNewFile *.sh exec ':call s:ld_shell(0)'
-    autocmd BufNewFile *.py exec ':call s:ld_python(0)'
-    autocmd BufNewFile *.vim exec ':call s:ld_vim(0)'
-    autocmd BufNewFile *.php exec ':call s:ld_php(0)'
+    autocmd BufNewFile *.[ch]pp     call s:ld_c(0)
+    autocmd BufNewFile *.[ch]       call s:ld_c(0)
+    autocmd BufNewFile *.java       call s:ld_c(0)
+    autocmd BufNewFile *.sh         call s:ld_shell(0, "bash")
+    autocmd BufNewFile *.bash       call s:ld_shell(0, "bash")
+    autocmd BufNewFile *.zsh        call s:ld_shell(0, "zsh")
+    autocmd BufNewFile *.py         call s:ld_python(0)
+    autocmd BufNewFile *.vim        call s:ld_vim(0)
+    autocmd BufNewFile *.php        call s:ld_php(0)
 endif
 
 
@@ -71,10 +74,10 @@ function! s:ld_c(line)
 endfunction
 
 
-function! s:ld_shell(line)
+function! s:ld_shell(line, shell)
     let l:l = a:line
 
-    let l:l = s:ld_append(l:l, '#!/bin/bash')
+    let l:l = s:ld_append(l:l, '#!/usr/bin/env ' . a:shell)
     let l:l = s:ld_file_info(l:l, '#')
     let l:l = s:ld_append(l:l, '')
 
