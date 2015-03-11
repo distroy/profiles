@@ -6,25 +6,23 @@
 let g:ld_copyright = ['Copyright (C) ' . g:ld_user]
 
 
-if has('autocmd')
-    autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
-    autocmd BufNewFile *.[ch]       call s:ld_nf_c(0)
+autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
+autocmd BufNewFile *.[ch]       call s:ld_nf_c(0)
 
-    autocmd BufNewFile *.java       call s:ld_nf_c(0)
+autocmd BufNewFile *.java       call s:ld_nf_c(0)
 
-    autocmd BufNewFile *.php        call s:ld_nf_php(0)
+autocmd BufNewFile *.php        call s:ld_nf_php(0)
 
-    autocmd BufNewFile *.sh         call s:ld_nf_shell(0, "bash")
-    autocmd BufNewFile *.bash       call s:ld_nf_shell(0, "bash")
-    autocmd BufNewFile *.zsh        call s:ld_nf_shell(0, "zsh")
+autocmd BufNewFile *.sh         call s:ld_nf_shell(0, "bash")
+autocmd BufNewFile *.bash       call s:ld_nf_shell(0, "bash")
+autocmd BufNewFile *.zsh        call s:ld_nf_shell(0, "zsh")
 
-    autocmd BufNewFile *.py         call s:ld_nf_python(0)
+autocmd BufNewFile *.py         call s:ld_nf_python(0)
 
-    autocmd BufNewFile *.js         call s:ld_nf_js(0)
-    autocmd BufNewFile *.html       call s:ld_nf_html(0)
+autocmd BufNewFile *.js         call s:ld_nf_js(0)
+autocmd BufNewFile *.html       call s:ld_nf_html(0)
 
-    autocmd BufNewFile *.vim        call s:ld_nf_vim(0)
-endif
+autocmd BufNewFile *.vim        call s:ld_nf_vim(0)
 
 
 function! s:ld_append(line, text)
@@ -32,6 +30,16 @@ function! s:ld_append(line, text)
         return -1
     endif
     return a:line + 1
+endfunction
+
+
+function! s:ld_cursor(row, ...)
+    if a:0 == 0
+        call cursor(a:row, 0)
+    else
+        call cursor(a:row, a:1)
+    endif
+
 endfunction
 
 
@@ -80,12 +88,14 @@ function! s:ld_nf_html(line)
     let l:l = s:ld_append(l:l, '<html lang="zh-CN">')
     let l:l = s:ld_append(l:l, '<head>')
     let l:l = s:ld_append(l:l, '<meta charset="UTF-8">')
-    let l:l = s:ld_append(l:l, '<title>__TITLE__</title>')
+    let l:l = s:ld_append(l:l, '<title>' . expand("%:t") . '</title>')
+    let l:p = l:l
     let l:l = s:ld_append(l:l, '</head>')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '<body>')
     let l:l = s:ld_append(l:l, '</body>')
     let l:l = s:ld_append(l:l, '</html>')
+    call s:ld_cursor(l:p)
     return l:l
 endfunction
 
@@ -100,8 +110,10 @@ function! s:ld_nf_c(line)
         let l:l = s:ld_append(l:l, '#ifndef __LOLY_H__')
         let l:l = s:ld_append(l:l, '#define __LOLY_H__')
         let l:l = s:ld_append(l:l, '')
+        let l:p = l:l
         let l:l = s:ld_append(l:l, '')
         let l:l = s:ld_append(l:l, '#endif /* __LOLY_H__ */')
+        call s:ld_cursor(l:p)
     endif
 
     return l:l
@@ -136,13 +148,14 @@ function! s:ld_nf_python(line)
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, 'def main(opts, args):')
+    let l:p = l:l
     let l:l = s:ld_append(l:l, '    return 0')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, 'if __name__ == "__main__":')
     let l:l = s:ld_append(l:l, '    (opts, args) = get_options()')
     let l:l = s:ld_append(l:l, '    exit(main(opts, args))')
-
+    call s:ld_cursor(l:p)
     return l:l
 endfunction
 
@@ -162,8 +175,9 @@ function! s:ld_nf_php(line)
     let l:l = s:ld_append(l:l, '<?php')
     let l:l = s:ld_infos1(l:l, '#')
     let l:l = s:ld_append(l:l, '')
+    let l:p = l:l
     let l:l = s:ld_append(l:l, '?>')
-
+    call s:ld_cursor(l:p)
     return l:l
 endfunction
 
