@@ -39,7 +39,6 @@ function! s:ld_cursor(row, ...)
     else
         call cursor(a:row, a:1)
     endif
-
 endfunction
 
 
