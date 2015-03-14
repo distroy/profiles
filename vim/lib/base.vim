@@ -46,12 +46,6 @@ set laststatus=2
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
 
-" filetype
-filetype on
-filetype plugin on
-filetype indent off
-autocmd FileType * set formatoptions-=cro
-
 
 nnoremap <F3> :exec ':grep' '-rnIw' '--exclude-dir={.git,.hg,.svn}' '--exclude={tags,".*.swp"}' expand('<cword>') '*'<CR><CR> :cw <CR>
 nnoremap <F4> :grep -nI --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"}<Space>
