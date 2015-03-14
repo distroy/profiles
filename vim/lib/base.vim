@@ -33,9 +33,10 @@ set showcmd
 "set cursorline
 set scrolloff=3
 
-set list
-set listchars=tab:>-,trail:-
 set nowrap
+set list
+set listchars=tab:>·,trail:·
+highlight SpecialKey ctermfg = DarkGray
 
 set noautoindent
 
