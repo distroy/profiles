@@ -10,7 +10,7 @@ call ld#set_tags('tags')
 filetype on
 filetype plugin on
 filetype indent off
-set formatoptions-=cro
+autocmd FileType * set formatoptions-=cro
 
 
 set foldmethod=syntax
@@ -22,5 +22,5 @@ highlight Folded ctermbg = darkgray ctermfg = darkgreen
 
 
 autocmd FileType javascript setlocal foldmethod=marker | setlocal foldmarker={,}
-autocmd FileType html       setlocal foldmethod=indent
+autocmd FileType html       setlocal foldmethod=indent | setlocal wrap
 
