@@ -2,10 +2,16 @@
 " Copyright (C) distroy
 "
 
+nnoremap <F1> :exec printf(':vertical help %s', expand('<cword>'))<CR>
 
-nnoremap <F3> :exec ':grep' '-rnIw' '--exclude-dir={.git,.hg,.svn}' '--exclude={tags,".*.swp"}' expand('<cword>') '*'<CR><CR> :cw <CR>
-nnoremap <F4> :grep -nI --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"}<Space>
-nnoremap <F5> :A<CR>
+nnoremap <F3>p :call ld#grep('-rwI', ld#curr_word(), '*')<CR><CR> :cw<CR>
+nnoremap <F3>l :call ld#grep('-rwI', ld#curr_word(), ld#curr_file())<CR><CR> :cw<CR>
+vnoremap <F3>p :<c-u>call ld#grep('-rI', ld#get_selection(), '*')<CR><CR> :cw <CR>
+vnoremap <F3>l :<c-u>call ld#grep('-rI', ld#get_selection(), ld#curr_file())<CR><CR> :cw <CR>
+nnoremap <F3>i :grep --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"} -I<Space>
+
+
+nnoremap <F4> :A<CR>
 
 nnoremap <F7> gT
 nnoremap <F8> gt

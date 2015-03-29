@@ -3,7 +3,9 @@
 "
 
 
-let g:ld_copyright = ['Copyright (C) ' . g:ld_user]
+if !exists('g:ld_copyright')
+    let g:ld_copyright = ['Copyright (C) ' . g:ld_user]
+endif
 
 
 autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)

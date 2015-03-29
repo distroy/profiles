@@ -18,5 +18,6 @@ cat >>$WRITE_FILE <<EOF
 source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
 EOF
 
-ld_link $SOURCE_DIR/vim $HOME/.vim
+git submodule update --init --recursive bundle/Vundle.vim
+vim +BundleInstall +qall
 

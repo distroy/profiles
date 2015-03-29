@@ -22,10 +22,14 @@ if !exists('g:ld_tagshow')
 endif
 
 
-let s:path = fnamemodify(expand('<sfile>:p'), ':p:h')
-let s:list = split(globpath(s:path, 'lib/*.vim'), '\n')
-for s:i in s:list
-    exec 'source' s:i
-endfor
+function! s:ld_source_directory(path, expr)
+    for l:file in split(globpath(a:path, a:expr), '\n')
+        exec 'source' l:file
+    endfor
+endfunction
 
+
+let g:ld_vim_path = fnamemodify(expand('<sfile>:p'), ':p:h')
+call s:ld_source_directory(g:ld_vim_path, 'pre/*.vim')
+call s:ld_source_directory(g:ld_vim_path, 'lib/*.vim')
 

@@ -12,6 +12,7 @@ function ld_link()
     if [ -e "$dst" ]; then
         mv "$dst" "$dst-bak-$(date +"%Y%m%d-%H%M%S")"
     fi
+    mkdir -p "$(dirname "$dst")"
     ln -s "$src" "$dst"
 }
 
