@@ -17,6 +17,7 @@ Plugin 'gmarik/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'         " fugitive
 Plugin 'tpope/vim-surround'         " surround
+Plugin 'tpope/vim-repeat'           " repeat
 Plugin 'Shougo/neocomplete.vim'     " neocomplete
 Plugin 'kien/ctrlp.vim'             " ctrlp
 Plugin 'bling/vim-airline'          " airline
