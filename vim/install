@@ -21,3 +21,6 @@ EOF
 git submodule update --init --recursive bundle/Vundle.vim
 vim +BundleInstall +qall
 
+cd bundle/Vundle.vim
+git checkout master
+

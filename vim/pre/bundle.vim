@@ -31,7 +31,6 @@ Plugin 'Raimondi/delimitMate'       " delimitMate
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'a.vim'
-Plugin 'SuperTab'
 Plugin 'gitv'
 
 
