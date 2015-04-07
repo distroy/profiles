@@ -41,7 +41,11 @@ function! ld#get_selection()
 endfunction
 
 
-function! ld#grep(option, search, files)
+function! ld#grep(tabnew, option, search, files)
+    if a:tabnew
+        execute 'tabnew'
+    endif
+
     let l:txt = a:search
     let l:txt = substitute(l:txt, '#', '\\#', 'g')
     let l:txt = substitute(l:txt, '\"', '\\"', 'g')
@@ -49,5 +53,6 @@ function! ld#grep(option, search, files)
     let l:cmd = printf(':%s %s "%s" %s', l:grep, a:option, l:txt, a:files)
     echohl l:cmd
     exec l:cmd
+
 endfunction
 
