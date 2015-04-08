@@ -30,7 +30,7 @@ set smartcase
 
 set ruler
 set showcmd
-"set cursorline
+set cursorline
 set scrolloff=3
 
 set nowrap
