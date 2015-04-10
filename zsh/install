@@ -12,8 +12,9 @@ WRITE_FILE=$HOME/.zshrc
 # zshrc
 cat >>$WRITE_FILE <<EOF
 # ld zshrc
-#ZSH=
-#ZSH_DISABLE_GIT_DIRTY=true
 source ${SOURCE_DIR/#$HOME/\$HOME}/zshrc
 EOF
 
+git submodule update --init --recursive oh-my-zsh
+cd oh-my-zsh
+git checkout master

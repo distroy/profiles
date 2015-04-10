@@ -8,21 +8,15 @@ pushd $(dirname $0) &>/dev/null
 
 
 # oh my zsh
-if [ -n "$ZSH" ]; then
-    ZSH_THEME=distroy
-    DISABLE_AUTO_UPDATE=true
-    ZSH_HIST_STAMPS="%F %T"
+ZSH=oh-my-zsh
+DISABLE_AUTO_UPDATE=true
 
-    source "$ZSH/oh-my-zsh.sh"
+source "$ZSH/oh-my-zsh.sh"
 
-    unset ZSH
-    unset ZSH_THEME
-    unset DISABLE_AUTO_UPDATE
-    unset ZSH_HIST_STAMPS
-fi
+unset ZSH
+unset DISABLE_AUTO_UPDATE
 
 
-local config_file
 for config_file (lib/*.zsh); do
     source $config_file
 done
@@ -30,5 +24,3 @@ unset config_file
 
 
 popd &>/dev/null
-
-
