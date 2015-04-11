@@ -7,10 +7,14 @@ call ld#set_tags('tags')
 " call ld#set_tags('./tags')
 
 
+syntax on
 filetype on
 filetype plugin on
 filetype indent off
 autocmd FileType * set formatoptions-=cro
+set noautoindent
+
+highlight Comment ctermfg = blue
 
 
 set foldmethod=syntax
