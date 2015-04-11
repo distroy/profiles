@@ -2,7 +2,8 @@
 
 
 function __ld_git_prompt_info() (
-    if [[ "$ZSH_DISABLE_GIT_DIRTY" == true ]]; then
+    local hide_status="$(command git config --get ld.hide-status 2>/dev/null)"
+    if [[ "$hide_status" == "1" ]]; then
         function parse_git_dirty() {
             echo "$ZSH_THEME_GIT_PROMPT_NO_CHECK"
         }
