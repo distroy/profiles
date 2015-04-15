@@ -8,6 +8,8 @@ set number
 highlight Directory ctermfg = blue
 
 set cursorline
+highlight CursorLineNr ctermfg = DarkRed
+highlight CursorLine cterm = None
 set scrolloff=3
 
 set nowrap
