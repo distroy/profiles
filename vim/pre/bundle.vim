@@ -18,7 +18,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'         " fugitive
 Plugin 'tpope/vim-surround'         " surround
 Plugin 'tpope/vim-repeat'           " repeat
-Plugin 'Shougo/neocomplete.vim'     " neocomplete
 Plugin 'kien/ctrlp.vim'             " ctrlp
 Plugin 'bling/vim-airline'          " airline
 Plugin 'tomtom/tcomment_vim'        " tcomment
@@ -27,7 +26,11 @@ Plugin 'scrooloose/nerdtree'        " nerdtree
 Plugin 'majutsushi/tagbar'          " tagbar
 Plugin 'Yggdroot/indentLine'        " indentLine
 Plugin 'edsono/vim-matchit'         " matchit
-Plugin 'Raimondi/delimitMate'       " delimitMate
+Plugin 'jiangmiao/auto-pairs'       " auto-pairs
+
+if has('lua')
+    Plugin 'Shougo/neocomplete.vim' " neocomplete
+endif
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'a.vim'

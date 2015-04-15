@@ -9,7 +9,7 @@ alias ll='ls -l'
 alias l.='ls -d .*'
 
 alias vi='vim'
-alias vis='vim -S'
+alias vs='vim -S'
 
 alias pu='ps f -fj -u $USER -U $USER'
 
