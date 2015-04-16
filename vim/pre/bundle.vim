@@ -26,7 +26,6 @@ Plugin 'scrooloose/nerdtree'        " nerdtree
 Plugin 'majutsushi/tagbar'          " tagbar
 Plugin 'Yggdroot/indentLine'        " indentLine
 Plugin 'edsono/vim-matchit'         " matchit
-Plugin 'jiangmiao/auto-pairs'       " auto-pairs
 
 if has('lua')
     Plugin 'Shougo/neocomplete.vim' " neocomplete
