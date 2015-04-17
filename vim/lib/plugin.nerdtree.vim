@@ -11,4 +11,3 @@ let g:NERDTreeShowLineNumbers   = 1
 
 
 nnoremap <silent> <F12> :NERDTreeToggle<CR>
-

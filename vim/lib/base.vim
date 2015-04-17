@@ -18,9 +18,8 @@ set listchars=tab:>·,trail:·
 highlight SpecialKey ctermfg = DarkGray
 
 
-autocmd BufWritePre * %s/\s\+$//e
+autocmd BufWritePre * call ld#hook_pre_save()
 
 " over length
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
-

@@ -24,7 +24,7 @@ endif
 
 function! s:ld_source_directory(path, expr)
     for l:file in split(globpath(a:path, a:expr), '\n')
-        exec 'source' l:file
+        execute 'source' l:file
     endfor
 endfunction
 
@@ -32,4 +32,3 @@ endfunction
 let g:ld_vim_path = fnamemodify(expand('<sfile>:p'), ':p:h')
 call s:ld_source_directory(g:ld_vim_path, 'pre/*.vim')
 call s:ld_source_directory(g:ld_vim_path, 'lib/*.vim')
-

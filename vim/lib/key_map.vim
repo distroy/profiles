@@ -2,7 +2,7 @@
 " Copyright (C) distroy
 "
 
-nnoremap <F1> :exec printf(':vertical help %s', expand('<cword>'))<CR>
+nnoremap <F1> :execute printf(':vertical help %s', expand('<cword>'))<CR>
 
 nnoremap <F3>p :call ld#grep(1, '-rwI', ld#curr_word(), '*')<CR><CR>:cw<CR>
 nnoremap <F3>l :call ld#grep(0, '-rwI', ld#curr_word(), ld#curr_file())<CR><CR>:cw<CR>
@@ -17,4 +17,3 @@ nnoremap <F7> gT
 nnoremap <F8> gt
 
 nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
-

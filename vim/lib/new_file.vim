@@ -181,5 +181,3 @@ function! s:ld_nf_php(line)
     call s:ld_cursor(l:p)
     return l:l
 endfunction
-
-
