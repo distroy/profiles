@@ -18,8 +18,15 @@ set listchars=tab:>·,trail:·
 highlight SpecialKey ctermfg = DarkGray
 
 
-autocmd BufWritePre * call ld#hook_pre_save()
+autocmd BufWritePre * call <SID>trim_tail_space()
 
 " over length
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
+
+
+function! s:trim_tail_space()
+    let l:pos = getcurpos()
+    %s/\s\+$//e
+    call setpos('.', l:pos)
+endfunction

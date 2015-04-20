@@ -5,8 +5,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-let &rtp .= ',' . g:ld_vim_path . '/bundle/Vundle.vim'
-call vundle#begin(g:ld_vim_path . '/bundle')
+let &runtimepath .= ',' . g:ld_vim_path . '/plugin/Vundle.vim'
+call vundle#begin(g:ld_vim_path . '/plugin')
 
 
 " let Vundle manage Vundle, required

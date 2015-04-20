@@ -8,14 +8,12 @@ if exists('g:ld_loaded_vimrc')
 endif
 let g:ld_loaded_vimrc = 1
 
-
 if !exists('g:ld_user')
     let g:ld_user = 'distroy'
 endif
 if !exists('g:ld_email')
     let g:ld_email = 'distroy@163.com'
 endif
-
 
 if !exists('g:ld_tagshow')
     let g:ld_tagshow = 'tagbar'
@@ -30,5 +28,5 @@ endfunction
 
 
 let g:ld_vim_path = fnamemodify(expand('<sfile>:p'), ':p:h')
-call s:ld_source_directory(g:ld_vim_path, 'pre/*.vim')
+execute 'source' g:ld_vim_path . '/plugin/plugin.vim'
 call s:ld_source_directory(g:ld_vim_path, 'lib/*.vim')

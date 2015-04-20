@@ -18,9 +18,9 @@ cat >>$WRITE_FILE <<EOF
 source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
 EOF
 
-git submodule update --init --recursive bundle/Vundle.vim
-vim +BundleInstall +qall
+git submodule update --init --recursive plugin/Vundle.vim
+vim +PluginInstall +qall
 
-cd bundle/Vundle.vim
+cd plugin/Vundle.vim
 git checkout master
 
