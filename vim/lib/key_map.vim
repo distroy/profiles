@@ -4,10 +4,10 @@
 
 nnoremap <F1> :execute printf(':vertical help %s', expand('<cword>'))<CR>
 
-nnoremap <F3>p :call <SID>grep(1, '-rwI', <SID>curr_word(), '*')<CR><CR>:cw<CR>
-nnoremap <F3>l :call <SID>grep(0, '-rwI', <SID>curr_word(), <SID>curr_file())<CR><CR>:cw<CR>
-vnoremap <F3>p :<c-u>call <SID>grep(1, '-rI', <SID>get_selection(), '*')<CR><CR>:cw<CR>
-vnoremap <F3>l :<c-u>call <SID>grep(0, '-rI', <SID>get_selection(), <SID>curr_file())<CR><CR>:cw<CR>
+nnoremap <F3>p :call <SID>grep(1, '-rwI', <SID>curr_word(), '*')<CR><CR> :cw<CR>
+nnoremap <F3>l :call <SID>grep(0, '-rwI', <SID>curr_word(), <SID>curr_file())<CR><CR> :cw<CR>
+vnoremap <F3>p :<c-u>call <SID>grep(1, '-rI', <SID>get_selection(), '*')<CR><CR> :cw<CR>
+vnoremap <F3>l :<c-u>call <SID>grep(0, '-rI', <SID>get_selection(), <SID>curr_file())<CR><CR> :cw<CR>
 nnoremap <F3>i :grep --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"} -I<Space>
 
 
