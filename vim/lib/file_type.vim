@@ -15,7 +15,7 @@ highlight Comment ctermfg = blue
 
 set foldmethod=syntax
 set nofoldenable
-set foldnestmax=3
+set foldnestmax=20
 " set foldlevel=1
 autocmd BufRead * normal zR
 
