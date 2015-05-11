@@ -78,6 +78,12 @@ function! s:ld_nf_js(line)
     let l:l = a:line
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, '(function (win, doc) {')
+    let l:l = s:ld_append(l:l, '')
+    let l:p = l:l
+    let l:l = s:ld_append(l:l, '})(window, document);')
+    call s:ld_cursor(l:p)
     return l:l
 endfunction
 
