@@ -15,6 +15,7 @@
     editor = vim
 [alias]
     lg = log --color --graph --date-order --pretty=\"format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset\"
+    lga = log --color --graph --date-order --pretty=\"format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset\" --all
     co = checkout
     ci = commit
     st = status
