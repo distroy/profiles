@@ -4,8 +4,14 @@
 
 
 if !exists('g:ld_copyright')
-    let g:ld_copyright = ['Copyright (C) ' . g:ld_user]
+    let g:ld_copyright = []
+    if exists('g:ld_company')
+        call add(g:ld_copyright, 'Copyright (C) ' . g:ld_company)
+    endif
+
+    call add(g:ld_copyright, 'Copyright (C) ' . g:ld_user)
 endif
+
 
 
 autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
@@ -83,6 +89,8 @@ function! s:ld_nf_js(line)
     let l:l = s:ld_append(l:l, '')
     let l:p = l:l
     let l:l = s:ld_append(l:l, '})(window, document);')
+    delete
+    let l:l = l:l - 1
     call s:ld_cursor(l:p)
     return l:l
 endfunction
@@ -102,6 +110,8 @@ function! s:ld_nf_html(line)
     let l:l = s:ld_append(l:l, '<body>')
     let l:l = s:ld_append(l:l, '</body>')
     let l:l = s:ld_append(l:l, '</html>')
+    delete
+    let l:l = l:l - 1
     call s:ld_cursor(l:p)
     return l:l
 endfunction
@@ -120,6 +130,8 @@ function! s:ld_nf_c(line)
         let l:p = l:l
         let l:l = s:ld_append(l:l, '')
         let l:l = s:ld_append(l:l, '#endif /* __LOLY_H__ */')
+        delete
+        let l:l = l:l - 1
         call s:ld_cursor(l:p)
     endif
 
@@ -162,6 +174,8 @@ function! s:ld_nf_python(line)
     let l:l = s:ld_append(l:l, 'if __name__ == "__main__":')
     let l:l = s:ld_append(l:l, '    (opts, args) = get_options()')
     let l:l = s:ld_append(l:l, '    exit(main(opts, args))')
+    delete
+    let l:l = l:l - 1
     call s:ld_cursor(l:p)
     return l:l
 endfunction
@@ -184,6 +198,9 @@ function! s:ld_nf_php(line)
     let l:l = s:ld_append(l:l, '')
     let l:p = l:l
     let l:l = s:ld_append(l:l, '?>')
+    delete
+    let l:l = l:l - 1
     call s:ld_cursor(l:p)
     return l:l
 endfunction
+

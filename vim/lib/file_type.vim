@@ -27,6 +27,10 @@ autocmd FileType html       setlocal foldmethod=indent
 autocmd FileType python     setlocal foldmethod=indent
 
 
+command -nargs=+ -complete=dir CAppendTags call <SID>append_tags(<f-args>)
+command -nargs=1 CSetTab call <SID>set_tab(<args>)
+
+
 function! s:set_tab(w)
     let l:w = a:w
     let &l:tabstop      = l:w
@@ -35,9 +39,10 @@ function! s:set_tab(w)
 endfunction
 
 
-function! s:set_tags(path)
+function! s:append_tags(...)
     if &l:tags == ''
         let &l:tags .= 'tags'
     endif
-    let &l:tags .= ',' . a:path
+    let l:paths = join(a:000, ',')
+    let &l:tags .= ',' . l:paths
 endfunction
