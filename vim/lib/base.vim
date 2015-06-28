@@ -17,8 +17,12 @@ set list
 set listchars=tab:>·,trail:·
 highlight SpecialKey ctermfg = DarkGray
 
+set colorcolumn=80
+highlight ColorColumn ctermfg = red
+
 
 autocmd BufWritePre * call <SID>trim_tail_space()
+
 
 " over length
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
