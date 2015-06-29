@@ -6,7 +6,24 @@
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 SOURCE_DIR="$PWD"
-source ../install
+
+
+function ld_link()
+{
+    local src="$1"
+    local dst="$2"
+
+    mv "$dst" "$dst-bak-$(date +"%Y%m%d-%H%M%S")" &>/dev/null
+
+    mkdir -p "$(dirname "$dst")"
+    # ln -s "$src" "$dst"
+
+    wsrc="$(cygpath -w "$src")"
+    wdst="$(cygpath -w "$dst")"
+    dir=
+    test -d "$src" && dir=/d
+    /cygdrive/c/windows/system32/cmd /c mklink $dir "$wdst" "$wsrc" &>/dev/null
+}
 
 
 # bin dir symbol link
@@ -24,4 +41,3 @@ done
 
 # minttyrc
 ld_link $SOURCE_DIR/minttyrc $HOME/.minttyrc
-
