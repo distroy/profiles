@@ -17,7 +17,7 @@ set list
 set listchars=tab:>·,trail:·
 highlight SpecialKey ctermfg = DarkGray
 
-set colorcolumn=80
+set colorcolumn=81
 highlight ColorColumn ctermfg = red
 
 
