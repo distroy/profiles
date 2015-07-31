@@ -7,7 +7,7 @@ import os
 import sys
 import commands
 
-widths = [1, 8, 8, 8, 11, 6, 8, 9]
+widths = [1, 8, 8, 8, 11, 6, 8, 13]
 
 scr_width = 0
 bcmd_fmt = ""
