@@ -1,0 +1,16 @@
+# .zshrc
+#
+# Copyright (C) distroy
+#
+
+
+pushd $(dirname $BASH_SOURCE) &>/dev/null
+
+
+for config_file in $(echo lib/*.bash); do
+    source $config_file
+done
+unset config_file
+
+
+popd &>/dev/null

@@ -2,13 +2,6 @@
 # Copyright (C) distroy
 #
 
-
-test -z "$C_INCLUDE_PATH" && \
-    export C_INCLUDE_PATH=/usr/local/include:/usr/include:/include
-test -z "$CPLUS_INCLUDE_PATH" && \
-    export CPLUS_INCLUDE_PATH=/usr/local/include:/usr/include:/include
-
-
 # local
 ld_local=$HOME/local
 

@@ -1,7 +1,10 @@
 # modified by af-magic.zsh-theme
+#
+# Copyright (C) distroy
+#
 
 
-function __ld_git_prompt_info() (
+function __ld_git_prompt_info() {
     local hide_status="$(command git config --get ld.hide-status 2>/dev/null)"
     if [[ "$hide_status" == "1" ]]; then
         function parse_git_dirty() {
@@ -9,7 +12,7 @@ function __ld_git_prompt_info() (
         }
     fi
     git_prompt_info "$@"
-)
+}
 
 
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
@@ -28,7 +31,7 @@ eval my_gray='$FG[237]'
 eval my_orange='$FG[214]'
 
 # right prompt
-RPROMPT='$my_gray%*[%?] %n@%m:%l%{$reset_color%}%'
+RPROMPT='$my_gray%*[%?] %n@$(hostname -I):%l%{$reset_color%}%'
 
 # git settings
 ZSH_THEME_GIT_PROMPT_PREFIX="$FG[075](branch:"
