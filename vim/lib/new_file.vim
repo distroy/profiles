@@ -142,7 +142,7 @@ endfunction
 function! s:ld_nf_shell(line, shell)
     let l:l = a:line
 
-    let l:l = s:ld_append(l:l, '#!/usr/bin/env ' . a:shell)
+    let l:l = s:ld_append(l:l, '#! /usr/bin/env ' . a:shell)
     let l:l = s:ld_infos1(l:l, '#')
     let l:l = s:ld_append(l:l, '')
 
