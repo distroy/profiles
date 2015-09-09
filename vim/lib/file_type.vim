@@ -22,7 +22,7 @@ autocmd BufRead * normal zR
 highlight Folded ctermbg = darkgray ctermfg = darkgreen
 
 
-autocmd FileType javascript setlocal foldmethod=marker | setlocal foldmarker={,}
+" autocmd FileType javascript setlocal foldmethod=marker | setlocal foldmarker={,}
 autocmd FileType html       setlocal foldmethod=indent
 autocmd FileType python     setlocal foldmethod=indent
 
