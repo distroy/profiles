@@ -25,13 +25,13 @@ Plugin 'mkitt/tabline.vim'          " tabline
 Plugin 'scrooloose/nerdtree'        " nerdtree
 Plugin 'majutsushi/tagbar'          " tagbar
 Plugin 'Yggdroot/indentLine'        " indentLine
-Plugin 'edsono/vim-matchit'         " matchit
-Plugin 'mattn/emmet-vim'            " emmet
+" Plugin 'edsono/vim-matchit'         " matchit
+" Plugin 'mattn/emmet-vim'            " emmet
 " Plugin 'jelera/vim-javascript-syntax'   " javascript
 " Plugin 'pangloss/vim-javascript'    " javascript
 
 if has('lua')
-    Plugin 'Shougo/neocomplete.vim' " neocomplete
+    " Plugin 'Shougo/neocomplete.vim' " neocomplete
 endif
 " Plugin 'Valloric/YouCompleteMe'     " ycm
 

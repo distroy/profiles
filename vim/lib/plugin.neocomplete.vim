@@ -7,6 +7,10 @@ if !has('lua')
     finish
 endif
 
+if !exists('g:loaded_neocomplete')
+    finish
+endif
+
 
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 
