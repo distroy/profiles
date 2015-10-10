@@ -17,10 +17,14 @@ unset ZSH
 unset DISABLE_AUTO_UPDATE
 
 
-for config_file (lib/*.zsh); do
-    source $config_file
-done
-unset config_file
+function import () {
+    local i
+    for i in $@; do
+        source $i
+    done
+}
 
+import env/*.zsh
+import lib/*.zsh
 
 popd &>/dev/null
