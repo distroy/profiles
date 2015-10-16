@@ -11,6 +11,7 @@ alias l.='ls -d .*'
 alias vi='vim'
 alias vs='vim -S'
 
-alias pu='ps f -fj -u $USER -U $USER'
+alias p='ps f -fj'
+alias pu='p -u $USER -U $USER'
 
 alias history='fc -l -t "%F %T"'
