@@ -153,7 +153,7 @@ endfunction
 function! s:ld_nf_python(line)
     let l:l = a:line
 
-    let l:l = s:ld_append(l:l, '#!/usr/bin/env python')
+    let l:l = s:ld_append(l:l, '#! /usr/bin/env python')
     let l:l = s:ld_append(l:l, '# -*- coding: utf-8 -*-')
     let l:l = s:ld_infos1(l:l, '#')
     let l:l = s:ld_append(l:l, '')
