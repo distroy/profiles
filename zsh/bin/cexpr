@@ -1,0 +1,44 @@
+#! /usr/bin/env bash
+#
+# Copyright (C) distroy
+#
+
+
+if (( $# == 0)); then
+    echo
+    exit
+fi
+
+
+src=$(mktemp /tmp/tmp_XXXXX.cpp)
+out=$(mktemp /tmp/tmp_XXXXX.out)
+
+function echo_src() {
+    echo "$@" >&4
+}
+
+function build_src() {
+    echo_src "#include <iostream>"
+    echo_src "#include <stdint.h>"
+    # echo_src "#include <pthread.h>"
+    # echo_src "#include <unistd.h>"
+    # echo_src "#include <sys/types.h>"
+    # echo_src "#include <errno.h>"
+    echo_src "#define P(a) std::cout << (a) << std::endl"
+    echo_src "int main() {"
+    echo_src "    P($@);"
+    echo_src "    return 0;"
+    echo_src "}"
+}
+
+function run() {
+    # echo "$@" >&2
+    "$@"
+}
+
+
+run build_src "$@" 4> $src
+run g++ -o $out $src
+run $out
+
+run rm $src $out
