@@ -8,7 +8,7 @@ pushd $(dirname $0) &>/dev/null
 
 
 # oh my zsh
-ZSH=oh-my-zsh
+ZSH=$(pwd)/oh-my-zsh
 DISABLE_AUTO_UPDATE=true
 
 source "$ZSH/oh-my-zsh.sh"
