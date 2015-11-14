@@ -124,15 +124,8 @@ function! s:ld_nf_c(line)
     let l:l = s:ld_append(l:l, '')
 
     if expand("%:e") == 'h'
-        let l:l = s:ld_append(l:l, '#ifndef __LOLY_H__')
-        let l:l = s:ld_append(l:l, '#define __LOLY_H__')
+        let l:l = s:ld_append(l:l, '#pragma once')
         let l:l = s:ld_append(l:l, '')
-        let l:p = l:l
-        let l:l = s:ld_append(l:l, '')
-        let l:l = s:ld_append(l:l, '#endif /* __LOLY_H__ */')
-        delete
-        let l:l = l:l - 1
-        call s:ld_cursor(l:p)
     endif
 
     return l:l
