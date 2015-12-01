@@ -18,7 +18,7 @@ set listchars=tab:>·,trail:·
 highlight SpecialKey ctermfg = DarkGray
 
 set colorcolumn=81
-highlight ColorColumn ctermfg = red
+highlight ColorColumn ctermbg = red ctermfg = white
 
 
 autocmd BufWritePre * call <SID>trim_tail_space()
