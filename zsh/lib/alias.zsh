@@ -11,7 +11,17 @@ alias l.='ls -d .*'
 alias vi='vim'
 alias vs='vim -S'
 
-alias p='ps f -fj'
-alias pu='ps f -fj -u $USER -U $USER'
+case $OSTYPE in
+darwin*)
+    alias p='ps -j'
+    alias pu='ps -j -u $USER -U $USER'
+    ;;
+cygwin)
+    ;;
+*)
+    alias p='ps f -fj'
+    alias pu='ps f -fj -u $USER -U $USER'
+    ;;
+esac
 
 alias history='fc -l -t "%F %T"'
