@@ -33,7 +33,7 @@ Plugin 'Yggdroot/indentLine'        " indentLine
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim' " neocomplete
 endif
-" Plugin 'Valloric/YouCompleteMe'     " ycm
+Plugin 'Valloric/YouCompleteMe'     " ycm
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'a.vim'

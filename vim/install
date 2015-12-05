@@ -23,4 +23,3 @@ vim +PluginInstall +qall
 
 cd plugin/Vundle.vim
 git checkout master
-

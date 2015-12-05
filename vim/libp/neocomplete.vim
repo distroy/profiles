@@ -3,11 +3,11 @@
 "
 
 
-if !has('lua')
+if !exists('g:loaded_neocomplete')
     finish
 endif
 
-if !exists('g:loaded_neocomplete')
+if !has('lua')
     finish
 endif
 
