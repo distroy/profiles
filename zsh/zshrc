@@ -5,10 +5,11 @@
 
 
 pushd $(dirname $0) &>/dev/null
+LD_ZSH=$(pwd)
 
 
 # oh my zsh
-ZSH=$(pwd)/oh-my-zsh
+ZSH=$LD_ZSH/oh-my-zsh
 DISABLE_AUTO_UPDATE=true
 
 source "$ZSH/oh-my-zsh.sh"
@@ -24,7 +25,8 @@ function import () {
     done
 }
 
-import env/*.zsh
-import lib/*.zsh
+import $LD_ZSH/env/*.zsh
+import $LD_ZSH/lib/*.zsh
 
+unset LD_ZSH
 popd &>/dev/null

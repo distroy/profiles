@@ -12,12 +12,35 @@ widths = [1, 8, 8, 8, 11, 6, 8, 13]
 scr_width = 0
 bcmd_fmt = ""
 
+
+def getTerminalSize(w = 25, h = 80):
+    def ioctl_GWINSZ(fd):
+        try:
+            import fcntl, termios, struct
+            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+        except:
+            return
+        return cr
+    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+    import os
+    if not cr:
+        try:
+            fd = os.open(os.ctermid(), os.O_RDONLY)
+            cr = ioctl_GWINSZ(fd)
+            os.close(fd)
+        except:
+            pass
+    if not cr:
+        env = os.environ
+        cr = (env.get('LINES', w), env.get('COLUMNS', h))
+    return int(cr[1]), int(cr[0])
+
+
 def init():
-    global scr_width
-    try:
-        scr_width = int(os.environ['COLUMNS'])
-    except:
-        scr_width = 0
+    if sys.stdout.isatty():
+        # scr_width = int(os.environ.get('COLUMNS', 0))
+        width, height = getTerminalSize(0, 0)
+        scr_width = width
 
     global bcmd_fmt
     bcmd_fmt = ''.join(['%%%ds' % i for i in widths]) + ' '

@@ -1,0 +1,261 @@
+#!/usr/bin/env python
+#
+# Copyright (C) distroy
+#
+
+
+import os
+import sys
+import commands
+
+
+def getTerminalSize(w = 25, h = 80):
+    def ioctl_GWINSZ(fd):
+        try:
+            import fcntl, termios, struct
+            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+        except:
+            return
+        return cr
+    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+    import os
+    if not cr:
+        try:
+            fd = os.open(os.ctermid(), os.O_RDONLY)
+            cr = ioctl_GWINSZ(fd)
+            os.close(fd)
+        except:
+            pass
+    if not cr:
+        env = os.environ
+        cr = (env.get('LINES', w), env.get('COLUMNS', h))
+    return int(cr[1]), int(cr[0])
+
+
+class PsForest(object):
+
+    _RIGHT_FIELDS = ()
+
+    def _get_exec_args(self, argv):
+        args = [
+            'ps',
+        ]
+        args.extend(argv)
+        return args
+
+    def _is_right_field(self, k, v):
+        return v.isdigit() or k in self._RIGHT_FIELDS
+
+    def _parse_head(self, line):
+        return line.split()
+
+    def _parse_line(self, line, head_size):
+        l   = line.split()
+        c   = ' '.join(l[head_size - 1 : ])
+        l   = l[ : head_size - 1]
+        l.append(c)
+        return l
+
+
+    def __init_tty(self):
+        if sys.stdout.isatty():
+            self.__ttyw, self.__ttyh = getTerminalSize(None, None)
+        else:
+            self.__ttyw = None
+            self.__ttyh = None
+
+
+    def __stdout(self, fmt, *args):
+        sys.stdout.write(fmt % tuple(args))
+
+    def __stderr(self, fmt, *args):
+        sys.stderr.write(fmt % tuple(args))
+
+
+    def __get_bcmd(self, line):
+        return self.bcmd_fmt % tuple(line[: len(self.__widths) - 1])
+
+    def __get_bfmt(self):
+        buff = []
+        for i in range(0, len(self.__widths) - 1):
+            buff.append(('%%%ds' if self.__types[i] else '%%-%ds') % self.__widths[i])
+        buff.append('')
+        self.bcmd_fmt = ' '.join(buff)
+
+    def __get_cmd(self, cmd):
+        return cmd
+
+    def __get_depth(self, depth):
+        buff = []
+        for i in range(0, len(depth) - 1):
+            if depth[i]:
+                buff.append(' |  ')
+            else:
+                buff.append('    ')
+        if len(depth):
+            buff.append(' \_ ')
+        return ''.join(buff)
+
+
+    def __make_tree(self):
+        for proc in self.__lines:
+            ppid = proc['info']['PPID']
+
+            if ppid in self.__tree.keys():
+                parent = self.__tree[ppid]
+                parent['childs'].append(proc)
+                proc['root'] = 0
+
+
+    def __print_line(self, text):
+        s = text
+        if self.__ttyw:
+            s = s[ : self.__ttyw]
+        self.__stdout('%s\r\n', s)
+
+    def __print_tree(self):
+        self.__get_bfmt()
+
+        self.__print_head()
+        for proc in self.__lines:
+            if not proc['root']:
+                continue
+
+            self.__print_subtree(proc)
+
+    def __print_head(self):
+        head = self.__head
+        buff = []
+        buff.append(self.__get_bcmd(head))
+        buff.append(self.__get_cmd(head[-1]))
+        self.__print_line(''.join(buff))
+
+    def __print_subtree(self, root, depth = []):
+        text = root['text']
+        childs = root['childs']
+
+        buff = ''
+        buff += self.__get_bcmd(text)
+        buff += self.__get_depth(depth)
+        buff += self.__get_cmd(text[-1])
+        self.__print_line(buff)
+
+        depth.append(1)
+        for i in range(0, len(childs)):
+            child = childs[i]
+            if i == len(childs) - 1:
+                depth.pop()
+                depth.append(0)
+            self.__print_subtree(child, depth)
+        depth.pop()
+
+
+    def __parse_head(self, line):
+        self.__head     = self._parse_head(line)
+        self.__lines    = []
+        self.__tree     = {}
+
+        self.__widths   = []
+        self.__types    = []
+        for i in self.__head:
+            self.__widths.append(len(i))
+            self.__types.append(True)
+
+    def __parse_line(self, line):
+        text = self._parse_line(line, len(self.__head))
+        info = {}
+        for i in range(0, len(self.__head)):
+            k   = self.__head[i]
+            v   = text[i]
+            w   = len(v)
+
+            info[k] = v
+            if w > self.__widths[i]:
+                self.__widths[i]    = w
+
+            if not self._is_right_field(k, v):
+                self.__types[i]     = False
+
+        proc    = {'info': info, 'childs': [], 'root': 1, 'text': text}
+        pid     = info['PID']
+
+        self.__tree[pid] = proc
+        self.__lines.append(proc)
+
+
+    def run(self):
+        self.__init_tty()
+
+        cmd = ' '.join(self._get_exec_args(sys.argv[1 : ]))
+        (ret, output) = commands.getstatusoutput(cmd)
+        if ret != 0:
+            self.__stderr('command: %s\r\n%s', cmd, output)
+            return ret
+
+        # self.__stdout('command: %s\r\n%s\r\n', cmd, output)
+
+        lines = output.split('\n')
+        self.__parse_head(lines[0])
+        if 'PPID' not in self.__head:
+            self.__stdout('%s', output)
+            return 0
+
+        self.__tree = {}
+        for line in lines[1:]:
+            text = self.__parse_line(line)
+
+        self.__make_tree()
+        self.__print_tree()
+
+        return 0
+
+class PsForestDarwin(PsForest):
+    _RIGHT_FIELDS = ('STARTED', '%CPU')
+
+    # def __init__(self):
+    #     super(PsForestDarwin, self).__init__()
+    #     # pass
+
+    def _get_exec_args(self, argv):
+        args = [
+            'ps',
+            '-ouser',
+            '-opid',
+            '-oppid',
+            '-opgid',
+            '-osess',
+            '-otty',
+            '-o%cpu',
+            '-ostat',
+            '-ostart',
+            '-ocputime',
+            '-ocommand',
+        ]
+
+        args.extend(argv)
+        return args
+
+    # def _is_right_field(self, k, v):
+    #     return v.isdigit() or k in self._RIGHT_FIELDS
+
+    def _parse_line(self, line, head_size):
+        l   = line.split()
+        c   = ' '.join(l[head_size - 1 : ])
+        l   = l[ : head_size - 1]
+        l.append(c)
+        return l
+
+    def _parse_head(self, line):
+        return line.split()
+
+
+def is_platform(p):
+    import platform
+    return platform.system().lower().find(p.lower()) != -1
+
+if __name__ == '__main__':
+    if is_platform('darwin'):
+        o = PsForestDarwin()
+    else:
+        o = PsForest()
+    exit(o.run())

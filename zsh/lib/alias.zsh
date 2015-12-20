@@ -13,14 +13,14 @@ alias vs='vim -S'
 
 case $OSTYPE in
 darwin*)
-    alias p='ps -j'
-    alias pu='ps -j -u $USER -U $USER'
+    alias p="$LD_ZSH/lib/tool/psforest"
+    alias pu='p -u $USER -U $USER'
     ;;
 cygwin)
     ;;
 *)
     alias p='ps f -fj'
-    alias pu='ps f -fj -u $USER -U $USER'
+    alias pu='p -u $USER -U $USER'
     ;;
 esac
 
