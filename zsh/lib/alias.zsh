@@ -17,6 +17,8 @@ darwin*)
     alias pu='p -u $USER -U $USER'
     ;;
 cygwin)
+    alias p="$LD_ZSH/lib/tool/psforest"
+    alias pu='p'
     ;;
 *)
     alias p='ps f -fj'

@@ -9,20 +9,20 @@ import sys
 import commands
 
 
-def getTerminalSize(w = 25, h = 80):
-    def ioctl_GWINSZ(fd):
+def get_tty_size(w = 25, h = 80):
+    def ioctl_gwinsz(fd):
         try:
             import fcntl, termios, struct
             cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
         except:
             return
         return cr
-    cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
+    cr = ioctl_gwinsz(0) or ioctl_gwinsz(1) or ioctl_gwinsz(2)
     import os
     if not cr:
         try:
             fd = os.open(os.ctermid(), os.O_RDONLY)
-            cr = ioctl_GWINSZ(fd)
+            cr = ioctl_gwinsz(fd)
             os.close(fd)
         except:
             pass
@@ -32,8 +32,7 @@ def getTerminalSize(w = 25, h = 80):
     return int(cr[1]), int(cr[0])
 
 
-class PsForest(object):
-
+class Psforest(object):
     _RIGHT_FIELDS = ()
 
     def _get_exec_args(self, argv):
@@ -49,17 +48,18 @@ class PsForest(object):
     def _parse_head(self, line):
         return line.split()
 
-    def _parse_line(self, line, head_size):
+    def _parse_line(self, line, head):
+        s   = len(head)
         l   = line.split()
-        c   = ' '.join(l[head_size - 1 : ])
-        l   = l[ : head_size - 1]
+        c   = ' '.join(l[s - 1 : ])
+        l   = l[ : s - 1]
         l.append(c)
         return l
 
 
     def __init_tty(self):
         if sys.stdout.isatty():
-            self.__ttyw, self.__ttyh = getTerminalSize(None, None)
+            self.__ttyw, self.__ttyh = get_tty_size(None, None)
         else:
             self.__ttyw = None
             self.__ttyh = None
@@ -162,7 +162,7 @@ class PsForest(object):
             self.__types.append(True)
 
     def __parse_line(self, line):
-        text = self._parse_line(line, len(self.__head))
+        text = self._parse_line(line, self.__head)
         info = {}
         for i in range(0, len(self.__head)):
             k   = self.__head[i]
@@ -209,12 +209,8 @@ class PsForest(object):
 
         return 0
 
-class PsForestDarwin(PsForest):
+class PsforestDarwin(Psforest):
     _RIGHT_FIELDS = ('STARTED', '%CPU')
-
-    # def __init__(self):
-    #     super(PsForestDarwin, self).__init__()
-    #     # pass
 
     def _get_exec_args(self, argv):
         args = [
@@ -235,18 +231,42 @@ class PsForestDarwin(PsForest):
         args.extend(argv)
         return args
 
-    # def _is_right_field(self, k, v):
-    #     return v.isdigit() or k in self._RIGHT_FIELDS
 
-    def _parse_line(self, line, head_size):
-        l   = line.split()
-        c   = ' '.join(l[head_size - 1 : ])
-        l   = l[ : head_size - 1]
-        l.append(c)
-        return l
+class PsforestCygwin(Psforest):
+    _widths     = [1, 8, 8, 8, 11, 6, 12, 9]
+    _pid_idx    = -1
+
+    def _is_right_field(self, k, v):
+        return True
+
+    def _parse_line(self, line, head):
+        text = self._parse_head(line)
+        if self._pid_idx == -1 and 'PID' in head:
+            self._pid_idx = head.index('PID')
+
+        if self._pid_idx != -1:
+            pid = text[self._pid_idx]
+            try:
+                fd = os.open('/proc/%s/cmdline' % pid, os.O_RDONLY)
+                cmd = os.read(fd, 2048)
+                cmd = cmd.replace('\0', ' ')
+                cmd = cmd.replace('\n', ' ')
+                if cmd != '<defunct> ':
+                    text[-1] = cmd
+                os.close(fd)
+            except:
+                pass
+        return text
 
     def _parse_head(self, line):
-        return line.split()
+        text = []
+        start = 0
+        for w in self._widths:
+            end = start + w
+            text.append(line[start: end].lstrip())
+            start = end
+        text.append(line[start: ].lstrip())
+        return text
 
 
 def is_platform(p):
@@ -254,8 +274,9 @@ def is_platform(p):
     return platform.system().lower().find(p.lower()) != -1
 
 if __name__ == '__main__':
+    o = Psforest()
     if is_platform('darwin'):
-        o = PsForestDarwin()
-    else:
-        o = PsForest()
+        o = PsforestDarwin()
+    if is_platform('cygwin'):
+        o = PsforestCygwin()
     exit(o.run())
