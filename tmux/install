@@ -1,0 +1,18 @@
+#! /usr/bin/env bash
+#
+# Copyright (C) distroy
+#
+
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+SOURCE_DIR="$PWD"
+source ../install
+
+
+WRITE_FILE=$HOME/.tmux.conf
+
+
+cat >>$WRITE_FILE <<EOF
+# ld tmux conf
+source-file ${SOURCE_DIR/#$HOME/~}/tmux.conf
+EOF
