@@ -3,14 +3,14 @@
 "
 
 
-if !exists('g:loaded_youcompleteme')
-    finish
+" if !exists('g:loaded_youcompleteme')
+"     finish
+" endif
+
+
+if !exists('g:ycm_global_ycm_extra_conf') || g:ycm_global_ycm_extra_conf == ''
+    let g:ycm_global_ycm_extra_conf = g:ld_vim_path . '/libp/ycm/ycm_extra_conf.py'
 endif
-
-
-let s:this_dir = fnamemodify(expand('<sfile>:p'), ':p:h')
-
-let g:ycm_global_ycm_extra_conf = s:this_dir . '/ycm_conf.py'
 
 let g:ycm_confirm_extra_conf                    = 0 " 打开vim时不再询问是否加载ycm_extra_conf.py配置
 let g:ycm_collect_identifiers_from_tag_files    = 1 " 使用ctags生成的tags文件

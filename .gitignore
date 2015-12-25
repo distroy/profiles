@@ -2,10 +2,11 @@
 .*
 !.gitignore
 
+*.pyc
+
 tags
 
 test
 temp
 tmp
 bak
-

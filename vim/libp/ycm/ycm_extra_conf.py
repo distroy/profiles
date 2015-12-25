@@ -6,159 +6,127 @@
 
 
 import os
+import time
 import ycm_core
 
-# These are the compilation flags that will be used in case there's no
-# compilation database set (by default, one is not set).
-# CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
-flags = [
-    '-Wall',
-    '-Wextra',
-    '-Werror',
-    '-Wc++98-compat',
-    '-Wno-long-long',
-    '-Wno-variadic-macros',
-    '-fexceptions',
-    '-DNDEBUG',
-    # You 100% do NOT need -DUSE_CLANG_COMPLETER in your flags; only the YCM
-    # source code needs it.
-    '-DUSE_CLANG_COMPLETER',
-    # THIS IS IMPORTANT! Without a "-std=<something>" flag, clang won't know which
-    # language to use when compiling headers. So it will guess. Badly. So C++
-    # headers will be compiled as C headers. You don't want that so ALWAYS specify
-    # a "-std=<something>".
-    # For a C project, you would set this to something like 'c99' instead of
-    # 'c++11'.
-    '-std=c++11',
-    # ...and the same thing goes for the magic -x option which specifies the
-    # language that the files to be compiled are written in. This is mostly
-    # relevant for c++ headers.
-    # For a C project, you would set this to 'c' instead of 'c++'.
-    '-x',
-    'c++',
-    '-isystem',
-    '../BoostParts',
-    '-isystem',
-    # This path will only work on OS X, but extra paths that don't exist are not
-    # harmful
-    '/System/Library/Frameworks/Python.framework/Headers',
-    '-isystem',
-    '../llvm/include',
-    '-isystem',
-    '../llvm/tools/clang/include',
-    '-I',
-    '.',
-    '-I',
-    './ClangCompleter',
-    '-isystem',
-    './tests/gmock/gtest',
-    '-isystem',
-    './tests/gmock/gtest/include',
-    '-isystem',
-    './tests/gmock',
-    '-isystem',
-    './tests/gmock/include',
-]
 
+def get_handler():
+    flags = [
+        '-Wall',
+        '-Wextra',
+        '-Werror',
+        '-Wc++98-compat',
+        '-Wno-long-long',
+        '-Wno-variadic-macros',
+        '-fexceptions',
+        '-DNDEBUG',
+        '-DUSE_CLANG_COMPLETER',
+        '-std=c++11',
+        '-x',
+        'c++',
+        '-isystem',
+        '/usr/include',
+        '-isystem',
+        '/usr/local/include',
+        '-isystem',
+        '/usr/local/include/c++/4.8.2',
+    ]
 
-# Set this to the absolute path to the folder (NOT the file!) containing the
-# compile_commands.json file to use that instead of 'flags'. See here for
-# more details: http://clang.llvm.org/docs/JSONCompilationDatabase.html
-#
-# You can get CMake to generate this file for you by adding:
-#   set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
-# to your CMakeLists.txt file.
-#
-# Most projects will NOT need to set this to anything; you can just change the
-# 'flags' list of compilation flags. Notice that YCM itself uses that approach.
-compilation_database_folder = ''
+    SRC_EXTS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
 
-if os.path.exists(compilation_database_folder):
-  database = ycm_core.CompilationDatabase(compilation_database_folder)
-else:
-  database = None
+    HOME = os.environ.get('HOME', os.path.abspath(__file__))
 
-SOURCE_EXTENSIONS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
+    database_dir    = ''
+    database        = None
+    if os.path.exists(database_dir):
+        database = ycm_core.CompilationDatabase(database_dir)
 
-def DirectoryOfThisScript():
-    return os.path.dirname(os.path.abspath( __file__ ))
+    fd = os.open('%s/.ycm_extra_conf.log' % HOME,
+        os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC, 0664)
 
+    def log(fmt, *args):
+        buff = []
 
-def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
-    if not working_directory:
-        return list(flags)
-    new_flags = []
-    make_next_absolute = False
-    path_flags = ['-isystem', '-I', '-iquote', '--sysroot=']
-    for flag in flags:
-        new_flag = flag
+        buff.append(time.strftime('%Y-%m-%d %H:%M:%S '))
+        buff.append('%d ' % os.getpid())
+        buff.append(fmt % tuple(args))
 
-        if make_next_absolute:
-            make_next_absolute = False
-            if not flag.startswith('/'):
-                new_flag = os.path.join(working_directory, flag)
+        buff.append('\n')
+        os.write(fd, ''.join(buff))
 
-        for path_flag in path_flags:
-            if flag == path_flag:
-                make_next_absolute = True
-                break
+    def make_relative_paths(flags, work_dir):
+        log('make_relative_paths(%s, %s)', str(flags), str(work_dir))
+        if not work_dir:
+            return list(flags)
 
-            if flag.startswith( path_flag ):
-                path = flag[len(path_flag):]
-                new_flag = path_flag + os.path.join(working_directory, path)
-                break
+        new_flags = []
+        make_next_absolute = False
+        path_flags = ['-isystem', '-I', '-iquote', '--sysroot=']
+        for flag in flags:
+            new_flag = flag
 
-        if new_flag:
-            new_flags.append(new_flag)
-    return new_flags
+            if make_next_absolute:
+                make_next_absolute = False
+                if not flag.startswith('/'):
+                    new_flag = os.path.join(work_dir, flag)
 
+            for path_flag in path_flags:
+                if flag == path_flag:
+                    make_next_absolute = True
+                    break
 
-def IsHeaderFile(filename):
-    extension = os.path.splitext(filename)[1]
-    return extension in ['.h', '.hxx', '.hpp', '.hh']
+                if flag.startswith(path_flag):
+                    path = flag[len(path_flag) : ]
+                    new_flag = path_flag + os.path.join(work_dir, path)
+                    break
 
+            if new_flag:
+                new_flags.append(new_flag)
+        return new_flags
 
-def GetCompilationInfoForFile(filename):
-    # The compilation_commands.json file generated by CMake does not have entries
-    # for header files. So we do our best by asking the db for flags for a
-    # corresponding source file, if any. If one exists, the flags for that file
-    # should be good enough.
-    if IsHeaderFile(filename):
-        basename = os.path.splitext(filename)[0]
-        for extension in SOURCE_EXTENSIONS:
-            replacement_file = basename + extension
-            if os.path.exists(replacement_file):
-                compilation_info = database.GetCompilationInfoForFile(replacement_file)
-                if compilation_info.compiler_flags_:
-                    return compilation_info
-        return None
-    return database.GetCompilationInfoForFile(filename)
+    def is_header(filename):
+        extension = os.path.splitext(filename)[1]
+        return extension in ['.h', '.hxx', '.hpp', '.hh']
 
-
-def FlagsForFile(filename, **kwargs):
-    if database:
-        # Bear in mind that compilation_info.compiler_flags_ does NOT return a
-        # python list, but a "list-like" StringVec object
-        compilation_info = GetCompilationInfoForFile(filename)
-        if not compilation_info:
+    def get_compilation_info(filename):
+        if is_header(filename):
+            basename = os.path.splitext(filename)[0]
+            for extension in SRC_EXTS:
+                replacement_file = basename + extension
+                if os.path.exists(replacement_file):
+                    info = database.GetCompilationInfoForFile(replacement_file)
+                    if info.compiler_flags_:
+                        return info
             return None
+        return database.GetCompilationInfoForFile(filename)
 
-        final_flags = MakeRelativePathsInFlagsAbsolute(
-            compilation_info.compiler_flags_,
-            compilation_info.compiler_working_dir_)
+    def get_flags_for_file(filename, **kwargs):
+        log('filename: %s', filename)
+        log('kwargs: %s', str(kwargs))
 
-        # NOTE: This is just for YouCompleteMe; it's highly likely that your project
-        # does NOT need to remove the stdlib flag. DO NOT USE THIS IN YOUR
-        # ycm_extra_conf IF YOU'RE NOT 100% SURE YOU NEED IT.
-        try:
-            final_flags.remove('-stdlib=libc++')
-        except ValueError:
-            pass
-    else:
-        relative_to = DirectoryOfThisScript()
-        final_flags = MakeRelativePathsInFlagsAbsolute(flags, relative_to)
+        if database:
+            info = get_compilation_info(filename)
+            if not info:
+                return None
 
-    return {
-        'flags':    final_flags,
-        'do_cache': True
-    }
+            final_flags = make_relative_paths(info.compiler_flags_, info.compiler_working_dir_)
+
+            try:
+                final_flags.remove('-stdlib=libc++')
+            except ValueError:
+                pass
+        else:
+            relative_to = os.path.dirname(os.path.abspath(__file__))
+            final_flags = make_relative_paths(flags, relative_to)
+
+        log('final_flags: %s\n', str(final_flags))
+
+        return {
+            'flags':    final_flags,
+            'do_cache': True,
+        }
+
+    return get_flags_for_file
+
+
+FlagsForFile = get_handler()
