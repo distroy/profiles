@@ -35,10 +35,12 @@ def get_tty_size(w = 25, h = 80):
 class Psforest(object):
     _RIGHT_FIELDS = ()
 
+    _DEFAULT_ARGS = [
+        'ps',
+    ]
+
     def _get_exec_args(self, argv):
-        args = [
-            'ps',
-        ]
+        args = self._DEFAULT_ARGS[ : ]
         args.extend(argv)
         return args
 
@@ -212,24 +214,20 @@ class Psforest(object):
 class PsforestDarwin(Psforest):
     _RIGHT_FIELDS = ('STARTED', '%CPU')
 
-    def _get_exec_args(self, argv):
-        args = [
-            'ps',
-            '-ouser',
-            '-opid',
-            '-oppid',
-            '-opgid',
-            '-osess',
-            '-otty',
-            '-o%cpu',
-            '-ostat',
-            '-ostart',
-            '-ocputime',
-            '-ocommand',
-        ]
-
-        args.extend(argv)
-        return args
+    _DEFAULT_ARGS = [
+        'ps',
+        '-ouser',
+        '-opid',
+        '-oppid',
+        '-opgid',
+        '-osess',
+        '-otty',
+        '-o%cpu',
+        '-ostat',
+        '-ostart',
+        '-ocputime',
+        '-ocommand',
+    ]
 
 
 class PsforestCygwin(Psforest):
@@ -269,14 +267,22 @@ class PsforestCygwin(Psforest):
         return text
 
 
-def is_platform(p):
+plat_psforest = {
+    'cygwin': PsforestCygwin,
+    'darwin': PsforestDarwin,
+}
+
+
+def main():
     import platform
-    return platform.system().lower().find(p.lower()) != -1
+    o = None
+    for plat in plat_psforest:
+        if platform.system().lower().find(plat.lower()) != -1:
+            o = plat_psforest[plat]()
+            break
+    if not o:
+        o = Psforest()
+    return o.run()
 
 if __name__ == '__main__':
-    o = Psforest()
-    if is_platform('darwin'):
-        o = PsforestDarwin()
-    if is_platform('cygwin'):
-        o = PsforestCygwin()
-    exit(o.run())
+    exit(main())
