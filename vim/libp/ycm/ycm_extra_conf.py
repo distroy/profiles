@@ -11,7 +11,7 @@ import ycm_core
 
 
 def get_handler():
-    flags = [
+    FLAGS = [
         '-Wall',
         '-Wextra',
         '-Werror',
@@ -109,15 +109,17 @@ def get_handler():
             if not info:
                 return None
 
-            final_flags = make_relative_paths(info.compiler_flags_, info.compiler_working_dir_)
-
+            flags       = info.compiler_flags_
+            work_dir    = info.compiler_working_dir_
             try:
                 final_flags.remove('-stdlib=libc++')
             except ValueError:
                 pass
         else:
-            relative_to = os.path.dirname(os.path.abspath(__file__))
-            final_flags = make_relative_paths(flags, relative_to)
+            work_dir    = os.path.dirname(os.path.abspath(__file__))
+            flags       = FLAGS
+
+        final_flags = make_relative_paths(flags, work_dir)
 
         log('final_flags: %s\n', str(final_flags))
 
