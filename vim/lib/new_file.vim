@@ -50,6 +50,12 @@ function! s:ld_cursor(row, ...)
 endfunction
 
 
+function! s:ld_delete(line)
+    delete
+    return a:line - 1
+endfunction
+
+
 function! s:ld_infos1(line, prefix)
     return s:ld_infos3(a:line, a:prefix, a:prefix, a:prefix)
 endfunction
@@ -89,8 +95,8 @@ function! s:ld_nf_js(line)
     let l:l = s:ld_append(l:l, '')
     let l:p = l:l
     let l:l = s:ld_append(l:l, '})(window, document);')
-    delete
-    let l:l = l:l - 1
+
+    let l:l = s:ld_delete(l:l)
     call s:ld_cursor(l:p)
     return l:l
 endfunction
@@ -110,8 +116,8 @@ function! s:ld_nf_html(line)
     let l:l = s:ld_append(l:l, '<body>')
     let l:l = s:ld_append(l:l, '</body>')
     let l:l = s:ld_append(l:l, '</html>')
-    delete
-    let l:l = l:l - 1
+
+    let l:l = s:ld_delete(l:l)
     call s:ld_cursor(l:p)
     return l:l
 endfunction
@@ -123,9 +129,16 @@ function! s:ld_nf_c(line)
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
 
-    if expand("%:e") == 'h'
+    let l:ext = expand('%:e')
+    if l:ext == 'h'
         let l:l = s:ld_append(l:l, '#pragma once')
         let l:l = s:ld_append(l:l, '')
+    elseif l:ext == 'cpp'
+        let l:l = s:ld_append(l:l, 'namespace {')
+        let l:l = s:ld_append(l:l, '')
+        let l:l = s:ld_append(l:l, '} // end namespace')
+
+        let l:l = s:ld_delete(l:l)
     endif
 
     return l:l
@@ -167,8 +180,8 @@ function! s:ld_nf_python(line)
     let l:l = s:ld_append(l:l, 'if __name__ == "__main__":')
     let l:l = s:ld_append(l:l, '    (opts, args) = get_options()')
     let l:l = s:ld_append(l:l, '    exit(main(opts, args))')
-    delete
-    let l:l = l:l - 1
+
+    let l:l = s:ld_delete(l:l)
     call s:ld_cursor(l:p)
     return l:l
 endfunction
@@ -191,8 +204,8 @@ function! s:ld_nf_php(line)
     let l:l = s:ld_append(l:l, '')
     let l:p = l:l
     let l:l = s:ld_append(l:l, '?>')
-    delete
-    let l:l = l:l - 1
+
+    let l:l = s:ld_delete(l:l)
     call s:ld_cursor(l:p)
     return l:l
 endfunction
