@@ -133,14 +133,15 @@ function! s:ld_nf_c(line)
     if l:ext == 'h'
         let l:l = s:ld_append(l:l, '#pragma once')
         let l:l = s:ld_append(l:l, '')
-    elseif l:ext == 'cpp'
-        let l:l = s:ld_append(l:l, 'namespace {')
-        let l:l = s:ld_append(l:l, '')
-        let l:l = s:ld_append(l:l, '} // end namespace')
-
-        let l:l = s:ld_delete(l:l)
     endif
 
+    let l:l = s:ld_append(l:l, 'namespace {')
+    let l:l = s:ld_append(l:l, '')
+    let l:p = l:l
+    let l:l = s:ld_append(l:l, '} // end namespace')
+    let l:l = s:ld_delete(l:l)
+
+    call s:ld_cursor(l:p)
     return l:l
 endfunction
 
