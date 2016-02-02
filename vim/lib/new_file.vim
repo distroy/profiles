@@ -138,7 +138,7 @@ function! s:ld_nf_c(line)
     let l:l = s:ld_append(l:l, 'namespace {')
     let l:l = s:ld_append(l:l, '')
     let l:p = l:l
-    let l:l = s:ld_append(l:l, '} // end namespace')
+    let l:l = s:ld_append(l:l, '} /* end namespace */')
     let l:l = s:ld_delete(l:l)
 
     call s:ld_cursor(l:p)
