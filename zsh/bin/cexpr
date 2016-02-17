@@ -1,44 +1,128 @@
-#! /usr/bin/env bash
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) distroy
 #
 
 
-if (( $# == 0)); then
-    echo
-    exit
-fi
+import os
+import sys
+import atexit
 
 
-src=$(mktemp /tmp/tmp_XXXXX.cpp)
-out=$(mktemp /tmp/tmp_XXXXX.out)
-
-function echo_src() {
-    echo "$@" >&4
-}
-
-function build_src() {
-    echo_src "#include <iostream>"
-    echo_src "#include <stdint.h>"
-    # echo_src "#include <pthread.h>"
-    # echo_src "#include <unistd.h>"
-    # echo_src "#include <sys/types.h>"
-    # echo_src "#include <errno.h>"
-    echo_src "#define P(a) std::cout << (a) << std::endl"
-    echo_src "int main() {"
-    echo_src "    P($@);"
-    echo_src "    return 0;"
-    echo_src "}"
-}
-
-function run() {
-    # echo "$@" >&2
-    "$@"
-}
+__exec_name = os.path.basename(sys.argv[0])
 
 
-run build_src "$@" 4> $src
-run g++ -o $out $src
-run $out
+def get_options():
+    import optparse
+    parser = optparse.OptionParser(version = "%prog (distroy) 0.1")
 
-run rm $src $out
+    parser.add_option('-i', dest = 'inc', metavar = 'header',  default = [], action = 'append')
+    parser.add_option('-I', dest = 'inc_dir', metavar = 'dir', default = [], action = 'append')
+
+    parser.add_option('-d', '--debug', default = False, action = 'store_true')
+
+    global opts
+    global args
+    opts, args = parser.parse_args()
+    return opts, args
+
+
+def log_debug(fmt, *args):
+    if not opts.debug:
+        return
+
+    buff = []
+    buff.append(fmt % tuple(args))
+
+    buff.append(os.linesep)
+    sys.stdout.write(''.join(buff))
+
+
+def std_error(fmt, *args):
+    buff = []
+
+    buff.append(__exec_name)
+    buff.append(': ')
+    buff.append(fmt % tuple(args))
+
+    buff.append(os.linesep)
+    sys.stderr.write(''.join(buff))
+
+
+def std_error_exit(fmt, *args):
+    std_error(fmt, *args)
+    exit(-1)
+
+
+def get_src_content():
+    buff = []
+    buff.append('#include <iostream>')
+    buff.append('#include <stdint.h>')
+    for i in opts.inc:
+        buff.append('#include "%s"' % i)
+    buff.append('#define P(a) std::cout << (a) << std::endl')
+    buff.append('int main() {')
+    buff.append('    P(%s);' % ' '.join(args))
+    buff.append('    return 0;')
+    buff.append('}')
+    return os.linesep.join(buff)
+
+
+def write_file(path, content):
+    fd = os.open(path, os.O_CREAT | os.O_RDWR | os.O_TRUNC | os.O_SYNC, 0644)
+    os.write(fd, content)
+    os.close(fd)
+
+
+def execv(argv):
+    log_debug('exec: %s', ' '.join(argv))
+
+    pid = os.fork()
+    if pid == 0:
+        os.execvp(argv[0], argv)
+    else:
+        pid, status = os.waitpid(pid, 0)
+        return os.WEXITSTATUS(status)
+
+
+def tmpfile(suffix, prefix):
+    import tempfile
+    fd, name = tempfile.mkstemp(suffix, prefix)
+    os.close(fd)
+    return name
+
+
+def main(opts, args):
+    src = tmpfile('.cpp', 'tmp_')
+    out = tmpfile('.out', 'tmp_')
+
+    atexit.register(os.remove, src)
+    atexit.register(os.remove, out)
+
+    txt = get_src_content()
+    write_file(src, txt)
+
+    cmd = [
+        'g++',
+        '-o', out,
+        src,
+    ]
+    for i in opts.inc_dir:
+        cmd.append('-I')
+        cmd.append(i)
+
+    r = execv(cmd)
+    if r != 0:
+        return r
+
+    r = execv([out])
+    if r != 0:
+        return r
+
+    return 0
+
+
+if __name__ == "__main__":
+    (opts, args) = get_options()
+    exit(main(opts, args))
