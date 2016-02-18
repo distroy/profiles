@@ -19,7 +19,8 @@ Plugin 'tpope/vim-fugitive'         " fugitive
 Plugin 'tpope/vim-surround'         " surround
 Plugin 'tpope/vim-repeat'           " repeat
 Plugin 'kien/ctrlp.vim'             " ctrlp
-Plugin 'bling/vim-airline'          " airline
+Plugin 'vim-airline/vim-airline'    " airline
+Plugin 'vim-airline/vim-airline-themes'     " airline themes
 Plugin 'tomtom/tcomment_vim'        " tcomment
 Plugin 'mkitt/tabline.vim'          " tabline
 Plugin 'scrooloose/nerdtree'        " nerdtree

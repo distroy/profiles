@@ -29,6 +29,6 @@ endfunction
 
 let g:ld_vim_path = fnamemodify(expand('<sfile>:p'), ':p:h')
 
-execute 'source' g:ld_vim_path . '/plugin/plugin.vim'
+execute 'source' g:ld_vim_path . '/plugin.vim'
 call s:ld_source_directory(g:ld_vim_path . '/lib')
 call s:ld_source_directory(g:ld_vim_path . '/libp')
