@@ -22,7 +22,7 @@ Plugin 'kien/ctrlp.vim'             " ctrlp
 Plugin 'vim-airline/vim-airline'    " airline
 Plugin 'vim-airline/vim-airline-themes'     " airline themes
 Plugin 'tomtom/tcomment_vim'        " tcomment
-Plugin 'mkitt/tabline.vim'          " tabline
+" Plugin 'mkitt/tabline.vim'          " tabline
 Plugin 'scrooloose/nerdtree'        " nerdtree
 Plugin 'majutsushi/tagbar'          " tagbar
 Plugin 'Yggdroot/indentLine'        " indentLine
