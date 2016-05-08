@@ -31,6 +31,7 @@ autocmd BufNewFile *.js         call s:ld_nf_js(0)
 autocmd BufNewFile *.html       call s:ld_nf_html(0)
 
 autocmd BufNewFile *.vim        call s:ld_nf_vim(0)
+autocmd BufNewFile *.sql        call s:ld_nf_sql(0)
 
 
 function! s:ld_append(line, text)
@@ -216,3 +217,11 @@ function! s:ld_nf_php(line)
     return l:l
 endfunction
 
+
+function! s:ld_nf_sql(line)
+    let l:l = a:line
+
+    let l:l = s:ld_infos1(l:l, '--')
+
+    return l:l
+endfunction
