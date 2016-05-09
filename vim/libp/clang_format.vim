@@ -7,6 +7,7 @@ let g:clang_format#code_style   = 'google'
 " let g:clang_format#auto_format_on_insert_leave = 1
 let g:clang_format#style_options = {
     \ 'AccessModifierOffset' : -4,
+    \ 'AlignConsecutiveAssignments' : 'true',
     \ 'AllowShortIfStatementsOnASingleLine' : 'true',
     \ 'AlwaysBreakTemplateDeclarations' : 'true',
     \ 'Standard' : 'C++11',
