@@ -27,7 +27,8 @@ Plugin 'scrooloose/nerdtree'        " nerdtree
 Plugin 'majutsushi/tagbar'          " tagbar
 Plugin 'Yggdroot/indentLine'        " indentLine
 Plugin 'kana/vim-operator-user'     " for clang format
-Plugin 'rhysd/vim-clang-format'     " clang format
+" Plugin 'rhysd/vim-clang-format'     " clang format
+Plugin 'Chiel92/vim-autoformat'     " auto format
 Plugin 'edsono/vim-matchit'         " matchit
 Plugin 'mattn/emmet-vim'            " emmet
 " Plugin 'jelera/vim-javascript-syntax'   " javascript
