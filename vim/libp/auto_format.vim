@@ -3,6 +3,9 @@
 "
 
 
+nnoremap <F11> :Autoformat<CR>
+
+
 " javascript
 " npm -g install js-beautify
 
