@@ -18,6 +18,7 @@ set listchars=tab:>·,trail:·
 highlight SpecialKey ctermfg = DarkGray
 
 set colorcolumn=81
+set textwidth=0
 highlight ColorColumn ctermbg = red ctermfg = white
 
 
