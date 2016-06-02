@@ -195,3 +195,4 @@ function! s:make_clangformt()
 endfunction
 
 let g:formatdef_clangformat = s:make_clangformt()
+let g:formatdef_autopep8 = '"autopep8 -" . (g:DoesRangeEqualBuffer(a:firstline, a:lastline) ? " --range " . a:firstline . " " . a:lastline : "") . " --max-line-length=100"'
