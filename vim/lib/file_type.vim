@@ -17,7 +17,7 @@ set foldmethod=syntax
 set nofoldenable
 set foldnestmax=20
 " set foldlevel=1
-autocmd BufRead * normal zR
+autocmd BufEnter * normal zR
 
 highlight Folded ctermbg = darkgray ctermfg = darkgreen
 
@@ -25,6 +25,10 @@ highlight Folded ctermbg = darkgray ctermfg = darkgreen
 " autocmd FileType javascript setlocal foldmethod=marker | setlocal foldmarker={,}
 autocmd FileType html       setlocal foldmethod=indent
 autocmd FileType python     setlocal foldmethod=indent
+
+
+" set file type
+autocmd BufEnter *.vue set filetype=html
 
 
 command -nargs=+ -complete=dir CAppendTags call <SID>append_tags(<f-args>)
