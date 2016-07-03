@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /usr/bin/env bash
 #
 # Copyright (C) distroy
 #
@@ -18,8 +18,8 @@ cat >>$WRITE_FILE <<EOF
 source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
 EOF
 
-git submodule update --init --recursive plugin/Vundle.vim
-vim +PluginInstall +qall
+git submodule update --init --recursive plugin/vim-plug
+vim +PlugInstall +qall
 
-cd plugin/Vundle.vim
+cd plugin/vim-plug
 git checkout master

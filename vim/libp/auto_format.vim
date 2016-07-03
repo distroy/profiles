@@ -84,7 +84,7 @@ let s:style_cpp['PenaltyExcessCharacter'] = 100
 let s:style_cpp['PenaltyReturnTypeOnItsOwnLine'] = 100
 
 " 圆括号的换行方式
-" BreakBeforeBraces: Attach
+" BreakBeforeBraces: Attach, Linux
 let s:style_cpp['BreakBeforeBraces'] = 'Attach'
 
 " 在构造函数初始化时按逗号断行，并以冒号对齐
@@ -132,7 +132,7 @@ let s:style_cpp['MaxEmptyLinesToKeep'] = 2
 " ObjCSpaceBeforeProtocolList: true
 
 " 指针向右对齐: 即靠近指针变量名
-" PointerAlignment: Right
+" PointerAlignment: Right, Middle, Left
 let s:style_cpp['PointerAlignment'] = 'Right'
 let s:style_cpp['DerivePointerAlignment'] = 'true'
 
@@ -187,7 +187,7 @@ endfunction
 
 function! s:stringize_options(opts) abort
     let l:keyvals = map(items(a:opts), 's:get_keyval(v:val[0], v:val[1])')
-    return '{' . join(l:keyvals, ',') . '}'
+    return '{' . join(l:keyvals, ', ') . '}'
 endfunction
 
 function! s:make_clangformt()

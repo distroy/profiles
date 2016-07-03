@@ -2,48 +2,42 @@
 " Copyright (C) distroy
 "
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" set nocompatible              " be iMproved, required
+" filetype off                  " required
 
-let &runtimepath .= ',' . g:ld_vim_path . '/plugin/Vundle.vim'
-call vundle#begin(g:ld_vim_path . '/plugin')
+exec 'source' g:ld_vim_path . '/plugin/vim-plug/plug.vim'
+call plug#begin(g:ld_vim_path . '/plugin')
 
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'         " fugitive
-Plugin 'tpope/vim-surround'         " surround
-Plugin 'tpope/vim-repeat'           " repeat
-Plugin 'kien/ctrlp.vim'             " ctrlp
-Plugin 'vim-airline/vim-airline'    " airline
-Plugin 'vim-airline/vim-airline-themes'     " airline themes
-Plugin 'tomtom/tcomment_vim'        " tcomment
-Plugin 'mkitt/tabline.vim'          " tabline
-Plugin 'scrooloose/nerdtree'        " nerdtree
-Plugin 'majutsushi/tagbar'          " tagbar
-Plugin 'Yggdroot/indentLine'        " indentLine
-Plugin 'kana/vim-operator-user'     " for clang format
-" Plugin 'rhysd/vim-clang-format'     " clang format
-Plugin 'Chiel92/vim-autoformat'     " auto format
-Plugin 'edsono/vim-matchit'         " matchit
-Plugin 'mattn/emmet-vim'            " emmet
-" Plugin 'jelera/vim-javascript-syntax'   " javascript
-Plugin 'pangloss/vim-javascript'    " javascript
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'mkitt/tabline.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'tomtom/tcomment_vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'kien/ctrlp.vim', {'on': 'CtrlP'}
+Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
+Plug 'edsono/vim-matchit'
+Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
+" Plug 'jelera/vim-javascript-syntax'
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 
 if has('lua')
-    " Plugin 'Shougo/neocomplete.vim' " neocomplete
+    " Plugin 'Shougo/neocomplete.vim'
 endif
-Plugin 'Valloric/YouCompleteMe'     " ycm
+Plug 'Valloric/YouCompleteMe'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'a.vim'
-Plugin 'gitv'
+Plug 'a.vim', {'on': 'A'}
 
 
-call vundle#end()            " required
+call plug#end()            " required
 
-filetype plugin indent on    " required
+" filetype plugin indent on    " required
