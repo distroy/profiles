@@ -22,7 +22,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'tomtom/tcomment_vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-Plug 'kien/ctrlp.vim', {'on': 'CtrlP'}
+Plug 'kien/ctrlp.vim'
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
 Plug 'edsono/vim-matchit'
 Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
