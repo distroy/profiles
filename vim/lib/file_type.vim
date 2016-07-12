@@ -17,7 +17,7 @@ set foldmethod=syntax
 set nofoldenable
 set foldnestmax=20
 " set foldlevel=1
-autocmd BufEnter * normal zR
+autocmd BufRead * normal zR
 
 highlight Folded ctermbg = darkgray ctermfg = darkgreen
 
