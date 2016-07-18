@@ -198,4 +198,4 @@ endfunction
 
 let g:formatdef_clangformat = s:make_clangformt()
 let g:formatdef_autopep8 = '"autopep8 -" . (g:DoesRangeEqualBuffer(a:firstline, a:lastline) ? " --range " . a:firstline . " " . a:lastline : "") . " --max-line-length=100"'
-let g:formatdef_jsbeautify_javascript = '"js-beautify -j -f - -".(&expandtab ? "s ".shiftwidth() : "t").(&textwidth ? " -w ".&textwidth : "")'
+let g:formatdef_jsbeautify_javascript = '"js-beautify -X -j -f - -".(&expandtab ? "s ".shiftwidth() : "t").(&textwidth ? " -w ".&textwidth : "")'

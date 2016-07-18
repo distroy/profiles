@@ -27,7 +27,8 @@ Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
 Plug 'edsono/vim-matchit'
 Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
 " Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
+Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
