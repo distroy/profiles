@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+
+if [[ "$0" == "${BASH_SOURCE[0]}" ]]; then
+    for i in "$@"; do
+        "$i/update"
+    done
+fi

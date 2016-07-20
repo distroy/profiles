@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+#
+# Copyright (C) distroy
+#
+
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+SOURCE_DIR="$PWD"
+source ../update
+
+
+vim +PlugInstall +PlugUpdate +qall
