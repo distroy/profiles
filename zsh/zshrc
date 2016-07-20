@@ -20,8 +20,8 @@ unset DISABLE_AUTO_UPDATE
 
 function import () {
     local i
-    for i in $@; do
-        source $i
+    for i in "$@"; do
+        source "$i"
     done
 }
 
