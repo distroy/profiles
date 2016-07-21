@@ -19,6 +19,13 @@ nnoremap <F8> gt
 nnoremap <silent> <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
 
 
+" window move
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+
 function! s:curr_word()
     return  expand('<cword>')
 endfunction
