@@ -56,7 +56,7 @@ function! s:grep(tabnew, option, search, files)
     let l:txt = substitute(l:txt, '#', '\\#', 'g')
     let l:txt = substitute(l:txt, '%', '\\%', 'g')
     let l:txt = substitute(l:txt, '\"', '\\"', 'g')
-    let l:grep = 'grep --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"}'
+    let l:grep = 'grep --exclude-dir={.git,.hg,.svn,node_modules} --exclude={tags,".*.swp"}'
     let l:cmd = printf(':%s %s "%s" %s', l:grep, a:option, l:txt, a:files)
     execute l:cmd
 endfunction
