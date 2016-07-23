@@ -8,14 +8,14 @@ set number
 highlight Directory ctermfg = blue
 
 set cursorline
-highlight CursorLineNr ctermfg = DarkRed
-highlight CursorLine cterm = None
+highlight CursorLineNr  ctermbg = darkred
+highlight CursorLine    cterm = none
 set scrolloff=5
 
 set nowrap
 set list
 set listchars=tab:>·,trail:·
-highlight SpecialKey ctermfg = DarkGray
+highlight SpecialKey ctermfg = darkgray
 
 set colorcolumn=81
 set textwidth=0
