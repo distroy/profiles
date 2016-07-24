@@ -1,17 +1,4 @@
-BoldAsFont          = no
-Font                = Source Code Pro
-FontHeight          = 10
-CursorType          = block
-PgUpDnScroll        = yes
-RightClickAction    = paste
-Transparency        = low
-Locale              =
-Charset             =
-BackspaceSendsBS    = no
-ConfirmExit         = yes
-OpaqueWhenFocused   = no
-
-ForegroundColour    = 199, 199, 199
+ForegroundColour    = 220, 220, 220
 BackgroundColour    =   0,   0,   0
 CursorColour        = 255, 255, 255
 Black               =   0,   0,   0
