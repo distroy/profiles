@@ -8,29 +8,25 @@
 # LD_CD_MIN_DEPTH=1
 
 function ld_cd_like_echo_directories() {
-    if [ $# -eq 0 ]; then
-        return 1
-    fi
+    [ $# -eq 0 ] && return 1
     local i=0
     for dir in "$@"; do
-        (( i++ ))
         echo "${LD_COLOR_CYAN}${i}${LD_COLOR_RESET}. $dir"
+        (( i++ ))
     done
 }
 
 function ld_cd_like_get_directory_by_index() {
-    if [ $# -eq 0 ]; then
-        return 1
-    fi
+    [ $# -eq 0 ] && return 1
     local index=$1
     shift
     local i=0
     for dir in "$@"; do
-        (( i++ ))
         if (( i == index )); then
             echo $dir
             return 0
         fi
+        (( i++ ))
     done
 }
 
@@ -108,8 +104,6 @@ function ld_cd_like() {
         dirs="$dir"
     done
 }
-
-#stty erase ^H
 
 alias c=ld_cd_like
 alias cdr='cd $LD_CD_ROOT_DIR'
