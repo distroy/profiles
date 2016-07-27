@@ -21,9 +21,9 @@ autocmd BufNewFile *.java       call s:ld_nf_c(0)
 
 autocmd BufNewFile *.php        call s:ld_nf_php(0)
 
-autocmd BufNewFile *.sh         call s:ld_nf_shell(0, "bash")
-autocmd BufNewFile *.bash       call s:ld_nf_shell(0, "bash")
-autocmd BufNewFile *.zsh        call s:ld_nf_shell(0, "zsh")
+autocmd BufNewFile *.sh         call s:ld_nf_shell(0, 'bash')
+autocmd BufNewFile *.bash       call s:ld_nf_shell(0, 'bash')
+autocmd BufNewFile *.zsh        call s:ld_nf_shell(0, 'zsh')
 
 autocmd BufNewFile *.py         call s:ld_nf_python(0)
 
@@ -92,13 +92,8 @@ function! s:ld_nf_js(line)
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '')
-    let l:l = s:ld_append(l:l, '(function (win, doc) {')
-    let l:l = s:ld_append(l:l, '')
-    let l:p = l:l
-    let l:l = s:ld_append(l:l, '})(window, document);')
 
     let l:l = s:ld_delete(l:l)
-    call s:ld_cursor(l:p)
     return l:l
 endfunction
 
