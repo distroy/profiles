@@ -93,7 +93,6 @@ function! s:ld_nf_js(line)
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, '')
 
-    let l:l = s:ld_delete(l:l)
     return l:l
 endfunction
 
