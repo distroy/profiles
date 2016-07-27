@@ -8,7 +8,7 @@ nnoremap <F3>l :call <SID>grep(0, '-rwI', <SID>curr_word(), <SID>curr_file())<CR
 vnoremap <F3>p :<c-u>call <SID>grep(1, '-rI', <SID>get_selection(), '*')<CR><CR> :cw<CR>
 vnoremap <F3>l :<c-u>call <SID>grep(0, '-rI', <SID>get_selection(), <SID>curr_file())<CR><CR> :cw<CR>
 " nnoremap <F3>i :grep --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"} -I<Space>
-nnoremap <expr> <F3>i <SID>get_grep_cmd('-I ')
+nnoremap <expr> <F3>i <SID>get_grep_cmd('-I') . ' '
 
 
 function! s:curr_word()
