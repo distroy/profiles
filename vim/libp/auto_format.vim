@@ -48,7 +48,7 @@ let s:style_cpp['AlignConsecutiveAssignments'] = 'true'
 
 " 多行声明语句按=号对齐
 " AlignConsecutiveDeclarations: false
-" let s:style_cpp['AlignConsecutiveDeclarations'] = 'true'
+let s:style_cpp['AlignConsecutiveDeclarations'] = 'true'
 
 " 行尾注释对齐
 " AlignTrailingComments: true
