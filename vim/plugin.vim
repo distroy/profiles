@@ -29,6 +29,7 @@ Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
 " Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
+Plug 'mbbill/undotree'
 
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
@@ -36,7 +37,7 @@ endif
 Plug 'Valloric/YouCompleteMe'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
-Plug 'a.vim', {'on': 'A'}
+" Plug 'a.vim', {'on': 'A'}
 
 
 call plug#end()            " required
