@@ -25,6 +25,9 @@ autocmd BufNewFile *.sh         call s:ld_nf_shell(0, 'bash')
 autocmd BufNewFile *.bash       call s:ld_nf_shell(0, 'bash')
 autocmd BufNewFile *.zsh        call s:ld_nf_shell(0, 'zsh')
 
+autocmd BufNewFile [Mm]akefile  call s:ld_nf_shell(0, '')
+autocmd BufNewFile *.mk         call s:ld_nf_shell(0, '')
+
 autocmd BufNewFile *.py         call s:ld_nf_python(0)
 
 autocmd BufNewFile *.js         call s:ld_nf_js(0)
@@ -91,7 +94,6 @@ function! s:ld_nf_js(line)
     let l:l = a:line
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
-    let l:l = s:ld_append(l:l, '')
 
     return l:l
 endfunction
@@ -144,7 +146,9 @@ endfunction
 function! s:ld_nf_shell(line, shell)
     let l:l = a:line
 
-    let l:l = s:ld_append(l:l, '#! /usr/bin/env ' . a:shell)
+    if a:shell != ''
+        let l:l = s:ld_append(l:l, '#! /usr/bin/env ' . a:shell)
+    endif
     let l:l = s:ld_infos1(l:l, '#')
     let l:l = s:ld_append(l:l, '')
 
