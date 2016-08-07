@@ -9,5 +9,4 @@ SOURCE_DIR="$PWD"
 source ../update
 
 
-vim +PlugInstall +qall
-vim +PlugUpdate +qall
+vim +PlugUpdate

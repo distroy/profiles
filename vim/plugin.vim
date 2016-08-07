@@ -5,7 +5,8 @@
 " set nocompatible              " be iMproved, required
 " filetype off                  " required
 
-exec 'source' g:ld_vim_path . '/plugin/vim-plug/plug.vim'
+" exec 'source' g:ld_vim_path . '/plugin/vim-plug/plug.vim'
+exec 'source' g:ld_vim_path . '/plugin/plug.vim'
 call plug#begin(g:ld_vim_path . '/plugin')
 
 
@@ -20,6 +21,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'mkitt/tabline.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'tomtom/tcomment_vim'
+" Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'kien/ctrlp.vim'

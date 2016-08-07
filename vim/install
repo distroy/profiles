@@ -18,8 +18,4 @@ cat >>$WRITE_FILE <<EOF
 source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
 EOF
 
-git submodule update --init --recursive plugin/vim-plug
-vim +PlugInstall +qall
-
-cd plugin/vim-plug
-git checkout master
+vim +PlugInstall
