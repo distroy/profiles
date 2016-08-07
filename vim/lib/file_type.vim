@@ -22,7 +22,6 @@ autocmd BufRead * normal zR
 highlight Folded ctermbg = darkgray ctermfg = darkgreen
 
 
-" autocmd FileType javascript setlocal foldmethod=marker | setlocal foldmarker={,}
 autocmd FileType html       setlocal foldmethod=indent
 autocmd FileType python     setlocal foldmethod=indent
 
@@ -31,11 +30,11 @@ autocmd FileType python     setlocal foldmethod=indent
 autocmd BufEnter *.vue set filetype=html
 
 
-command -nargs=+ -complete=dir CAppendTags call <SID>append_tags(<f-args>)
-command -nargs=1 CSetTab call <SID>set_tab(<args>)
+command -nargs=+ -complete=dir CAppendTags call <SID>ld_append_tags(<f-args>)
+command -nargs=1 CSetTab call <SID>ld_set_tab(<args>)
 
 
-function! s:set_tab(w)
+function! s:ld_set_tab(w)
     let l:w = a:w
     let &l:tabstop      = l:w
     let &l:shiftwidth   = l:w
@@ -43,7 +42,7 @@ function! s:set_tab(w)
 endfunction
 
 
-function! s:append_tags(...)
+function! s:ld_append_tags(...)
     if &l:tags == ''
         let &l:tags .= 'tags'
     endif

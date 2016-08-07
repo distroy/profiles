@@ -3,15 +3,15 @@
 "
 
 
-nnoremap <F3>p :call <SID>grep(1, '-rwI', <SID>curr_word(), '*')<CR><CR> :cw<CR>
-nnoremap <F3>l :call <SID>grep(0, '-rwI', <SID>curr_word(), <SID>curr_file())<CR><CR> :cw<CR>
-vnoremap <F3>p :<c-u>call <SID>grep(1, '-rI', <SID>get_selection(), '*')<CR><CR> :cw<CR>
-vnoremap <F3>l :<c-u>call <SID>grep(0, '-rI', <SID>get_selection(), <SID>curr_file())<CR><CR> :cw<CR>
-" nnoremap <F3>i :grep --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"} -I<Space>
-nnoremap <expr> <F3>i <SID>get_grep_cmd('-I') . ' '
+nnoremap <F3>p :call <SID>ld_grep(1, '-rwI', <SID>ld_curr_word(), '*')<CR><CR> :cw<CR>
+nnoremap <F3>l :call <SID>ld_grep(0, '-rwI', <SID>ld_curr_word(), <SID>curr_file())<CR><CR> :cw<CR>
+vnoremap <F3>p :<c-u>call <SID>ld_grep(1, '-rI', <SID>ld_get_selection(), '*')<CR><CR> :cw<CR>
+vnoremap <F3>l :<c-u>call <SID>ld_grep(0, '-rI', <SID>ld_get_selection(), <SID>curr_file())<CR><CR> :cw<CR>
+" nnoremap <F3>i :ld_grep --exclude-dir={.git,.hg,.svn} --exclude={tags,".*.swp"} -I<Space>
+nnoremap <expr> <F3>i <SID>ld_get_grep_cmd('-I') . ' '
 
 
-function! s:curr_word()
+function! s:ld_curr_word()
     return  expand('<cword>')
 endfunction
 
@@ -21,13 +21,13 @@ function! s:curr_file()
 endfunction
 
 
-function! s:get_grep_cmd(opts)
+function! s:ld_get_grep_cmd(opts)
     let l:grep = 'grep --exclude-dir={.git,.hg,.svn,node_modules} --exclude={tags,".*.swp"}'
     return printf(':%s %s', l:grep, a:opts)
 endfunctio
 
 
-function! s:get_selection()
+function! s:ld_get_selection()
     " Why is this not a built-in Vim script function?!
     let [l:line1, l:col1] = getpos("'<")[1:2]
     let [l:line2, l:col2] = getpos("'>")[1:2]
@@ -38,7 +38,7 @@ function! s:get_selection()
 endfunction
 
 
-function! s:grep(tabnew, opts, search, files)
+function! s:ld_grep(tabnew, opts, search, files)
     if a:tabnew
         tabnew
     endif
