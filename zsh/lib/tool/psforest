@@ -231,7 +231,7 @@ class PsforestDarwin(Psforest):
 
 
 class PsforestCygwin(Psforest):
-    _widths     = [1, 8, 8, 8, 11, 6, 12, 9]
+    _widths     = [1, 8, 8, 8, 11, 7, 11, 9]
     _pid_idx    = -1
 
     def _is_right_field(self, k, v):
