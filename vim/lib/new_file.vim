@@ -13,7 +13,6 @@ if !exists('g:ld_copyright')
 endif
 
 
-
 autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
 autocmd BufNewFile *.[ch]       call s:ld_nf_c(0)
 
@@ -123,6 +122,7 @@ endfunction
 
 function! s:ld_nf_c(line)
     let l:l = a:line
+    let l:p = 0
 
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
@@ -131,15 +131,21 @@ function! s:ld_nf_c(line)
     if l:ext == 'h'
         let l:l = s:ld_append(l:l, '#pragma once')
         let l:l = s:ld_append(l:l, '')
+        let l:l = s:ld_append(l:l, '')
     endif
 
-    let l:l = s:ld_append(l:l, 'namespace {')
-    let l:l = s:ld_append(l:l, '')
-    let l:p = l:l
-    let l:l = s:ld_append(l:l, '} /* end namespace */')
-    let l:l = s:ld_delete(l:l)
+    if l:ext == 'h' || l:ext == 'hpp' || l:ext == 'cpp'
+        let l:l = s:ld_append(l:l, 'namespace {')
+        let l:l = s:ld_append(l:l, '')
+        let l:p = l:l
+        let l:l = s:ld_append(l:l, '')
+        let l:l = s:ld_append(l:l, '} /* end namespace */')
+        let l:l = s:ld_delete(l:l)
+    endif
 
-    call s:ld_cursor(l:p)
+    if l:p != 0
+        call s:ld_cursor(l:p)
+    endif
     return l:l
 endfunction
 
