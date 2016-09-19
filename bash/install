@@ -6,15 +6,11 @@
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 SOURCE_DIR="$PWD"
-WRITE_FILE=$HOME/.zshrc
+WRITE_FILE=$HOME/.bashrc
 
 
-# zshrc
+# bashrc
 cat >>$WRITE_FILE <<EOF
-# ld zshrc
-source ${SOURCE_DIR/#$HOME/\$HOME}/zshrc
+# ld bashrc
+source ${SOURCE_DIR/#$HOME/\$HOME}/bashrc
 EOF
-
-git submodule update --init --recursive oh-my-zsh
-cd oh-my-zsh
-git checkout master
