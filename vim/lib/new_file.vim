@@ -31,6 +31,7 @@ autocmd BufNewFile *.py         call s:ld_nf_python(0)
 
 autocmd BufNewFile *.js         call s:ld_nf_js(0)
 autocmd BufNewFile *.html       call s:ld_nf_html(0)
+autocmd BufNewFile *.css        call s:ld_nf_css(0)
 
 autocmd BufNewFile *.vim        call s:ld_nf_vim(0)
 autocmd BufNewFile *.sql        call s:ld_nf_sql(0)
@@ -116,6 +117,15 @@ function! s:ld_nf_html(line)
 
     let l:l = s:ld_delete(l:l)
     call s:ld_cursor(l:p)
+    return l:l
+endfunction
+
+
+function! s:ld_nf_css(line)
+    let l:l = a:line
+    let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
+    let l:l = s:ld_append(l:l, '')
+
     return l:l
 endfunction
 
