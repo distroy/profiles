@@ -141,10 +141,19 @@ function! s:ld_nf_c(line)
     if l:ext == 'h'
         let l:l = s:ld_append(l:l, '#pragma once')
         let l:l = s:ld_append(l:l, '')
-        let l:l = s:ld_append(l:l, '')
     endif
 
+    let l:l = s:ld_append(l:l, '')
+
     if l:ext == 'h' || l:ext == 'hpp' || l:ext == 'cpp'
+        if l:ext == 'cpp'
+            let l:l = s:ld_append(l:l, '#include "' . expand('%:r') .'.h"')
+        else
+            let l:l = s:ld_append(l:l, '#include <string>')
+        endif
+        let l:l = s:ld_append(l:l, '')
+        let l:l = s:ld_append(l:l, '')
+
         let l:l = s:ld_append(l:l, 'namespace {')
         let l:l = s:ld_append(l:l, '')
         let l:p = l:l
