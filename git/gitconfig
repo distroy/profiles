@@ -27,6 +27,7 @@
 [i18n]
     filesEncoding = utf-8
 [credential]
+    # helper = cache
     helper = cache --timeout=28800
 [diff]
     guitool = tmerge
