@@ -26,7 +26,7 @@ Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'kien/ctrlp.vim'
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
-Plug 'edsono/vim-matchit'
+Plug 'distroy/vim-matchit'
 Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
 " Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
