@@ -19,7 +19,7 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mkitt/tabline.vim'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'tomtom/tcomment_vim'
 " Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 Plug 'majutsushi/tagbar'
