@@ -16,9 +16,7 @@ call plug#begin(g:ld_vim_path . '/plugin')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'mkitt/tabline.vim'
+Plug 'itchyny/lightline.vim'
 " Plug 'Yggdroot/indentLine'
 Plug 'tomtom/tcomment_vim'
 " Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
@@ -31,6 +29,7 @@ Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
 " Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
+Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
 
 if has('lua')
