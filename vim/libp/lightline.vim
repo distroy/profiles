@@ -25,7 +25,9 @@ function s:set_lightline(...)
     endwhile
     let l:key = a:000[l:l - 2]
     let l:val = a:000[l:l - 1]
-    let l:obj[l:key] = l:val
+    if !has_key(l:obj, l:key)
+        let l:obj[l:key] = l:val
+    endif
 endfunction
 
 
