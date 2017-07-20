@@ -3,6 +3,8 @@
 #
 
 
+alias top='top -d 1'
+
 alias ls='ls --color=auto --escape --time-style=+%F\ %T'
 alias la='ls -a'
 alias ll='ls -l'
