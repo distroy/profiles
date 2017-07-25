@@ -41,8 +41,8 @@ let g:ycm_seed_identifiers_with_syntax          = 1    " 语法关键字补全
 " " force recomile with syntastic
 " nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
-" " nnoremap <leader>lo :lopen<CR> "open locationlist
-" " nnoremap <leader>lc :lclose<CR>    "close locationlist
+" " nnoremap <leader>lo :lopen<CR> " open locationlist
+" " nnoremap <leader>lc :lclose<CR>    " close locationlist
 " inoremap <leader><leader> <C-x><C-o>
 
 " 在注释输入中也能补全
@@ -54,3 +54,16 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
 " 跳转到定义处
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+
+" 标记颜色
+" highlight YcmErrorSign
+" highlight YcmWarningSign ctermbg = none
+" 代码中出错字段颜色
+highlight YcmErrorSection ctermbg = none
+highlight YcmWarningSection ctermbg = none
+" 出错行颜色
+" highlight YcmErrorLine
+" highlight YcmWarningLine
