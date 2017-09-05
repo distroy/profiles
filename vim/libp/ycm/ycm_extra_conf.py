@@ -41,18 +41,48 @@ def get_handler():
     if os.path.exists(database_dir):
         database = ycm_core.CompilationDatabase(database_dir)
 
-    fd = os.open('%s/.ycm_extra_conf.log' % HOME,
-        os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC, 0664)
+    class Log(object):
+        __fd = -1
+        __file_flag = os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC
 
+        def __init__(self):
+            HOME = os.environ.get('HOME', os.path.abspath(__file__))
+            self.__path ='%s/.ycm_extra_conf.log' % HOME
+
+            self.open()
+            size = os.lseek(self.__fd, 0, os.SEEK_END)
+            if size > 10 << 20:
+                os.rename(self.__path, '%s.1' % self.__path)
+                self.open()
+
+        def __del__(self):
+            self.close()
+
+        def open(self):
+            self.close()
+            self.__fd = os.open(self.__path, self.__file_flag, 0664)
+
+        def close(self):
+            if self.__fd != -1:
+                os.close(self.__fd)
+                self.__fd = -1
+
+        def log(self, fmt, *args):
+            if self.__fd == -1:
+                return
+
+            buff = []
+
+            buff.append(time.strftime('%Y-%m-%d %H:%M:%S '))
+            buff.append('%d ' % os.getpid())
+            buff.append(fmt % tuple(args))
+
+            buff.append('\n')
+            os.write(self.__fd, ''.join(buff))
+
+    fd = Log()
     def log(fmt, *args):
-        buff = []
-
-        buff.append(time.strftime('%Y-%m-%d %H:%M:%S '))
-        buff.append('%d ' % os.getpid())
-        buff.append(fmt % tuple(args))
-
-        buff.append('\n')
-        os.write(fd, ''.join(buff))
+        fd.log(fmt, *args)
 
     def make_relative_paths(flags, work_dir):
         log('make_relative_paths(%s, %s)', str(flags), str(work_dir))
