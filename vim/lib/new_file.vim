@@ -145,9 +145,9 @@ function! s:ld_nf_c(line)
 
     let l:l = s:ld_append(l:l, '')
 
-    if l:ext == 'h' || l:ext == 'hpp' || l:ext == 'cpp'
-        if l:ext == 'cpp'
-            let l:l = s:ld_append(l:l, '#include "' . expand('%:r') .'.h"')
+    if l:ext == 'h' || l:ext == 'hpp' || l:ext == 'cpp' || l:ext == 'c'
+        if l:ext == 'cpp' || l:ext == 'c'
+            let l:l = s:ld_append(l:l, '#include "' . expand('%:t:r') .'.h"')
         else
             let l:l = s:ld_append(l:l, '#include <string>')
         endif
