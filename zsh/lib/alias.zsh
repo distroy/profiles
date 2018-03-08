@@ -13,6 +13,8 @@ alias l.='ls -d .*'
 alias vi='vim'
 alias vs='vim -S'
 
+alias tailf='tail -F'
+
 case $OSTYPE in
 darwin*)
     alias p="$LD_ZSH/lib/tool/psforest"

@@ -13,6 +13,8 @@ alias l.='ls -d .*'
 alias vi='vim'
 alias vs='vim -S'
 
+alias tailf='tail -F'
+
 alias p='ps f -fj'
 alias pu='ps f -fj -u $USER -U $USER'
 
