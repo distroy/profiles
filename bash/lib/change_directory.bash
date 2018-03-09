@@ -46,8 +46,7 @@ function ld_cd_like() {
     min_depth=$(( min_depth > 0 ? min_depth : 1 ))
 
     local key="$1"
-    local dirs="$(find "$root_dir" -maxdepth $max_depth -mindepth $min_depth -type d | sort -f)"
-    dirs="$(echo "$dirs" | egrep -vw '\.')"
+    local dirs="$(find "$root_dir" -maxdepth $max_depth -mindepth $min_depth -type d -not -name '.*' | sort -f)"
 
     local errmsg=
     local dir=
