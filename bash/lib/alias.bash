@@ -19,3 +19,4 @@ alias p='ps f -fj'
 alias pu='ps f -fj -u $USER -U $USER'
 
 alias history='fc -l -t "%F %T"'
+alias where='which -a'
