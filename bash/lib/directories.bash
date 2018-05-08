@@ -3,14 +3,14 @@
 #
 
 
-alias cd=cd_func
-function cd_func() {
+alias cd=ld_cd_func
+function ld_cd_func() {
     if ((LD_CD_COUNT == 0)); then
         ((LD_CD_COUNT = 10))
     fi
 
     if [[ $1 == "--" ]]; then
-        dirs -v
+        dirs -v | head -$LD_CD_COUNT
         return 0
     fi
 
@@ -44,9 +44,6 @@ function cd_func() {
             return 0
         fi
     done
-
-    # Trim down everything beyond 11th entry
-    popd -n +$((LD_CD_COUNT + 2)) &> /dev/null
 
     return 0
 }
