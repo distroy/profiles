@@ -7,10 +7,31 @@
 "     finish
 " endif
 
+function! s:ld_get_ycm_conf()
+    if exists('g:ycm_global_ycm_extra_conf') && g:ycm_global_ycm_extra_conf != ''
+        return g:ycm_global_ycm_extra_conf
+    endif
 
-if !exists('g:ycm_global_ycm_extra_conf') || g:ycm_global_ycm_extra_conf == ''
-    let g:ycm_global_ycm_extra_conf = g:ld_vim_path . '/libp/ycm/ycm_extra_conf.py'
-endif
+    let l:path = getcwd()
+    while l:path != '/'
+        let l:conf = l:path . '/.ycm_extra_conf.py'
+        if filereadable(l:conf)
+            return l:conf
+        endif
+
+        let l:path = fnamemodify(l:path, ':h')
+    endwhile
+
+    let l:conf = $HOME . '/.ycm_extra_conf.py'
+    if filereadable(l:conf)
+        return l:conf
+    endif
+
+    return g:ld_vim_path . '/libp/ycm/ycm_extra_conf.py'
+endfunction
+
+
+let g:ycm_global_ycm_extra_conf = s:ld_get_ycm_conf()
 
 let g:ycm_confirm_extra_conf                    = 0 " 打开vim时不再询问是否加载ycm_extra_conf.py配置
 let g:ycm_collect_identifiers_from_tag_files    = 1 " 使用ctags生成的tags文件
