@@ -36,6 +36,8 @@ autocmd BufNewFile *.css        call s:ld_nf_css(0)
 autocmd BufNewFile *.vim        call s:ld_nf_vim(0)
 autocmd BufNewFile *.sql        call s:ld_nf_sql(0)
 
+autocmd BufNewFile .gitignore   call s:ld_nf_git_ignore(0)
+
 
 function! s:ld_append(line, text)
     if a:line < 0 || append(a:line, a:text) != 0
@@ -252,6 +254,16 @@ function! s:ld_nf_sql(line)
     let l:l = a:line
 
     let l:l = s:ld_infos1(l:l, '--')
+
+    return l:l
+endfunction
+
+
+function! s:ld_nf_git_ignore(line)
+    let l:l = a:line
+
+    let l:l = s:ld_append(l:l, '# git ignore')
+    let l:l = s:ld_infos1(l:l, '#')
 
     return l:l
 endfunction
