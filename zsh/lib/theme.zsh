@@ -14,12 +14,19 @@ function __ld_git_prompt_info() {
     git_prompt_info "$@"
 }
 
+function __ld_right_prompt() {
+    local r c h
+    r=$1
+    h=$(hostname -I 2>/dev/null || echo %m)
+    c=`((r == 0)) && echo $FG[243] || echo $FG[009]`
+    echo "$c%*[%?] %n@$h:%l%{$reset_color%}%"
+}
+
 
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 
 # primary prompt
-#PROMPT='$FG[032]%~$(__ld_git_prompt_info) $FG[105]%(!.#.»)%{$reset_color%} '
 PROMPT=$'$FG[032]%~$(__ld_git_prompt_info)\
 $FG[105]%(!.#.»)%{$reset_color%} '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
@@ -31,7 +38,7 @@ eval my_gray='$FG[237]'
 eval my_orange='$FG[214]'
 
 # right prompt
-RPROMPT='$my_gray%*[%?] %n@$(hostname -I 2>/dev/null || echo %m):%l%{$reset_color%}%'
+RPROMPT='$(__ld_right_prompt $?)'
 
 # git settings
 ZSH_THEME_GIT_PROMPT_PREFIX="$FG[075](branch:"
