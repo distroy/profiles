@@ -10,82 +10,113 @@ import time
 import ycm_core
 
 
-def get_handler():
+class Log(object):
+    __fd = -1
+    __file_flag = os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC
+
+    def __init__(self):
+        HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
+        self.__path = '%s/.ycm_extra_conf.log' % HOME
+
+        self.open()
+        size = os.lseek(self.__fd, 0, os.SEEK_END)
+        if size > 10 << 20:
+            os.rename(self.__path, '%s.1' % self.__path)
+            self.open()
+
+    def __del__(self):
+        self.close()
+
+    def open(self):
+        self.close()
+        self.__fd = os.open(self.__path, self.__file_flag, 0664)
+
+    def close(self):
+        if self.__fd != -1:
+            os.close(self.__fd)
+            self.__fd = -1
+
+    def debug(self, fmt, *args):
+        if self.__fd == -1:
+            return
+
+        buff = []
+
+        buff.append(time.strftime('%Y-%m-%d %H:%M:%S '))
+        buff.append('%d ' % os.getpid())
+        buff.append(fmt % tuple(args))
+
+        buff.append('\n')
+        os.write(self.__fd, ''.join(buff))
+
+
+log = Log()
+
+
+class YcmExtraConf(object):
+    SOURCE_EXTS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
+    HEADER_EXTS = ['.h', '.hxx', '.hpp', '.hh']
+
+    HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
+
     FLAGS = [
+        '-x', 'c++',
+        '-std=c++11',
+        '-Wc++11-compat',
         '-Wall',
         '-Wextra',
         '-Werror',
-        # '-Wc++98-compat',
-        '-Wc++11-compat',
         '-Wno-long-long',
         '-Wno-variadic-macros',
         '-fexceptions',
         '-DNDEBUG',
         '-DUSE_CLANG_COMPLETER',
-        '-x',
-        'c++',
-        '-isystem',
+    ]
+
+    SYSTEM_INC = [
         '/usr/include',
-        '-isystem',
         '/usr/local/include',
-        '-isystem',
         '/usr/local/include/c++/4.8.2',
     ]
 
-    SRC_EXTS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
+    REPO_INC = [
+    ]
 
-    HOME = os.environ.get('HOME', os.path.abspath(__file__))
+    repo_path = None
 
-    database_dir    = ''
-    database        = None
-    if os.path.exists(database_dir):
-        database = ycm_core.CompilationDatabase(database_dir)
+    database_dir = ''
+    database = None
 
-    class Log(object):
-        __fd = -1
-        __file_flag = os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC
+    def __init__(self):
+        if os.path.exists(self.database_dir):
+            self.database = ycm_core.CompilationDatabase(self.database_dir)
 
-        def __init__(self):
-            HOME = os.environ.get('HOME', os.path.abspath(__file__))
-            self.__path ='%s/.ycm_extra_conf.log' % HOME
+        for i in self.SYSTEM_INC:
+            self.FLAGS.append('-isystem')
+            self.FLAGS.append(i)
 
-            self.open()
-            size = os.lseek(self.__fd, 0, os.SEEK_END)
-            if size > 10 << 20:
-                os.rename(self.__path, '%s.1' % self.__path)
-                self.open()
+        for i in self.REPO_INC:
+            self.FLAGS.append('-I')
+            self.FLAGS.append(os.path.join(self.get_repo_dir(), i))
 
-        def __del__(self):
-            self.close()
+    def get_repo_dir(self):
+        if self.repo_path:
+            return self.repo_path
 
-        def open(self):
-            self.close()
-            self.__fd = os.open(self.__path, self.__file_flag, 0664)
+        path = os.path.abspath(os.getcwd())
+        while path and path != '/':
+            if os.path.isdir(os.path.join(path, '.git')):
+                self.repo_path = path
+                break
+            if os.path.isdir(os.path.join(path, '.svn')):
+                self.repo_path = path
+                break
+        if not self.repo_path:
+            self.repo_path = os.getcwd()
+        return self.repo_path
 
-        def close(self):
-            if self.__fd != -1:
-                os.close(self.__fd)
-                self.__fd = -1
-
-        def log(self, fmt, *args):
-            if self.__fd == -1:
-                return
-
-            buff = []
-
-            buff.append(time.strftime('%Y-%m-%d %H:%M:%S '))
-            buff.append('%d ' % os.getpid())
-            buff.append(fmt % tuple(args))
-
-            buff.append('\n')
-            os.write(self.__fd, ''.join(buff))
-
-    fd = Log()
-    def log(fmt, *args):
-        fd.log(fmt, *args)
-
-    def make_relative_paths(flags, work_dir):
-        log('make_relative_paths(%s, %s)', str(flags), str(work_dir))
+    def make_relative_paths(self, flags, work_dir):
+        log.debug('make_relative_paths(%s, %s)', str(flags), str(work_dir))
         if not work_dir:
             return list(flags)
 
@@ -106,7 +137,7 @@ def get_handler():
                     break
 
                 if flag.startswith(path_flag):
-                    path = flag[len(path_flag) : ]
+                    path = flag[len(path_flag):]
                     new_flag = path_flag + os.path.join(work_dir, path)
                     break
 
@@ -116,49 +147,47 @@ def get_handler():
 
     def is_header(filename):
         extension = os.path.splitext(filename)[1]
-        return extension in ['.h', '.hxx', '.hpp', '.hh']
+        return extension in self.HEADER_EXTS
 
     def get_compilation_info(filename):
         if is_header(filename):
             basename = os.path.splitext(filename)[0]
-            for extension in SRC_EXTS:
+            for extension in self.SOURCE_EXTS:
                 replacement_file = basename + extension
                 if os.path.exists(replacement_file):
-                    info = database.GetCompilationInfoForFile(replacement_file)
+                    info = self.database.GetCompilationInfoForFile(replacement_file)
                     if info.compiler_flags_:
                         return info
             return None
-        return database.GetCompilationInfoForFile(filename)
+        return self.database.GetCompilationInfoForFile(filename)
 
-    def get_flags_for_file(filename, **kwargs):
-        log('filename: %s', filename)
-        log('kwargs: %s', str(kwargs))
+    def get_flags_for_file(self, filename, **kwargs):
+        log.debug('filename: %s', filename)
+        log.debug('kwargs: %s', str(kwargs))
 
-        if database:
+        if self.database:
             info = get_compilation_info(filename)
             if not info:
                 return None
 
-            flags       = info.compiler_flags_
-            work_dir    = info.compiler_working_dir_
+            flags = info.compiler_flags_
+            work_dir = info.compiler_working_dir_
             try:
                 final_flags.remove('-stdlib=libc++')
             except ValueError:
                 pass
         else:
-            work_dir    = os.path.dirname(os.path.abspath(__file__))
-            flags       = FLAGS
+            work_dir = os.path.dirname(os.path.abspath(__file__))
+            flags = self.FLAGS
 
-        final_flags = make_relative_paths(flags, work_dir)
+        final_flags = self.make_relative_paths(flags, work_dir)
 
-        log('final_flags: %s\n', str(final_flags))
+        log.debug('final_flags: %s\n', str(final_flags))
 
         return {
             'flags':    final_flags,
             'do_cache': True,
         }
 
-    return get_flags_for_file
 
-
-FlagsForFile = get_handler()
+FlagsForFile = YcmExtraConf().get_flags_for_file
