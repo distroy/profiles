@@ -11,12 +11,13 @@ import ycm_core
 
 
 class Log(object):
+    HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
+
     __fd = -1
     __file_flag = os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC
 
     def __init__(self):
-        HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
-        self.__path = '%s/.ycm_extra_conf.log' % HOME
+        self.__path = '%s/.ycm_extra_conf.log' % self.HOME
 
         self.open()
         size = os.lseek(self.__fd, 0, os.SEEK_END)
