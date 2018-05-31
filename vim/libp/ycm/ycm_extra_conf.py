@@ -79,10 +79,13 @@ class YcmExtraConf(object):
         '/usr/local/include/c++/4.8.2',
     ]
 
-    REPO_INC = [
+    local_path = None
+    LOCAL_INC = [
     ]
 
     repo_path = None
+    REPO_INC = [
+    ]
 
     database_dir = ''
     database = None
@@ -95,9 +98,18 @@ class YcmExtraConf(object):
             self.FLAGS.append('-isystem')
             self.FLAGS.append(i)
 
+        for i in self.LOCAL_INC:
+            self.FLAGS.append('-isystem')
+            self.FLAGS.append(os.path.join(self.get_local_dir(), i))
+
         for i in self.REPO_INC:
             self.FLAGS.append('-I')
             self.FLAGS.append(os.path.join(self.get_repo_dir(), i))
+
+    def get_local_dir(self):
+        if not self.local_path:
+            self.local_path = os.path.dirname(os.path.abspath(__file__))
+        return self.local_path
 
     def get_repo_dir(self):
         if self.repo_path:
