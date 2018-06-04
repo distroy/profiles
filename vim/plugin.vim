@@ -31,6 +31,7 @@ Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
+Plug 'ludovicchabant/vim-gutentags'
 
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
