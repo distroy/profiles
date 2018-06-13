@@ -9,6 +9,7 @@ import commands
 import json
 import os
 import sys
+import platform
 
 
 opts = None
@@ -65,26 +66,6 @@ def print_help(file = sys.stdout):
     file.write(info)
 
 
-def get_options():
-    import optparse
-    parser = optparse.OptionParser(version = "%prog (distroy) 0.1")
-    parser.print_help = print_help
-
-    parser.add_option('-s', '--symbolic', default = False, action = 'store_true')
-    parser.add_option('-v', '--verbose', default = False, action = 'store_true')
-    parser.add_option('-T', '--no-target-directory', default = False, action = 'store_true')
-    parser.add_option('-t', '--target-directory', default = None)
-
-    parser.add_option('-f', '--force', default = False, action = 'store_true')
-
-    parser.add_option('-d', '--debug', default = False, action = 'store_true')
-
-    global opts
-    global args
-    opts, args = parser.parse_args()
-    return opts, args
-
-
 def log_debug(fmt, *args):
 
     if not opts.debug:
@@ -117,153 +98,262 @@ def link_string(src, dst):
     return "'%s' => '%s'" % (dst, src)
 
 
-def get_win_path(path):
+class Link(object):
+    def text_to_str(self, text):
+        text = text.replace('\\', '\\\\')
+        text = text.replace('"', '\\"')
 
-    if path[0] == '/':
-        cmd = 'cygpath -w "%s"' % (path)
+        return '"%s"' % text
 
-        log_debug('win path cmd: %s', cmd)
+    def unix_link(self, src, dst):
+        argv = []
+
+        argv.append('ln')
+        if opts.symbolic:
+            argv.append('-s')
+        if opts.verbose:
+            argv.append('-v')
+
+        argv.append(src)
+        argv.append(dst)
+
+        pid = os.fork()
+        if pid == 0:  # child
+            os.execvp(argv[0], argv)
+        else:
+            pid, status = os.waitpid(pid, 0)
+
+        return os.WEXITSTATUS(status)
+
+    def exec_mklink(self, cmd, src, dst):
+        wsrc = self.get_win_path(src)
+        wdst = self.get_win_path(dst)
+
+        argv = []
+        argv.append(cmd)
+        argv.append('/c')
+        argv.append('mklink')
+
+        if not os.path.exists(src):
+            std_error_exit("accessing '%s': No such file or directory", src)
+
+        if os.path.exists(dst):
+            std_error_exit("failed to create %s link '%s': File exists", opts.symbolic_n, dst)
+
+        if opts.symbolic:
+            if os.path.isdir(src):
+                argv.append('/d')
+                # argv.append('/j')
+
+        else:
+            if os.path.isdir(src):
+                std_error_exit('failed to create %s link %s: Permission denied', opts.symbolic_n, link_string(src, dst))
+
+            argv.append('/h')
+
+        argv.append(self.text_to_str(wdst))
+        argv.append(self.text_to_str(wsrc))
+
+        cmd = ' '.join(argv)
+
+        log_debug('link cmd: %s', cmd)
+        if opts.debug:
+            print link_string(src, dst)
+            return 0
+
         status, output = commands.getstatusoutput(cmd)
 
-    else:
-        output = path
-        output = output.replace('/', '\\')
+        if opts.verbose:
+            print link_string(src, dst)
 
-    output = output.replace('\\', '\\\\')
-    output = output.replace('"', '\\"')
-
-    return '"%s"' % output
+        return status
 
 
-def mklink(src, dst):
-    exe = '/cygdrive/c/windows/system32/cmd'
+class Cygwin(Link):
+    def get_win_path(self, path):
+        if path[0] == '/':
+            cmd = 'cygpath -w "%s"' % (path)
 
-    argv = []
+            log_debug('win path cmd: %s', cmd)
+            status, output = commands.getstatusoutput(cmd)
 
-    argv.append(exe)
-    argv.append('/c')
-    argv.append('mklink')
+        else:
+            output = path
+            output = output.replace('/', '\\')
 
-    if not os.path.exists(src):
-        std_error_exit("accessing '%s': No such file or directory", src)
-
-    if os.path.exists(dst):
-        std_error_exit("failed to create %s link '%s': File exists", opts.symbolic_n, dst)
-
-    if opts.symbolic:
-        if os.path.isdir(src):
-            argv.append('/d')
-            #argv.append('/j')
-
-    else:
-        if os.path.isdir(src):
-            std_error_exit('failed to create %s link %s: Permission denied', opts.symbolic_n, link_string(src, dst))
-
-        argv.append('/h')
-
-    argv.append(get_win_path(dst))
-    argv.append(get_win_path(src))
-
-    cmd = ' '.join(argv)
-
-    log_debug('link cmd: %s', cmd)
-    if opts.debug:
-        print link_string(src, dst)
-        return 0
-
-    status, output = commands.getstatusoutput(cmd)
-
-    if opts.verbose:
-        print link_string(src, dst)
-
-    return status
+        return output
 
 
-# Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
-def link_form1():
+    def mklink(self, src, dst):
+        exe = '/cygdrive/c/windows/system32/cmd'
+        return self.exec_mklink(exe, src, dst)
 
-    if len(args) == 1:
-        std_error_exit("missing destination file operand after '%s'", args[0])
-    elif len(args) > 2:
-        std_error_exit("extra operand '%s'", args[1])
+class Wsl(Link):
+    def get_win_path(self, path):
+        cmd = 'wslpath -w "%s"' % (path)
+        log_debug('win path cmd: %s', cmd)
 
-    src = args[0]
-    dst = args[1]
+        status, output = commands.getstatusoutput(cmd)
+        if os.WEXITSTATUS(status) != 0:
+            return ''
 
-    return mklink(src, dst)
+        return output
 
+    def unix_link(self, src, dst):
+        argv = []
 
-#   or:  ln [OPTION]... TARGET                  (2nd form)
-def link_form2():
+        argv.append('ln')
+        if opts.symbolic:
+            argv.append('-s')
+        if opts.verbose:
+            argv.append('-v')
 
-    src = args[0]
-    dst = os.path.basename(src)
+        argv.append(src)
+        argv.append(dst)
 
-    return mklink(src, dst)
+        pid = os.fork()
+        if pid == 0:
+            os.execvp(argv[0], argv)
+        else:
+            pid, status = os.waitpid(pid, 0)
 
-
-#   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
-def link_form3():
-
-    directory = args[-1]
-    if not os.path.isdir(directory):
-        std_error_exit("target '%s' is not a directory", directory)
-
-    for src in args[ : -1]:
-        dst = '%s/%s' % (directory, os.path.basename(src))
-        mklink(src, dst)
-
-    return 0
-
-
-#   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
-def link_form4():
-
-    directory = opts.target_directory
-    if not os.path.isdir(directory):
-        std_error_exit("target '%s' is not a directory", directory)
-
-    for src in args:
-        dst = '%s/%s' % (directory, os.path.basename(src))
-        mklink(src, dst)
-
-    return 0
+        return os.WEXITSTATUS(status)
 
 
-# Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
-#   or:  ln [OPTION]... TARGET                  (2nd form)
-#   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
-#   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
-def main(opts, args):
+    def mklink(self, src, dst):
+        wsrc = self.get_win_path(src)
+        wdst = self.get_win_path(dst)
 
-    if len(args) == 0:
-        std_error_exit('missing file operand')
+        if not wsrc or not wdst:
+            return self.unix_link(src, dst);
 
-    if opts.symbolic:
-        opts.symbolic_n = 'symbolic'
-    else:
-        opts.symbolic_n = 'hard'
+        exe = '/mnt/c/windows/system32/cmd.exe'
+        return self.exec_mklink(exe, src, dst)
 
-    if opts.no_target_directory and opts.target_directory != None:
-        std_error_exit('cannot combine --target-directory and --no-target-directory')
 
-    if not opts.no_target_directory and opts.target_directory == None:
-        if len(args) == 2 and not os.path.isdir(args[1]):
-            opts.no_target_directory = True
+class Main(object):
 
-    if opts.no_target_directory:
-        return link_form1()
+    __link = None
 
-    if opts.target_directory != None:
-        return link_form4()
+    def _get_link(self):
+        plat = platform.platform().lower()
+        if plat.find('linux') >= 0 and plat.find('microsoft') >= 0:
+            return Wsl()
 
-    if len(args) == 1:
-        return link_form2()
+        return Cygwin()
 
-    return link_form3()
+    def get_options(self):
+        import optparse
+        parser = optparse.OptionParser(version = "%prog (distroy) 0.1")
+        parser.print_help = print_help
+
+        parser.add_option('-s', '--symbolic', default = False, action = 'store_true')
+        parser.add_option('-v', '--verbose', default = False, action = 'store_true')
+        parser.add_option('-T', '--no-target-directory', default = False, action = 'store_true')
+        parser.add_option('-t', '--target-directory', default = None)
+
+        parser.add_option('-f', '--force', default = False, action = 'store_true')
+
+        parser.add_option('-d', '--debug', default = False, action = 'store_true')
+
+        global opts
+        global args
+        opts, args = parser.parse_args()
+        return opts, args
+
+    def mklink(self, src, dst):
+        if not self.__link:
+            self.__link = self._get_link()
+        return self.__link.mklink(src, dst)
+
+
+    # Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
+    def link_form1(self):
+        if len(args) == 1:
+            std_error_exit("missing destination file operand after '%s'", args[0])
+        elif len(args) > 2:
+            std_error_exit("extra operand '%s'", args[1])
+
+        src = args[0]
+        dst = args[1]
+
+        return self.mklink(src, dst)
+
+
+    #   or:  ln [OPTION]... TARGET                  (2nd form)
+    def link_form2(self):
+        src = args[0]
+        dst = os.path.basename(src)
+
+        return self.mklink(src, dst)
+
+
+    #   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
+    def link_form3(self):
+        directory = args[-1]
+        if not os.path.isdir(directory):
+            std_error_exit("target '%s' is not a directory", directory)
+
+        ret = 0
+        for src in args[ : -1]:
+            dst = '%s/%s' % (directory, os.path.basename(src))
+            r = self.mklink(src, dst)
+            if ret == 0 and r != 0:
+                ret = r
+
+        return ret
+
+
+    #   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
+    def link_form4(self):
+        directory = opts.target_directory
+        if not os.path.isdir(directory):
+            std_error_exit("target '%s' is not a directory", directory)
+
+        ret = 0
+        for src in args:
+            dst = '%s/%s' % (directory, os.path.basename(src))
+            r = self.mklink(src, dst)
+            if ret == 0 and r != 0:
+                ret = r
+
+        return ret
+
+
+    # Usage: ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)
+    #   or:  ln [OPTION]... TARGET                  (2nd form)
+    #   or:  ln [OPTION]... TARGET... DIRECTORY     (3rd form)
+    #   or:  ln [OPTION]... -t DIRECTORY TARGET...  (4th form)
+    def main(self):
+        opts, args = self.get_options();
+
+        if len(args) == 0:
+            std_error_exit('missing file operand')
+
+        if opts.symbolic:
+            opts.symbolic_n = 'symbolic'
+        else:
+            opts.symbolic_n = 'hard'
+
+        if opts.no_target_directory and opts.target_directory != None:
+            std_error_exit('cannot combine --target-directory and --no-target-directory')
+
+        if not opts.no_target_directory and opts.target_directory == None:
+            if len(args) == 2 and not os.path.isdir(args[1]):
+                opts.no_target_directory = True
+
+        if opts.no_target_directory:
+            return self.link_form1()
+
+        if opts.target_directory != None:
+            return self.link_form4()
+
+        if len(args) == 1:
+            return self.link_form2()
+
+        return self.link_form3()
 
 
 if __name__ == "__main__":
-    (opts, args) = get_options()
-    exit(main(opts, args))
+    exit(Main().main())
 
