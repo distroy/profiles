@@ -263,7 +263,9 @@ function! s:ld_nf_git_ignore(line)
     let l:l = a:line
 
     let l:l = s:ld_append(l:l, '# git ignore')
-    let l:l = s:ld_infos1(l:l, '#')
+    " let l:l = s:ld_infos1(l:l, '#')
+    let l:l = s:ld_append(l:l, '.*')
+    let l:l = s:ld_append(l:l, '!.gitignore')
 
     return l:l
 endfunction
