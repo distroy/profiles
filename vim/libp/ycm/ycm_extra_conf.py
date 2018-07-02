@@ -10,14 +10,45 @@ import time
 import ycm_core
 
 
+SOURCE_EXTS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
+HEADER_EXTS = ['.h', '.hxx', '.hpp', '.hh']
+
+FLAGS = [
+    '-x', 'c++',
+    '-std=c++11',
+    '-Wc++11-compat',
+    '-Wall',
+    '-Wextra',
+    '-Werror',
+    '-Wno-long-long',
+    '-Wno-variadic-macros',
+    '-fexceptions',
+    '-DNDEBUG',
+    '-DUSE_CLANG_COMPLETER',
+]
+
+SYSTEM_INC = [
+    '/usr/include',
+    '/usr/local/include',
+    '/usr/local/include/c++/4.8.2',
+]
+
+LOCAL_INC = [
+]
+
+REPO_INC = [
+]
+
+
+HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
+
 class Log(object):
-    HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
 
     __fd = -1
     __file_flag = os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC
 
     def __init__(self):
-        self.__path = '%s/.ycm_extra_conf.log' % self.HOME
+        self.__path = '%s/.ycm_extra_conf.log' % HOME
 
         self.open()
         size = os.lseek(self.__fd, 0, os.SEEK_END)
@@ -55,39 +86,9 @@ log = Log()
 
 
 class YcmExtraConf(object):
-    SOURCE_EXTS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
-    HEADER_EXTS = ['.h', '.hxx', '.hpp', '.hh']
-
-    HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
-
-    FLAGS = [
-        '-x', 'c++',
-        '-std=c++11',
-        '-Wc++11-compat',
-        '-Wall',
-        '-Wextra',
-        '-Werror',
-        '-Wno-long-long',
-        '-Wno-variadic-macros',
-        '-fexceptions',
-        '-DNDEBUG',
-        '-DUSE_CLANG_COMPLETER',
-    ]
-
-    SYSTEM_INC = [
-        '/usr/include',
-        '/usr/local/include',
-        '/usr/local/include/c++/4.8.2',
-    ]
 
     local_path = None
-    LOCAL_INC = [
-    ]
-
     repo_path = None
-    REPO_INC = [
-    ]
-
     database_dir = ''
     database = None
 
@@ -95,15 +96,17 @@ class YcmExtraConf(object):
         if os.path.exists(self.database_dir):
             self.database = ycm_core.CompilationDatabase(self.database_dir)
 
-        for i in self.SYSTEM_INC:
+        self.FLAGS = FLAGS[:]
+
+        for i in SYSTEM_INC:
             self.FLAGS.append('-isystem')
             self.FLAGS.append(i)
 
-        for i in self.LOCAL_INC:
+        for i in LOCAL_INC:
             self.FLAGS.append('-isystem')
             self.FLAGS.append(os.path.join(self.get_local_dir(), i))
 
-        for i in self.REPO_INC:
+        for i in REPO_INC:
             self.FLAGS.append('-I')
             self.FLAGS.append(os.path.join(self.get_repo_dir(), i))
 
@@ -160,12 +163,12 @@ class YcmExtraConf(object):
 
     def is_header(filename):
         extension = os.path.splitext(filename)[1]
-        return extension in self.HEADER_EXTS
+        return extension in HEADER_EXTS
 
     def get_compilation_info(filename):
         if is_header(filename):
             basename = os.path.splitext(filename)[0]
-            for extension in self.SOURCE_EXTS:
+            for extension in SOURCE_EXTS:
                 replacement_file = basename + extension
                 if os.path.exists(replacement_file):
                     info = self.database.GetCompilationInfoForFile(replacement_file)
