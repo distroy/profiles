@@ -8,23 +8,9 @@
 " endif
 
 function! s:ld_get_ycm_conf()
-    if exists('g:ycm_global_ycm_extra_conf') && g:ycm_global_ycm_extra_conf != ''
-        return g:ycm_global_ycm_extra_conf
-    endif
-
-    let l:path = getcwd()
-    while l:path != '/'
-        let l:conf = l:path . '/.ycm_extra_conf.py'
-        if filereadable(l:conf)
-            return l:conf
-        endif
-
-        let l:path = fnamemodify(l:path, ':h')
-    endwhile
-
-    let l:conf = $HOME . '/.ycm_extra_conf.py'
-    if filereadable(l:conf)
-        return l:conf
+    let l:files = findfile('.ycm_extra_conf.py', expand('%:p:h').';')
+    if len(l:files) != 0
+        return l:files
     endif
 
     return g:ld_vim_path . '/libp/ycm/ycm_extra_conf.py'
