@@ -1,0 +1,239 @@
+# clang format
+
+# 基础样式
+# 该模板对C, C++, ObjectiveC, ObjectiveC++都有效
+Language:      Cpp
+BasedOnStyle:  Google
+
+# 类的访问修饰关键字(private, public, protected···)缩进
+# private:
+# int a;
+# 1表示不缩进
+# 大于1的值表示访问修饰关键字的左侧从int a的左侧列开始往右侧移动的距离
+# AccessModifierOffset: -1
+AccessModifierOffset: -4
+
+# 在未封闭(括号的开始和结束不在同一行)的括号中的代码是否对齐, 例如
+# if (a &&
+#     b)
+# AlignAfterOpenBracket: Align
+AlignAfterOpenBracket: false
+
+# 多行赋值语句按=号对齐
+# AlignConsecutiveAssignments: false
+AlignConsecutiveAssignments: true
+
+# 多行声明语句按=号对齐
+# AlignConsecutiveDeclarations: false
+AlignConsecutiveDeclarations: true
+# AlignEscapedNewlines: Right
+AlignEscapedNewlines: Left
+AlignEscapedNewlinesLeft: true
+# AlignOperands:   true
+
+# 行尾注释对齐
+# AlignTrailingComments: true
+
+# AllowAllParametersOfDeclarationOnNextLine: true
+# AllowShortBlocksOnASingleLine: false
+# AllowShortCaseLabelsOnASingleLine: false
+
+# 不支持一行的函数
+# AllowShortFunctionsOnASingleLine: All
+AllowShortFunctionsOnASingleLine: true
+
+# 不支持一行的条件判断语句
+# AllowShortIfStatementsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
+
+# 不支持一行的循环体
+# AllowShortLoopsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
+
+# AlwaysBreakAfterDefinitionReturnType: None
+# AlwaysBreakAfterReturnType: None
+
+# AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakBeforeMultilineStrings: true
+
+# AlwaysBreakTemplateDeclarations: true
+AlwaysBreakTemplateDeclarations: true
+# BinPackArguments: true
+# BinPackParameters: true
+# BraceWrapping:
+#   AfterClass:      false
+#   AfterControlStatement: false
+#   AfterEnum:       false
+#   AfterFunction:   false
+#   AfterNamespace:  false
+#   AfterObjCDeclaration: false
+#   AfterStruct:     false
+#   AfterUnion:      false
+#   AfterExternBlock: false
+#   BeforeCatch:     false
+#   BeforeElse:      false
+#   IndentBraces:    false
+#   SplitEmptyFunction: true
+#   SplitEmptyRecord: true
+#   SplitEmptyNamespace: true
+# BreakBeforeBinaryOperators: None
+
+# 圆括号的换行方式
+# BreakBeforeBraces: Attach
+BreakBeforeBraces: Attach
+
+# BreakBeforeInheritanceComma: false
+# BreakBeforeTernaryOperators: true
+
+# 在构造函数初始化时按逗号断行，并以冒号对齐
+# BreakConstructorInitializersBeforeComma: false
+BreakConstructorInitializersBeforeComma: true
+
+# BreakConstructorInitializers: BeforeColon
+# BreakAfterJavaFieldAnnotations: false
+# BreakStringLiterals: true
+
+# 每行字符的长度
+# ColumnLimit:     80
+ColumnLimit: 100
+
+# CommentPragmas:  '^ IWYU pragma:'
+# CompactNamespaces: false
+# ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+# ConstructorInitializerIndentWidth: 4
+
+#在续行(\ 下一行)时的缩进长度
+# ContinuationIndentWidth: 4
+
+# 格式兼容C++11
+# Cpp11BracedListStyle: true
+Cpp11BracedListStyle: true
+
+# DerivePointerAlignment: true
+DerivePointerAlignment: true
+
+# 禁用当前format文件
+# DisableFormat:   false
+
+# ExperimentalAutoDetectBinPacking: false
+# FixNamespaceComments: true
+# ForEachMacros:
+#   - foreach
+#   - Q_FOREACH
+#   - BOOST_FOREACH
+# IncludeBlocks:   Preserve
+# IncludeCategories:
+#   - Regex:           '^<ext/.*\.h>'
+#     Priority:        2
+#   - Regex:           '^<.*\.h>'
+#     Priority:        1
+#   - Regex:           '^<.*'
+#     Priority:        2
+#   - Regex:           '.*'
+#     Priority:        3
+# IncludeIsMainRegex: '([-_](test|unittest))?$'
+
+# switch的case缩进
+# IndentCaseLabels: true
+IndentCaseLabels: false
+
+# IndentPPDirectives: None
+
+# 缩进宽度
+# IndentWidth:     2
+IndentWidth:     4
+
+# IndentWrappedFunctionNames: false
+# JavaScriptQuotes: Leave
+# JavaScriptWrapImports: true
+
+# 去除block开始的空格
+# KeepEmptyLinesAtTheStartOfBlocks: false
+KeepEmptyLinesAtTheStartOfBlocks: true
+
+# MacroBlockBegin: ''
+# MacroBlockEnd:   ''
+
+# 最大连续空行数为
+# MaxEmptyLinesToKeep: 1
+MaxEmptyLinesToKeep: 2
+
+# NamespaceIndentation: None
+NamespaceIndentation: None
+
+# 针对OC的block的缩进宽度
+# ObjCBlockIndentWidth: 2
+
+# 针对OC的属性名后加空格
+# ObjCSpaceAfterProperty: false
+
+# 针对OC的协议列表前加空格
+# ObjCSpaceBeforeProtocolList: false
+
+# PenaltyBreakAssignment: 2
+# PenaltyBreakBeforeFirstCallParameter: 1
+# PenaltyBreakBeforeFirstCallParameter: 100
+# PenaltyBreakComment: 300
+# PenaltyBreakComment: 100
+# PenaltyBreakFirstLessLess: 120
+# PenaltyBreakFirstLessLess: 100
+# PenaltyBreakString: 1000
+# PenaltyBreakString: 100
+
+# 最多能超出ColumnLimit多少个字符
+# PenaltyExcessCharacter: 1000000
+PenaltyExcessCharacter: 20
+# PenaltyReturnTypeOnItsOwnLine: 200
+PenaltyReturnTypeOnItsOwnLine: 100
+
+# 指针向右对齐: 即靠近指针变量名 (Right, Middle, Left)
+# PointerAlignment: Left
+PointerAlignment: Right
+
+# RawStringFormats:
+#   - Delimiter:       pb
+#     Language:        TextProto
+#     BasedOnStyle:    google
+# ReflowComments:  true
+# SortIncludes:    true
+# SortUsingDeclarations: true
+
+# 括号后加空格
+# SpaceAfterCStyleCast: false
+
+# SpaceAfterTemplateKeyword: true
+
+# 赋值运算符前加空格
+# SpaceBeforeAssignmentOperators: true
+
+# 只在条件表示示括号前加上空格
+# SpaceBeforeParens: ControlStatements
+
+# 不在括号里加空格
+# SpaceInEmptyParentheses: false
+
+# 行尾的注释前加空格
+# SpacesBeforeTrailingComments: 2
+SpacesBeforeTrailingComments: 2
+
+# 不在括号里加空格
+# SpacesInAngles:  false
+
+# 是否在容器字面量(@[ @"1", @"2" ])中插入空格
+# SpacesInContainerLiterals: true
+
+# 不在括号里加空格
+# SpacesInCStyleCastParentheses: false
+# SpacesInParentheses: false
+# SpacesInSquareBrackets: false
+
+# 格式兼容C++11
+# Standard:        Auto
+Standard:        Cpp11
+
+# 将4个空格代替tab, 不使用tab
+# TabWidth:        8
+TabWidth:        4
+
+# UseTab:          Never
