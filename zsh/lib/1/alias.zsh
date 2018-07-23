@@ -17,16 +17,16 @@ alias tailf='tail -F'
 
 case $OSTYPE in
 darwin*)
-    alias p="$LD_ZSH/lib/tool/psforest"
-    alias pu='p -u $USER -U $USER'
+    alias p="$LD_ZSH/tool/psforest"
+    alias pu='p -u $UID -U $UID'
     ;;
 cygwin)
-    alias p="$LD_ZSH/lib/tool/psforest"
+    alias p="$LD_ZSH/tool/psforest"
     alias pu='p'
     ;;
 *)
     alias p='ps f -fj'
-    alias pu='p -u $USER -U $USER'
+    alias pu='p -u $UID -U $UID'
     ;;
 esac
 

@@ -18,15 +18,19 @@ unset ZSH
 unset DISABLE_AUTO_UPDATE
 
 
-function import () {
-    local i
-    for i in "$@"; do
-        source "$i"
+function __ld_import() {
+    local i j
+    for (( i = 0; i <= 100; ++i )); do
+        if [ ! -d $LD_ZSH/lib/$i ]; then
+            continue
+        fi
+        for j in $LD_ZSH/lib/$i/*.zsh; do
+            source "$j"
+        done
     done
 }
 
-import $LD_ZSH/lib/*.zsh
+__ld_import
 
-unset LD_ZSH
-unset -f import
+unset -f __ld_import
 popd &>/dev/null

@@ -8,3 +8,5 @@ function __ld_is_in_docker() {
 }
 
 __ld_is_in_docker && LD_DOCKER=1
+
+unset __ld_is_in_docker
