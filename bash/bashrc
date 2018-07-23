@@ -7,10 +7,15 @@
 pushd $(dirname $BASH_SOURCE) &>/dev/null
 
 
-for config_file in $(echo lib/*.bash); do
-    source $config_file
+for (( i = 0; i <= 100; ++i )); do
+    if [ ! -d lib/$i ]; then
+        continue
+    fi
+    for j in $(echo lib/$i/*.bash); do
+        source $j
+    done
 done
-unset config_file
+unset i j
 
 
 popd &>/dev/null
