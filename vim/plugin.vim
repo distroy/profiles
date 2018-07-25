@@ -28,6 +28,7 @@ Plug 'distroy/vim-matchit'
 Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
 " Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
+Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'

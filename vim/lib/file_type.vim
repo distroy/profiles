@@ -27,4 +27,4 @@ autocmd FileType python     setlocal foldmethod=indent
 
 
 " set file type
-autocmd BufEnter *.vue set filetype=html
+" autocmd BufEnter *.vue set filetype=html
