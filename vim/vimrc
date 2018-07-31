@@ -20,15 +20,28 @@ if !exists('g:ld_tagshow')
 endif
 
 
-function! s:ld_source_directory(path)
+function! s:ld_import_directory(path)
     for l:file in split(globpath(a:path, '*.vim'), '\n')
         execute 'source' l:file
     endfor
+endfunction
+
+function! s:ld_import_lib()
+    let l:base = g:ld_vim_path . '/lib/'
+    let l:i = 0
+    while l:i <= 100
+        let l:path = l:base . l:i
+        let l:i += 1
+        if isdirectory(l:path)
+            call s:ld_import_directory(l:path)
+        endif
+    endwhile
+    call s:ld_import_directory(l:base . 'plugin')
 endfunction
 
 
 let g:ld_vim_path = fnamemodify(expand('<sfile>:p'), ':p:h')
 
 execute 'source' g:ld_vim_path . '/plugin.vim'
-call s:ld_source_directory(g:ld_vim_path . '/lib')
-call s:ld_source_directory(g:ld_vim_path . '/libp')
+
+call s:ld_import_lib()

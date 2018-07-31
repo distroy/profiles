@@ -13,7 +13,7 @@ function! s:ld_get_ycm_conf()
         return l:files
     endif
 
-    return g:ld_vim_path . '/libp/ycm/ycm_extra_conf.py'
+    return g:ld_vim_path . '/lib/plugin/ycm/ycm_extra_conf.py'
 endfunction
 
 
