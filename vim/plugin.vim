@@ -32,7 +32,9 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
-Plug 'ludovicchabant/vim-gutentags'
+if version > 800
+    Plug 'ludovicchabant/vim-gutentags'
+endif
 
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
