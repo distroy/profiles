@@ -39,7 +39,9 @@ endif
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
 endif
-Plug 'Valloric/YouCompleteMe'
+if version >= 740
+    Plug 'Valloric/YouCompleteMe'
+endif
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plug 'a.vim', {'on': 'A'}
