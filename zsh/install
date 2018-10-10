@@ -13,6 +13,7 @@ WRITE_FILE=$HOME/.zshrc
 cat >>$WRITE_FILE <<EOF
 # ld zshrc
 source ${SOURCE_DIR/#$HOME/\$HOME}/zshrc
+source ${SOURCE_DIR/#$HOME/\$HOME}/zshrc.key
 EOF
 
 git submodule update --init --recursive oh-my-zsh
