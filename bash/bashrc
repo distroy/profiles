@@ -4,16 +4,21 @@
 #
 
 
-pushd $(dirname $BASH_SOURCE) &>/dev/null
+LD_BASH=$(dirname $BASH_SOURCE)
+pushd $LD_BASH &>/dev/null
 
 
 for (( i = 0; i <= 100; ++i )); do
-    if [ ! -d lib/$i ]; then
+    if [ ! -d $LD_BASH/lib/$i ]; then
         continue
     fi
-    for j in $(echo lib/$i/*.bash); do
+    for j in $(echo $LD_BASH/lib/$i/*.bash); do
         source $j
     done
+done
+
+for i in $(echo $LD_BASH/completion/*.bash); do
+    source $i
 done
 unset i j
 
