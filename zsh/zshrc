@@ -7,10 +7,9 @@
 pushd $(dirname $0) &>/dev/null
 LD_ZSH=$(pwd)
 
-
 export FPATH=$LD_ZSH/completion:$FPATH
-autoload -U compinit && compinit -i
-
+# autoload -U compinit
+# compinit -i
 
 # oh my zsh
 ZSH=$LD_ZSH/oh-my-zsh
@@ -35,6 +34,7 @@ function _ld_main() {
 }
 
 _ld_main
+
 
 unset -f _ld_main
 popd &>/dev/null

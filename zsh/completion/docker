@@ -1,4 +1,5 @@
 #compdef docker dockerd
+# wget https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/zsh/_docker -O docker
 #
 # zsh completion for docker (http://docker.com)
 #
