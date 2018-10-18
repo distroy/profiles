@@ -8,6 +8,10 @@ pushd $(dirname $0) &>/dev/null
 LD_ZSH=$(pwd)
 
 
+export FPATH=$LD_ZSH/completion:$FPATH
+autoload -U compinit && compinit -i
+
+
 # oh my zsh
 ZSH=$LD_ZSH/oh-my-zsh
 DISABLE_AUTO_UPDATE=true
@@ -18,7 +22,7 @@ unset ZSH
 unset DISABLE_AUTO_UPDATE
 
 
-function __ld_import() {
+function _ld_main() {
     local i j
     for (( i = 0; i <= 100; ++i )); do
         if [ ! -d $LD_ZSH/lib/$i ]; then
@@ -30,7 +34,7 @@ function __ld_import() {
     done
 }
 
-__ld_import
+_ld_main
 
-unset -f __ld_import
+unset -f _ld_main
 popd &>/dev/null
