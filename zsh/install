@@ -16,6 +16,4 @@ source ${SOURCE_DIR/#$HOME/\$HOME}/zshrc
 source ${SOURCE_DIR/#$HOME/\$HOME}/zshrc.key
 EOF
 
-git submodule update --init --recursive oh-my-zsh
-cd oh-my-zsh
-git checkout master
+git clone https://github.com/robbyrussell/oh-my-zsh.git oh-my-zsh
