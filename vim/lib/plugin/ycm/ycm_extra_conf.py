@@ -11,7 +11,7 @@ import ycm_core
 
 
 SOURCE_EXTS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
-HEADER_EXTS = ['.h', '.hxx', '.hpp', '.hh']
+HEADER_EXTS = ['.h', '.hxx', '.hpp', '.hh', '.inc']
 
 FLAGS = [
     '-x', 'c++',
@@ -37,13 +37,13 @@ LOCAL_INC = [
 ]
 
 REPO_INC = [
+    '.',
 ]
 
 
 HOME = os.environ.get('HOME', os.path.dirname(os.path.abspath(__file__)))
 
 class Log(object):
-
     __fd = -1
     __file_flag = os.O_CREAT | os.O_RDWR | os.O_APPEND | os.O_SYNC
 
@@ -86,50 +86,39 @@ log = Log()
 
 
 class YcmExtraConf(object):
-
-    local_path = None
-    repo_path = None
     database_dir = ''
     database = None
+    flags = []
 
     def __init__(self):
         if os.path.exists(self.database_dir):
             self.database = ycm_core.CompilationDatabase(self.database_dir)
 
-        self.FLAGS = FLAGS[:]
+        self.flags = FLAGS[:]
 
-        for i in SYSTEM_INC:
-            self.FLAGS.append('-isystem')
-            self.FLAGS.append(i)
+        self.add_include('/', SYSTEM_INC)
+        self.add_include(self.get_local_dir(), LOCAL_INC)
+        self.add_include(self.get_repo_dir(), REPO_INC, '-I')
 
-        for i in LOCAL_INC:
-            self.FLAGS.append('-isystem')
-            self.FLAGS.append(os.path.join(self.get_local_dir(), i))
+    def add_include(self, path, inc, flag='-isystem'):
+        if not isinstance(path, str) or not path:
+            return
 
-        for i in REPO_INC:
-            self.FLAGS.append('-I')
-            self.FLAGS.append(os.path.join(self.get_repo_dir(), i))
+        for i in inc:
+            self.flags.append(flag)
+            self.flags.append(os.path.abspath(os.path.join(path, i)))
 
     def get_local_dir(self):
-        if not self.local_path:
-            self.local_path = os.path.dirname(os.path.abspath(__file__))
-        return self.local_path
+        return os.path.dirname(os.path.abspath(__file__))
 
     def get_repo_dir(self):
-        if self.repo_path:
-            return self.repo_path
-
         path = os.path.abspath(os.getcwd())
         while path and path != '/':
-            if os.path.isdir(os.path.join(path, '.git')):
-                self.repo_path = path
-                break
-            if os.path.isdir(os.path.join(path, '.svn')):
-                self.repo_path = path
-                break
-        if not self.repo_path:
-            self.repo_path = os.getcwd()
-        return self.repo_path
+            if os.path.exists(os.path.join(path, '.git')):
+                return path
+            if os.path.exists(os.path.join(path, '.svn')):
+                return path
+        return None
 
     def make_relative_paths(self, flags, work_dir):
         log.debug('make_relative_paths(%s, %s)', str(flags), str(work_dir))
@@ -194,7 +183,7 @@ class YcmExtraConf(object):
                 pass
         else:
             work_dir = os.path.dirname(os.path.abspath(__file__))
-            flags = self.FLAGS
+            flags = self.flags
 
         final_flags = self.make_relative_paths(flags, work_dir)
 
