@@ -4,7 +4,7 @@
 #
 
 
-LD_BASH=$(dirname $BASH_SOURCE)
+LD_BASH=$(dirname (readlink -f $BASH_SOURCE))
 pushd $LD_BASH &>/dev/null
 
 
