@@ -15,11 +15,6 @@ if !exists('g:ld_email')
     let g:ld_email = 'distroy@163.com'
 endif
 
-if !exists('g:ld_tagshow')
-    let g:ld_tagshow = 'tagbar'
-endif
-
-
 function! s:ld_import_directory(path)
     for l:file in split(globpath(a:path, '*.vim'), '\n')
         execute 'source' l:file

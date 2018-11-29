@@ -2,6 +2,17 @@
 " Copyright (C) distroy
 "
 
+
+" check the plugins which use
+if !exists('g:ld_tagshow')
+    if version >= 800 && (has('python') || has('python3'))
+        let g:ld_tagshow = 'leaderf'
+    else
+        let g:ld_tagshow = 'tagbar'
+    endif
+endif
+
+
 " set nocompatible              " be iMproved, required
 " filetype off                  " required
 
@@ -19,10 +30,7 @@ Plug 'tpope/vim-repeat'
 Plug 'itchyny/lightline.vim'
 " Plug 'Yggdroot/indentLine'
 Plug 'tomtom/tcomment_vim'
-" Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
-Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-Plug 'kien/ctrlp.vim'
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
 Plug 'distroy/vim-matchit'
 Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
@@ -32,6 +40,19 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
+
+if g:ld_tagshow == 'leaderf'
+    if has('win32')
+        Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+    else
+        Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+    endif
+else
+    Plug 'kien/ctrlp.vim'
+    Plug 'majutsushi/tagbar'
+    " Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
+endif
+
 if version > 800
     Plug 'ludovicchabant/vim-gutentags'
 endif
