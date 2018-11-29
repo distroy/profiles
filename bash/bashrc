@@ -4,8 +4,8 @@
 #
 
 
-LD_BASH=$(dirname (readlink -f $BASH_SOURCE))
-pushd $LD_BASH &>/dev/null
+pushd $(dirname $BASH_SOURCE) &>/dev/null
+LD_BASH=$(pwd)
 
 
 for (( i = 0; i <= 100; ++i )); do
