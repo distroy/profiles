@@ -5,8 +5,10 @@
 
 
 ./install.py \
-    --system-libclang \
     --enable-coverage \
     --js-completer \
     --tern-completer \
-    --clang-completer
+    --clang-completer \
+    --java-completer \
+    "$@"
+    # --system-libclang \
