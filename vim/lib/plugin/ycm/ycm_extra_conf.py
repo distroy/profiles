@@ -86,38 +86,45 @@ log = Log()
 
 
 class YcmExtraConf(object):
-    database_dir = ''
-    database = None
-    flags = []
+    _database_dir = ''
+    _database = None
+    _flags = []
 
     def __init__(self):
-        if os.path.exists(self.database_dir):
-            self.database = ycm_core.CompilationDatabase(self.database_dir)
+        if os.path.exists(self._database_dir):
+            self._database = ycm_core.CompilationDatabase(self._database_dir)
+        self.init_include()
 
-        self.flags = FLAGS[:]
+    def init_include(self, filepath=None):
+        self._flags = FLAGS[:]
 
         self.add_include('/', SYSTEM_INC)
         self.add_include(self.get_local_dir(), LOCAL_INC)
-        self.add_include(self.get_repo_dir(), REPO_INC, '-I')
+        self.add_include(self.get_repo_dir(filepath), REPO_INC, '-I')
 
     def add_include(self, path, inc, flag='-isystem'):
         if not isinstance(path, str) or not path:
             return
 
         for i in inc:
-            self.flags.append(flag)
-            self.flags.append(os.path.abspath(os.path.join(path, i)))
+            self._flags.append(flag)
+            self._flags.append(os.path.abspath(os.path.join(path, i)))
 
     def get_local_dir(self):
         return os.path.dirname(os.path.abspath(__file__))
 
-    def get_repo_dir(self):
-        path = os.path.abspath(os.getcwd())
+    def get_repo_dir(self, filepath=None):
+        if filepath:
+            path = os.path.dirname(os.path.abspath(filepath))
+        else:
+            path = os.path.abspath(os.getcwd())
+
         while path and path != '/':
             if os.path.exists(os.path.join(path, '.git')):
                 return path
             if os.path.exists(os.path.join(path, '.svn')):
                 return path
+            path = os.path.dirname(path)
         return None
 
     def make_relative_paths(self, flags, work_dir):
@@ -160,17 +167,17 @@ class YcmExtraConf(object):
             for extension in SOURCE_EXTS:
                 replacement_file = basename + extension
                 if os.path.exists(replacement_file):
-                    info = self.database.GetCompilationInfoForFile(replacement_file)
+                    info = self._database.GetCompilationInfoForFile(replacement_file)
                     if info.compiler_flags_:
                         return info
             return None
-        return self.database.GetCompilationInfoForFile(filename)
+        return self._database.GetCompilationInfoForFile(filename)
 
     def get_flags_for_file(self, filename, **kwargs):
         log.debug('filename: %s', filename)
         log.debug('kwargs: %s', str(kwargs))
 
-        if self.database:
+        if self._database:
             info = get_compilation_info(filename)
             if not info:
                 return None
@@ -183,7 +190,7 @@ class YcmExtraConf(object):
                 pass
         else:
             work_dir = os.path.dirname(os.path.abspath(__file__))
-            flags = self.flags
+            flags = self._flags
 
         final_flags = self.make_relative_paths(flags, work_dir)
 
