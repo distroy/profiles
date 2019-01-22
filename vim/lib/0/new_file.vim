@@ -15,6 +15,7 @@ endif
 
 autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
 autocmd BufNewFile *.[ch]       call s:ld_nf_c(0)
+autocmd BufNewFile *.go         call s:ld_nf_c(0)
 
 autocmd BufNewFile *.java       call s:ld_nf_c(0)
 
