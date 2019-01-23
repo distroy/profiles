@@ -33,6 +33,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
 Plug 'distroy/vim-matchit'
+Plug 'vim-syntastic/syntastic'
 Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
 " Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
