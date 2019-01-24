@@ -15,7 +15,7 @@ endif
 
 autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
 autocmd BufNewFile *.[ch]       call s:ld_nf_c(0)
-autocmd BufNewFile *.go         call s:ld_nf_c(0)
+autocmd BufNewFile *.go         call s:ld_nf_go(0)
 
 autocmd BufNewFile *.java       call s:ld_nf_c(0)
 
@@ -267,6 +267,21 @@ function! s:ld_nf_git_ignore(line)
     " let l:l = s:ld_infos1(l:l, '#')
     let l:l = s:ld_append(l:l, '.*')
     let l:l = s:ld_append(l:l, '!.gitignore')
+
+    return l:l
+endfunction
+
+
+function! s:ld_nf_go(line)
+    let l:l = a:line
+
+    let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, 'package main')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, 'import (')
+    let l:l = s:ld_append(l:l, '    "fmt"')
+    let l:l = s:ld_append(l:l, ')')
 
     return l:l
 endfunction
