@@ -12,5 +12,8 @@ WRITE_FILE=$HOME/.bashrc
 # bashrc
 cat >>$WRITE_FILE <<EOF
 # ld bashrc
+# LD_CD_ROOT_DIR=
+# LD_CD_MIN_DEPTH=1
+# LD_CD_MAX_DEPTH=1
 source ${SOURCE_DIR/#$HOME/\$HOME}/bashrc
 EOF
