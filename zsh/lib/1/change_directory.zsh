@@ -4,8 +4,8 @@
 
 
 # LD_CD_ROOT_DIR=
-# LD_CD_MAX_DEPTH=1
 # LD_CD_MIN_DEPTH=1
+# LD_CD_MAX_DEPTH=1
 
 function ld_cd_like_echo_directories() {
     [ $# -eq 0 ] && return 1
@@ -33,7 +33,7 @@ function ld_cd_like_get_directory_by_index() {
 ## Desc : change to the source directory like xxx
 ## Usage: ld_cd_like key
 function ld_cd_like() {
-    local root_dir="$LD_CD_ROOT_DIR"
+    local root_dir=("${LD_CD_ROOT_DIR[@]}")
     if [[ "$root_dir" == "" ]]; then
         ld_msgr "invalid environment variable: LD_CD_ROOT_DIR"
         return 1
@@ -46,7 +46,7 @@ function ld_cd_like() {
     min_depth=$(( min_depth > 0 ? min_depth : 1 ))
 
     local key="$1"
-    local dirs="$(find "$root_dir" -maxdepth $max_depth -mindepth $min_depth -type d -not -name '.*' | sort -f)"
+    local dirs="$(find -L "${root_dir[@]}" -maxdepth $max_depth -mindepth $min_depth -type d -not -name '.*' | sort -f)"
 
     local errmsg=
     local dir=
