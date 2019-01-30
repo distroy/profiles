@@ -104,5 +104,10 @@ function ld_cd_like() {
     done
 }
 
+function _ld_cd_first() {
+    local root_dir=("${LD_CD_ROOT_DIR[@]}")
+    echo ${root_dir[1]}
+}
+
 alias c=ld_cd_like
-alias cdr='cd $LD_CD_ROOT_DIR'
+alias cdr='cd $(_ld_cd_first)'
