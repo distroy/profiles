@@ -47,6 +47,9 @@ class Psforest(object):
     def _is_right_field(self, k, v):
         return v.isdigit() or k in self._RIGHT_FIELDS
 
+    def _is_line_show(self, info):
+        return True
+
     def _parse_head(self, line):
         return line.split()
 
@@ -153,7 +156,7 @@ class Psforest(object):
 
 
     def __parse_head(self, line):
-        self.__head     = self._parse_head(line)
+        self.__head     = getattr(self, '_parse_head')(line)
         self.__lines    = []
         self.__tree     = {}
 
@@ -164,7 +167,7 @@ class Psforest(object):
             self.__types.append(True)
 
     def __parse_line(self, line):
-        text = self._parse_line(line, self.__head)
+        text = getattr(self, '_parse_line')(line, self.__head)
         info = {}
         for i in range(0, len(self.__head)):
             k   = self.__head[i]
@@ -175,8 +178,11 @@ class Psforest(object):
             if w > self.__widths[i]:
                 self.__widths[i]    = w
 
-            if not self._is_right_field(k, v):
+            if not getattr(self, '_is_right_field')(k, v):
                 self.__types[i]     = False
+
+        if not getattr(self, '_is_line_show')(info):
+            return
 
         proc    = {'info': info, 'childs': [], 'root': 1, 'text': text}
         pid     = info['PID']
@@ -188,12 +194,13 @@ class Psforest(object):
     def run(self):
         self.__init_tty()
 
-        cmd = ' '.join(self._get_exec_args(sys.argv[1 : ]))
+        cmd = ' '.join(getattr(self, '_get_exec_args')(sys.argv[1 : ]))
         (ret, output) = commands.getstatusoutput(cmd)
         if ret != 0:
             self.__stderr('command: %s\r\n%s', cmd, output)
             return ret
 
+        # self.__stdout('command: %s', cmd)
         # self.__stdout('command: %s\r\n%s\r\n', cmd, output)
 
         lines = output.split('\n')
@@ -228,6 +235,37 @@ class PsforestDarwin(Psforest):
         '-ocputime',
         '-ocommand',
     ]
+
+    __EXEC_FILTER = (
+        '/Applications/',
+        '/Library/Application Support/',
+        '/Library/Frameworks/',
+        '/System/Library/',
+    )
+
+    _opt_all_proc = False
+
+    def _is_line_show(self, info):
+        if self._opt_all_proc:
+            return True
+        cmd = info['COMMAND']
+        if cmd.startswith(self.__EXEC_FILTER):
+            return False
+        return True
+
+    def _get_exec_args(self, argv):
+        for i in argv:
+            if i[0] != '-':
+                continue
+            if [1] == '-':
+                continue
+
+            if i.find('e') >= 0:
+                self._opt_all_proc = True
+
+        args = self._DEFAULT_ARGS[ : ]
+        args.extend(argv)
+        return args
 
 
 class PsforestCygwin(Psforest):
