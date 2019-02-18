@@ -22,7 +22,8 @@ __go_tool_complete() {
         'get[download and install packages and dependencies]'
         'help[display help]'
         'install[compile and install packages and dependencies]'
-        'list[list packages]'
+        'list[list packages or modules]'
+        'mod[module maintenance]'
         'run[compile and run Go program]'
         'test[test packages]'
         'tool[run specified go tool]'
@@ -128,6 +129,22 @@ __go_tool_complete() {
             'remote[remote import path syntax]' \
             'testflag[description of testing flags]' \
             'testfunc[description of testing functions]'
+        ;;
+    mod)
+        if (( CURRENT == 3 )); then
+            _values 'go mod' \
+                'download[download modules to local cache]' \
+                'edit[edit go.mod from tools or scripts]' \
+                'graph[print module requirement graph]' \
+                'init[initialize new module in current directory]' \
+                'tidy[add missing and remove unused modules]' \
+                'vendor[make vendored copy of dependencies]' \
+                'verify[verify dependencies have expected content]' \
+                'why[explain why packages or modules are needed]' \
+            return
+        fi
+        case ${words[3]} in
+        esac
         ;;
     run)
         _arguments -s -w : \
