@@ -41,7 +41,7 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] }
 
 if g:ld_tagshow == 'leaderf'
     if has('win32')
