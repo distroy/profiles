@@ -14,5 +14,6 @@ WRITE_FILE=$HOME/.tmux.conf
 
 cat >>$WRITE_FILE <<EOF
 # ld tmux conf
+set-environment -g LD_TMUX ${SOURCE_DIR/#$HOME/~}
 source-file ${SOURCE_DIR/#$HOME/~}/tmux.conf
 EOF
