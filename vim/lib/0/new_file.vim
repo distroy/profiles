@@ -181,6 +181,12 @@ function! s:ld_nf_shell(line, shell)
     let l:l = s:ld_infos1(l:l, '#')
     let l:l = s:ld_append(l:l, '')
 
+    if a:shell == 'bash'
+        let l:l = s:ld_append(l:l, '')
+        let l:l = s:ld_append(l:l, 'SOURCE_DIR="$(dirname "$(readlink -f ${BASH_SOURCE[0]})")"')
+        let l:l = s:ld_append(l:l, '')
+    endif
+
     return l:l
 endfunction
 
