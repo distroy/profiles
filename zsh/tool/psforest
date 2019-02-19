@@ -76,10 +76,16 @@ class Psforest(object):
             self.__ttyh = None
 
     def __stdout(self, fmt, *args):
-        sys.stdout.write(fmt % tuple(args))
+        try:
+            sys.stdout.write(fmt % tuple(args))
+        except IOError:
+            pass
 
     def __stderr(self, fmt, *args):
-        sys.stderr.write(fmt % tuple(args))
+        try:
+            sys.stderr.write(fmt % tuple(args))
+        except IOError:
+            pass
 
     def __get_bcmd(self, line):
         return self.bcmd_fmt % tuple(line[: len(self.__widths) - 1])
@@ -244,6 +250,7 @@ class PsforestDarwin(Psforest):
         '/Library/Application Support/',
         '/Library/Frameworks/',
         '/System/Library/',
+        '/usr/libexec/',
     )
 
     _opt_all_proc = False
