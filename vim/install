@@ -18,4 +18,7 @@ cat >>$WRITE_FILE <<EOF
 source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
 EOF
 
+cp -v ./lib/plugin/auto_format/clang-format $HOME/.clang-format
+cp -v ./lib/plugin/ycm/ycm_extra_conf.py $HOME/.ycm_extra_conf.py
+
 vim +PlugInstall
