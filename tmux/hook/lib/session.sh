@@ -11,4 +11,5 @@ function _ld_tmux_renumber_sessions() {
         (( i == j )) || command tmux rename -t $i $j
         (( j++ ))
     done
+    return 0
 }
