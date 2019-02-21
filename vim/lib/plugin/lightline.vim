@@ -33,10 +33,15 @@ endfunction
 
 call s:set_lightline('colorscheme', 'wombat')
 
-call s:set_lightline('separator', 'left', "\ue0b0")
-call s:set_lightline('separator', 'right', "\ue0b2")
-call s:set_lightline('subseparator', 'left', "\ue0b1")
-call s:set_lightline('subseparator', 'right', "\ue0b3")
+if has('mac')
+    call s:set_lightline('separator', 'left', "\u25ba")
+    call s:set_lightline('separator', 'right', "\u25c4")
+else
+    call s:set_lightline('separator', 'left', "\ue0b0")
+    call s:set_lightline('separator', 'right', "\ue0b2")
+    call s:set_lightline('subseparator', 'left', "\ue0b1")
+    call s:set_lightline('subseparator', 'right', "\ue0b3")
+endif
 
 " call s:set_lightline('component', 'filename', '%f')
 let s:sl_right = [ ['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'] ]
