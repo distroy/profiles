@@ -10,8 +10,8 @@ import time
 import ycm_core
 
 
-SOURCE_EXTS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
-HEADER_EXTS = ['.h', '.hxx', '.hpp', '.hh', '.inc']
+SOURCE_EXTS = {'.cpp', '.cxx', '.cc', '.c', '.m', '.mm'}
+HEADER_EXTS = {'.h', '.hxx', '.hpp', '.hh', '.inc'}
 
 FLAGS = [
     '-x', 'c++',
