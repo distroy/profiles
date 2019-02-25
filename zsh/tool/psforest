@@ -91,9 +91,6 @@ class Psforest(object):
     def _is_right_field(self, k, v):
         return v.isdigit() or k in self._RIGHT_FIELDS
 
-    def _is_line_show(self, info):
-        return True
-
     def _parse_head(self, line):
         return line.split()
 
@@ -128,7 +125,6 @@ class Psforest(object):
         buff = []
         for i in range(len(self.__widths) - 1):
             w = self.__widths[i] - width[i]
-            # print w
             if self.__types[i]:
                 buff.append(' ' * w + line[i])
             else:
@@ -217,10 +213,12 @@ class Psforest(object):
 
     def __parse_line(self, line):
         text = getattr(self, '_parse_line')(line, self.__head['text'])
+        if not text:
+            return
+
         info = {}
         widths = []
-        for i in range(0, len(self.__head['text'])):
-            k = self.__head['text'][i]
+        for i, k in enumerate(self.__head['text']):
             v = text[i]
             l, w = get_str_width(v)
             widths.append(w)
@@ -231,9 +229,6 @@ class Psforest(object):
 
             if not getattr(self, '_is_right_field')(k, v):
                 self.__types[i] = False
-
-        if not getattr(self, '_is_line_show')(info):
-            return
 
         proc = {'info': info, 'childs': [], 'root': 1, 'text': text, 'width': widths}
         pid = info['PID']
@@ -302,10 +297,9 @@ class PsforestDarwin(Psforest):
         super(Psforest, self).__init__()
         self._RE_TIME = re.compile('\d+:\d+.\d+')
 
-    def _is_line_show(self, info):
+    def _is_line_show(self, cmd):
         if self._opt_all_proc:
             return True
-        cmd = info['COMMAND']
         if cmd.startswith(self.__EXEC_FILTER):
             return False
         return True
@@ -333,6 +327,8 @@ class PsforestDarwin(Psforest):
             c = ' '.join(l[s:])
             l[s - 3] += ' ' + l[s - 2]
             l[s - 2] = l[s - 1]
+        if not self._is_line_show(c):
+            return
         l = l[: s - 1]
         l.append(c)
         return l
