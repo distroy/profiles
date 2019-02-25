@@ -286,11 +286,11 @@ class PsforestDarwin(Psforest):
         l = line.split()
         if self._RE_TIME.match(l[s - 2]):
             c = ' '.join(l[s - 1:])
-            l = l[: s - 1]
         else:
             c = ' '.join(l[s:])
             l[s - 3] += ' ' + l[s - 2]
             l[s - 2] = l[s - 1]
+        l = l[: s - 1]
         l.append(c)
         return l
 
