@@ -36,6 +36,43 @@ def get_tty_size(w=25, h=80):
     return int(cr[1]), int(cr[0])
 
 
+def get_str_width(s):
+    u = s.decode('utf-8')
+    w = 0
+    for uchar in u:
+        if uchar >= u'\u4e00' and uchar <= u'\u9fa5':
+            # if unicode is a chinese
+            w += 2
+        elif uchar >= u'\u0030' and uchar <= u'\u0039':
+            # if unicode is a number
+            w += 1
+        elif (uchar >= u'\u0041' and uchar <= u'\u005a') or (uchar >= u'\u0061' and uchar <= u'\u007a'):
+            # if unicode is a english letter
+            w += 1
+        else:
+            w += 1
+    return len(s), w
+
+
+def get_width_str(s, width):
+    # return s[: width]
+    u = s.decode('utf-8')
+    w = 0
+    l = 0
+    for uchar in u:
+        if uchar >= u'\u4e00' and uchar <= u'\u9fa5':
+            w += 2
+        else:
+            w += 1
+
+        if w <= width:
+            l += 1
+        if w >= width:
+            break
+    u = u[:l]
+    return u.encode('utf-8')
+
+
 class Psforest(object):
     _RIGHT_FIELDS = ()
 
@@ -87,18 +124,17 @@ class Psforest(object):
         except IOError:
             pass
 
-    def __get_bcmd(self, line):
-        return self.bcmd_fmt % tuple(line[: len(self.__widths) - 1])
-
-    def __get_bfmt(self):
+    def __get_bcmd(self, line, width):
         buff = []
-        for i in range(0, len(self.__widths) - 1):
+        for i in range(len(self.__widths) - 1):
+            w = self.__widths[i] - width[i]
+            # print w
             if self.__types[i]:
-                buff.append('%%%ds' % self.__widths[i])
+                buff.append(' ' * w + line[i])
             else:
-                buff.append('%%-%ds' % self.__widths[i])
+                buff.append(line[i] + ' ' * w)
         buff.append('')
-        self.bcmd_fmt = ' '.join(buff)
+        return ' '.join(buff)
 
     def __get_cmd(self, cmd):
         return cmd
@@ -126,12 +162,10 @@ class Psforest(object):
     def __print_line(self, text):
         s = text
         if self.__ttyw:
-            s = s[: self.__ttyw]
+            s = get_width_str(s, self.__ttyw)
         self.__stdout('%s\r\n', s)
 
     def __print_tree(self):
-        self.__get_bfmt()
-
         self.__print_head()
         for proc in self.__lines:
             if not proc['root']:
@@ -140,21 +174,21 @@ class Psforest(object):
             self.__print_subtree(proc)
 
     def __print_head(self):
-        head = self.__head
+        text = self.__head['text']
         buff = []
-        buff.append(self.__get_bcmd(head))
-        buff.append(self.__get_cmd(head[-1]))
+        buff.append(self.__get_bcmd(text, self.__head['width']))
+        buff.append(self.__get_cmd(text[-1]))
         self.__print_line(''.join(buff))
 
     def __print_subtree(self, root, depth=[]):
         text = root['text']
         childs = root['childs']
 
-        buff = ''
-        buff += self.__get_bcmd(text)
-        buff += self.__get_depth(depth)
-        buff += self.__get_cmd(text[-1])
-        self.__print_line(buff)
+        buff = []
+        buff.append(self.__get_bcmd(text, root['width']))
+        buff.append(self.__get_depth(depth))
+        buff.append(self.__get_cmd(text[-1]))
+        self.__print_line(''.join(buff))
 
         depth.append(1)
         for i in range(0, len(childs)):
@@ -165,23 +199,31 @@ class Psforest(object):
         depth.pop()
 
     def __parse_head(self, line):
-        self.__head = getattr(self, '_parse_head')(line)
+        text = getattr(self, '_parse_head')(line)
+
         self.__lines = []
         self.__tree = {}
 
         self.__widths = []
         self.__types = []
-        for i in self.__head:
-            self.__widths.append(len(i))
+        widths = []
+        for i in text:
+            l, w = get_str_width(i)
+            widths.append(w)
+            self.__widths.append(w)
             self.__types.append(True)
 
+        self.__head = {'text': text, 'width': widths}
+
     def __parse_line(self, line):
-        text = getattr(self, '_parse_line')(line, self.__head)
+        text = getattr(self, '_parse_line')(line, self.__head['text'])
         info = {}
-        for i in range(0, len(self.__head)):
-            k = self.__head[i]
+        widths = []
+        for i in range(0, len(self.__head['text'])):
+            k = self.__head['text'][i]
             v = text[i]
-            w = len(v)
+            l, w = get_str_width(v)
+            widths.append(w)
 
             info[k] = v
             if w > self.__widths[i]:
@@ -193,7 +235,7 @@ class Psforest(object):
         if not getattr(self, '_is_line_show')(info):
             return
 
-        proc = {'info': info, 'childs': [], 'root': 1, 'text': text}
+        proc = {'info': info, 'childs': [], 'root': 1, 'text': text, 'width': widths}
         pid = info['PID']
 
         self.__tree[pid] = proc
@@ -202,7 +244,8 @@ class Psforest(object):
     def run(self):
         self.__init_tty()
 
-        cmd = ' '.join(getattr(self, '_get_exec_args')(sys.argv[1:]))
+        args = getattr(self, '_get_exec_args')(sys.argv[1:])
+        cmd = ' '.join(args)
         (ret, output) = commands.getstatusoutput(cmd)
         if ret != 0:
             self.__stderr('command: %s\r\n%s', cmd, output)
@@ -213,7 +256,7 @@ class Psforest(object):
 
         lines = output.split('\n')
         self.__parse_head(lines[0])
-        if 'PPID' not in self.__head:
+        if 'PPID' not in self.__head['text']:
             self.__stdout('%s', output)
             return 0
 
