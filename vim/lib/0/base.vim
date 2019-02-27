@@ -11,14 +11,14 @@ endif
 set number
 
 highlight Directory ctermfg = blue
-highlight Visual cterm = reverse ctermbg = none
-highlight Search cterm = none ctermbg = 3 ctermfg = 0
+highlight Visual cterm=reverse ctermbg=none
+highlight Search cterm=none ctermbg=3 ctermfg=0
 
 highlight LineNr ctermfg = 3
 
 set cursorline
-highlight CursorLineNr  ctermbg = darkred ctermfg = 3
-highlight CursorLine    cterm = none
+highlight CursorLineNr ctermbg=darkred ctermfg=3
+highlight CursorLine cterm=none guibg=NONE
 set scrolloff=5
 
 set nowrap
