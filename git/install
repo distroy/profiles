@@ -11,5 +11,5 @@ LD_GITRC=$HOME/gitconfig
 
 # gitconfig
 git config --global include.path ${SOURCE_DIR/#$HOME/\~}/gitconfig
-
-
+# gitignore
+git config --global core.excludesfile ${SOURCE_DIR/#$HOME/\~}/gitignore
