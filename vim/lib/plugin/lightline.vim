@@ -34,8 +34,10 @@ endfunction
 call s:set_lightline('colorscheme', 'wombat')
 
 if has('mac')
-    call s:set_lightline('separator', 'left', "\u25ba")
-    call s:set_lightline('separator', 'right', "\u25c4")
+    call s:set_lightline('separator', 'left', "\u25ba") " ►
+    call s:set_lightline('separator', 'right', "\u25c4") " ◄
+    call s:set_lightline('subseparator', 'left', "\u00bb") " »
+    call s:set_lightline('subseparator', 'right', "\u00ab") " «
 else
     call s:set_lightline('separator', 'left', "\ue0b0")
     call s:set_lightline('separator', 'right', "\ue0b2")
