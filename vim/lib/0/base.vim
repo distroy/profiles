@@ -22,8 +22,10 @@ highlight CursorLine cterm=none guibg=NONE
 set scrolloff=5
 
 set nowrap
-set list
-set listchars=tab:>·,trail:·
+if version > 730
+    set list
+    set listchars=tab:>·,trail:·
+endif
 highlight SpecialKey ctermfg = darkgray
 
 if version > 730
