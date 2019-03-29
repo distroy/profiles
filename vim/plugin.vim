@@ -42,6 +42,7 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
+Plug 'Raimondi/delimitMate' " auto close
 if version > 800
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] }
 endif
@@ -66,7 +67,7 @@ if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
 endif
 if version >= 740
-    Plug 'Valloric/YouCompleteMe'
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' }
 endif
 
 " plugin from http://vim-scripts.org/vim/scripts.html
