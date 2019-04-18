@@ -15,7 +15,7 @@ endif
 
 autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
 autocmd BufNewFile *.[ch]       call s:ld_nf_c(0)
-autocmd BufNewFile *.go         call s:ld_nf_go(0)
+autocmd BufNewFile *.go         call s:ld_nf_golang(0)
 
 autocmd BufNewFile *.java       call s:ld_nf_c(0)
 
@@ -278,16 +278,39 @@ function! s:ld_nf_git_ignore(line)
 endfunction
 
 
-function! s:ld_nf_go(line)
+function! s:ld_nf_golang(line)
     let l:l = a:line
 
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, 'package main')
+    let l:p = l:l
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, 'import (')
+    let l:l = s:ld_append(l:l, '    "bytes"')
+    let l:l = s:ld_append(l:l, '    "context"')
+    let l:l = s:ld_append(l:l, '    "errors"')
     let l:l = s:ld_append(l:l, '    "fmt"')
+    let l:l = s:ld_append(l:l, '    "log"')
+    let l:l = s:ld_append(l:l, '    "os"')
+    let l:l = s:ld_append(l:l, '    "strconv"')
+    let l:l = s:ld_append(l:l, '    "strings"')
+    let l:l = s:ld_append(l:l, '    "sync"')
+    let l:l = s:ld_append(l:l, '    "time"')
     let l:l = s:ld_append(l:l, ')')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, "// Always reference these packages, just in case the auto-generated code below doesn't.")
+    let l:l = s:ld_append(l:l, 'var _ = bytes.NewBuffer')
+    let l:l = s:ld_append(l:l, 'var _ = context.Canceled')
+    let l:l = s:ld_append(l:l, 'var _ = errors.New')
+    let l:l = s:ld_append(l:l, 'var _ = fmt.Sprintf')
+    let l:l = s:ld_append(l:l, 'var _ = log.New')
+    let l:l = s:ld_append(l:l, 'var _ = os.Exit')
+    let l:l = s:ld_append(l:l, 'var _ = strconv.Itoa')
+    let l:l = s:ld_append(l:l, 'var _ = strings.Replace')
+    let l:l = s:ld_append(l:l, 'var _ = sync.NewCond')
+    let l:l = s:ld_append(l:l, 'var _ = time.Now')
 
+    call s:ld_cursor(l:p, 9)
     return l:l
 endfunction
