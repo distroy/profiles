@@ -291,6 +291,11 @@ class PsforestDarwin(Psforest):
         '/usr/libexec/',
     )
 
+    __CMD_REPLACE = [ {
+        'fr': re.compile(r'\A/usr/local/Cellar/[pP]ython(?:[^\s/]+/)+?[Vv]ersions/([0-9.]+)/\S+/[pP]ython\Z'),
+        'to': r'python\g<1>',
+    } ]
+
     _opt_all_proc = False
 
     def __init__(self):
@@ -308,7 +313,7 @@ class PsforestDarwin(Psforest):
         for i in argv:
             if i[0] != '-':
                 continue
-            if [1] == '-':
+            if i[1] == '-':
                 continue
 
             if i.find('e') >= 0:
@@ -318,19 +323,31 @@ class PsforestDarwin(Psforest):
         args.extend(argv)
         return args
 
+    def _replace_cmd(self, cmd):
+        for o in self.__CMD_REPLACE:
+            fr = o['fr']
+            to = o['to']
+            if isinstance(fr, str):
+                return cmd.replace(fr, to)
+            else:
+                return fr.sub(to, cmd)
+        return cmd
+
     def _parse_line(self, line, head):
         s = len(head)
         l = line.split()
         if self._RE_TIME.match(l[s - 2]):
-            c = ' '.join(l[s - 1:])
+            c = l[s - 1:]
         else:
-            c = ' '.join(l[s:])
+            c = l[s:]
             l[s - 3] += ' ' + l[s - 2]
             l[s - 2] = l[s - 1]
-        if not self._is_line_show(c):
+        if not self._is_line_show(c[0]):
             return
+        c[0] = self._replace_cmd(c[0])
+
         l = l[: s - 1]
-        l.append(c)
+        l.append(' '.join(c))
         return l
 
 
