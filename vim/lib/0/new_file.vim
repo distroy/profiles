@@ -13,11 +13,11 @@ if !exists('g:ld_copyright')
 endif
 
 
-autocmd BufNewFile *.[ch]pp     call s:ld_nf_c(0)
-autocmd BufNewFile *.[ch]       call s:ld_nf_c(0)
+autocmd BufNewFile *.[ch]pp     call s:ld_nf_c_family(0)
+autocmd BufNewFile *.[ch]       call s:ld_nf_c_family(0)
 autocmd BufNewFile *.go         call s:ld_nf_golang(0)
 
-autocmd BufNewFile *.java       call s:ld_nf_c(0)
+autocmd BufNewFile *.java       call s:ld_nf_c_family(0)
 
 autocmd BufNewFile *.php        call s:ld_nf_php(0)
 
@@ -133,7 +133,7 @@ function! s:ld_nf_css(line)
 endfunction
 
 
-function! s:ld_nf_c(line)
+function! s:ld_nf_c_family(line)
     let l:l = a:line
     let l:p = 0
 
@@ -280,6 +280,7 @@ endfunction
 
 function! s:ld_nf_golang(line)
     let l:l = a:line
+    let l:testing = expand('%:t') =~ '.*_test.go'
 
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
@@ -297,7 +298,11 @@ function! s:ld_nf_golang(line)
     let l:l = s:ld_append(l:l, '    "strings"')
     let l:l = s:ld_append(l:l, '    "sync"')
     let l:l = s:ld_append(l:l, '    "time"')
+    if l:testing
+        let l:l = s:ld_append(l:l, '    "testing"')
+    endif
     let l:l = s:ld_append(l:l, ')')
+
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, "// Always reference these packages, just in case the auto-generated code below doesn't.")
     let l:l = s:ld_append(l:l, 'var _ = bytes.NewBuffer')
@@ -310,6 +315,9 @@ function! s:ld_nf_golang(line)
     let l:l = s:ld_append(l:l, 'var _ = strings.Replace')
     let l:l = s:ld_append(l:l, 'var _ = sync.NewCond')
     let l:l = s:ld_append(l:l, 'var _ = time.Now')
+    if l:testing
+        let l:l = s:ld_append(l:l, 'var _ = testing.Main')
+    endif
 
     call s:ld_cursor(l:p, 9)
     return l:l
