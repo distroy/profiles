@@ -281,10 +281,11 @@ endfunction
 function! s:ld_nf_golang(line)
     let l:l = a:line
     let l:testing = expand('%:t') =~ '.*_test.go'
+    let l:mod = expand('%:p:h:t')
 
     let l:l = s:ld_infos3(l:l, '/*', ' */', ' *')
     let l:l = s:ld_append(l:l, '')
-    let l:l = s:ld_append(l:l, 'package main')
+    let l:l = s:ld_append(l:l, 'package ' . l:mod)
     let l:p = l:l
     let l:l = s:ld_append(l:l, '')
     let l:l = s:ld_append(l:l, 'import (')
