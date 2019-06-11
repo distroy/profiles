@@ -292,7 +292,7 @@ class PsforestDarwin(Psforest):
     )
 
     __CMD_REPLACE = [ {
-        'fr': re.compile(r'\A/usr/local/Cellar/[pP]ython(?:[^\s/]+/)+?[Vv]ersions/([0-9.]+)/\S+/[pP]ython\Z'),
+        'fr': re.compile(r'\A/usr/local/Cellar/[pP]ython(?:[^\s/]*/)*[Vv]ersions/([0-9.]+)/\S+/[pP]ython\Z'),
         'to': r'python\g<1>',
     } ]
 
