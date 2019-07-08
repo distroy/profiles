@@ -44,6 +44,11 @@ let g:ycm_collect_identifiers_from_tags_files   = 1 " 开启 YCM 基于标签引
 let g:ycm_min_num_of_chars_for_completion       = 2 " 从第2个键入字符就开始罗列匹配项
 let g:ycm_cache_omnifunc    = 0  " 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_seed_identifiers_with_syntax          = 1    " 语法关键字补全
+let g:ycm_min_num_identifier_candidate_chars    = 2
+let g:ycm_semantic_triggers =  {
+    \ 'c,cpp': ['.', '->', '::', 're!\w{2}'],
+    \ 'javascript,python,go': ['.', 're!\w{2}'],
+    \ }
 
 " " force recomile with syntastic
 " nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -59,8 +64,11 @@ let g:ycm_complete_in_strings   = 1
 " 注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
+let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+
 " 跳转到定义处
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd FileType * nnoremap <buffer> <silent> <C-w><C-]> :<C-u>tab YcmCompleter GoTo<CR>
+autocmd FileType * nnoremap <buffer> <silent> <C-w>] :<C-u>tab YcmCompleter GoTo<CR>
 
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
