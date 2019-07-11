@@ -69,7 +69,9 @@ let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 " 跳转到定义处
 autocmd FileType * nnoremap <buffer> <silent> <C-w><C-]> :<C-u>tab YcmCompleter GoTo<CR>
 autocmd FileType * nnoremap <buffer> <silent> <C-w>] :<C-u>tab YcmCompleter GoTo<CR>
+autocmd FileType * nnoremap <buffer> <silent> <C-]> :<C-u>YcmCompleter GoTo<CR>
 
+let g:ycm_show_diagnostics_ui = 0
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
 
