@@ -4,6 +4,7 @@
 
 
 let g:go_template_autocreate = 0
+let g:go_fold_enable = ['block', 'import', 'varconst', 'comment', 'package_comment']
 
 let g:go_highlight_format_strings = 1
 " let g:go_highlight_variable_declarations = 1
@@ -18,6 +19,8 @@ let g:go_highlight_fields = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_generate_tags = 1
+
+let g:go_code_completion_enabled = 0
 
 let g:go_def_mapping_enabled = 0
 " autocmd FileType go nnoremap <buffer> <silent> <C-w><C-]> :<C-u>call go#def#Jump("tab", 0)<CR>
