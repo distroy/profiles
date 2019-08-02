@@ -43,7 +43,7 @@ Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
 Plug 'Raimondi/delimitMate' " auto close
-if version > 800
+if version >= 800
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] }
 endif
 
@@ -59,15 +59,16 @@ else
     " Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 endif
 
-if version > 800
+if version >= 800
     Plug 'ludovicchabant/vim-gutentags'
 endif
 
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
 endif
-if version >= 740
+if version > 740
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' }
+    " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
 endif
 
 " plugin from http://vim-scripts.org/vim/scripts.html
