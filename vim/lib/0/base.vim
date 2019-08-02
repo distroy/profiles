@@ -27,6 +27,7 @@ if version > 730
     set listchars=tab:>·,trail:·
 endif
 highlight SpecialKey ctermfg = darkgray
+highlight Whitespace ctermfg = darkgray
 
 if version > 730
     set colorcolumn=81
