@@ -3,7 +3,7 @@
 "
 
 
-let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_text_changed = 'always'
 
 let g:ale_sign_column_always = 0
 let g:ale_sign_error = '>>'
