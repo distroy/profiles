@@ -60,15 +60,16 @@ else
 endif
 
 if version >= 800
-    Plug 'ludovicchabant/vim-gutentags'
+    " Plug 'ludovicchabant/vim-gutentags'
 endif
 
 if has('lua')
     " Plugin 'Shougo/neocomplete.vim'
 endif
 if version > 740
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' }
+    " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' }
     " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
+    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 endif
 
 " plugin from http://vim-scripts.org/vim/scripts.html

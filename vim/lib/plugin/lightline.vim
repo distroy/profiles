@@ -47,7 +47,9 @@ endif
 
 " call s:set_lightline('component', 'filename', '%f')
 let s:sl_right = [ ['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'] ]
-call s:set_lightline('active', 'left', [ ['mode', 'paste'], ['readonly', 'relativepath', 'modified'] ])
+call s:set_lightline('active', 'left', [ ['mode', 'paste'], ['readonly', 'relativepath', 'modified', 'ld_current_function'] ])
 call s:set_lightline('active', 'right', s:sl_right)
 call s:set_lightline('inactive', 'left', [ ['relativepath'] ])
 call s:set_lightline('inactive', 'right', s:sl_right)
+
+call s:set_lightline('component_function', 'ld_current_function', 'LDCurrentFunction')

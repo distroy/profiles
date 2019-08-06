@@ -6,6 +6,7 @@
 " if !exists('g:loaded_youcompleteme')
 "     finish
 " endif
+finish
 
 function! s:ld_get_ycm_conf()
     let l:files = findfile('.ycm_extra_conf.py', expand('%:p:h').';')
