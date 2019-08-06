@@ -18,33 +18,35 @@ call coc#add_extension(
 
 call coc#config('coc.preferences.timeout', 500)
 call coc#config('coc.preferences.rootPatterns', ['.root', '.svn', '.git', '.hg', '.project'])
-call coc#config('coc.preferences.formatOnType', "true")
-call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', "true")
+call coc#config('coc.preferences.formatOnType', v:true)
+call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
 
 call coc#config('suggest.autoTrigger', "always")
 call coc#config('suggest.timeout', 500)             " 调整补全超时时间
-call coc#config('suggest.enablePreview', "false")   " 让 vim 弹出预览窗口
-call coc#config('suggest.noselect', "false")        " 补全开启时选中第一项
+call coc#config('suggest.enablePreview', v:false)   " 让 vim 弹出预览窗口
+call coc#config('suggest.noselect', v:false)        " 补全开启时选中第一项
 call coc#config('suggest.minTriggerInputLength', 1) " 设置最少补全触发字符数
 call coc#config('suggest.snippetIndicator', "⭐︎")   " 改变代码片段的提示字符
-call coc#config('suggest.triggerAfterInsertEnter', "true") " 进入插入模块即触发自动补全
-" call coc#config('suggest.keepCompleteopt', "true")
+call coc#config('suggest.triggerAfterInsertEnter', v:true) " 进入插入模块即触发自动补全
+" call coc#config('suggest.keepCompleteopt', v:true)
 
-call coc#config('diagnostic.displayByAle', "true")
+" call coc#config('diagnostic.displayByAle', v:true)
 call coc#config('diagnostic.level', "warning")
-call coc#config('diagnostic.checkCurrentLine', "true")
-" call coc#config('diagnostic.errorSign', ">>")
-" call coc#config('diagnostic.warningSign', ">>")
-" highlight CocErrorSign ctermfg=Red guifg=#ff0000
-" highlight CocWarningSign ctermfg=Yellow guifg=#ff922b
+call coc#config('diagnostic.checkCurrentLine', v:true)
+call coc#config('diagnostic.errorSign', ">>")
+call coc#config('diagnostic.warningSign', ">>")
+highlight CocErrorSign ctermfg=Black ctermbg=Red guifg=#ff0000
+highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
+highlight default link CocErrorHighlight none
+highlight default link CocWarningHighlight none
 
 function! LDCurrentFunction()
     return get(b:, 'coc_current_function', '')
 endfunction
 
 
-let g:coc_status_error_sign = 'E'
-let g:coc_status_warning_sign = 'W'
+let g:coc_status_error_sign = 'Error'
+let g:coc_status_warning_sign = 'Warn'
 
 
 " " if hidden is not set, TextEdit might fail.
