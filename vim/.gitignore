@@ -1,4 +1,6 @@
 # git ignore
-*
+.*
 !.gitignore
-!plug.vim
+
+!*.vim
+Session.vim
