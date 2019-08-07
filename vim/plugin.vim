@@ -43,7 +43,7 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'groenewege/vim-less', {'for': ['less']}
 Plug 'mbbill/undotree'
-Plug 'Raimondi/delimitMate' " auto close
+" Plug 'Raimondi/delimitMate' " auto close
 if version >= 800
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] }
 endif

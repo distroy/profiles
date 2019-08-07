@@ -9,11 +9,14 @@
 " coc-go
 
 call coc#add_extension(
+    \ 'coc-pairs',
     \ 'coc-json',
     \ 'coc-tsserver',
     \ 'coc-vimlsp',
     \ 'coc-python',
     \ 'coc-go',
+    \ 'coc-ccls',
+    \ 'coc-sql',
     \ )
 
 call coc#config('coc.preferences.timeout', 500)
@@ -23,8 +26,8 @@ call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
 
 call coc#config('suggest.autoTrigger', "always")
 call coc#config('suggest.timeout', 500)             " 调整补全超时时间
-call coc#config('suggest.enablePreview', v:false)   " 让 vim 弹出预览窗口
-call coc#config('suggest.noselect', v:false)        " 补全开启时选中第一项
+call coc#config('suggest.enablePreview', v:false)   " 让vim 弹出预览窗口
+call coc#config('suggest.noselect', v:true)         " 补全开启时不选中第一项
 call coc#config('suggest.minTriggerInputLength', 1) " 设置最少补全触发字符数
 call coc#config('suggest.snippetIndicator', "⭐︎")   " 改变代码片段的提示字符
 call coc#config('suggest.triggerAfterInsertEnter', v:true) " 进入插入模块即触发自动补全
@@ -62,8 +65,8 @@ set nowritebackup
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=100
 
-" " don't give |ins-completion-menu| messages.
-" set shortmess+=c
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
 " " always show signcolumns
 " set signcolumn=yes
@@ -103,7 +106,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+    execute 'vertical' 'help' expand('<cword>')
   else
     call CocAction('doHover')
   endif
