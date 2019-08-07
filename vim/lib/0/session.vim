@@ -2,4 +2,7 @@
 " Copyright (C) distroy
 "
 
-set sessionoptions=curdir,tabpages
+set sessionoptions=
+set sessionoptions+=curdir
+set sessionoptions+=tabpages
+set sessionoptions+=help
