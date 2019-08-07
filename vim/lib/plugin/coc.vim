@@ -13,7 +13,7 @@ call coc#add_extension(
     \ 'coc-json',
     \ 'coc-tsserver',
     \ 'coc-vimlsp',
-    \ 'coc-python',
+    \ 'coc-pyls',
     \ 'coc-go',
     \ 'coc-ccls',
     \ 'coc-sql',
