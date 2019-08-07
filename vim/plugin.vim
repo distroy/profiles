@@ -29,6 +29,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'itchyny/lightline.vim'
 " Plug 'Yggdroot/indentLine'
+Plug 'Shougo/echodoc.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
@@ -68,8 +69,10 @@ if has('lua')
 endif
 if version > 740
     " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' }
-    " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+endif
+if version >= 800
+    Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
+    " Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 endif
 
 " plugin from http://vim-scripts.org/vim/scripts.html
