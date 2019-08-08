@@ -31,12 +31,9 @@ function! s:ld_import_lib()
             call s:ld_import_directory(l:path)
         endif
     endwhile
-    call s:ld_import_directory(l:base . 'plugin')
 endfunction
 
 
-let g:ld_vim_path = fnamemodify(expand('<sfile>:p'), ':p:h')
-
-execute 'source' g:ld_vim_path . '/plugin.vim'
+let g:ld_vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 call s:ld_import_lib()

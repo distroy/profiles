@@ -3,10 +3,10 @@
 "
 
 
-" if !exists('g:loaded_youcompleteme')
-"     finish
-" endif
-finish
+if !exists('g:loaded_youcompleteme')
+    finish
+endif
+let s:current_directory = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 function! s:ld_get_ycm_conf()
     let l:files = findfile('.ycm_extra_conf.py', expand('%:p:h').';')
@@ -14,7 +14,7 @@ function! s:ld_get_ycm_conf()
         return l:files
     endif
 
-    return g:ld_vim_path . '/lib/plugin/ycm/ycm_extra_conf.py'
+    return s:current_directory . '/ycm/ycm_extra_conf.py'
 endfunction
 
 
