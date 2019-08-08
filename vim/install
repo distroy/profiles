@@ -11,6 +11,9 @@ source ../install
 
 WRITE_FILE=$HOME/.vimrc
 
+CLANG_FORMAT=$(find $SOURCE_DIR/lib -name clang-format)
+YCM_CONF_PY=$(find $SOURCE_DIR/lib -name ycm_extra_conf.py)
+
 
 # vimrc
 cat >>$WRITE_FILE <<EOF
@@ -20,8 +23,8 @@ EOF
 
 timestamp=$(date +%Y%m%d%H%M%S)
 test -f $HOME/.clang-format && cp $HOME/.clang-format $HOME/.clang-format-$timestamp
-cp -v ./lib/plugin/auto_format/clang-format $HOME/.clang-format
+cp -v $CLANG_FORMAT $HOME/.clang-format
 test -f $HOME/.ycm_extra_conf.py && cp $HOME/.ycm_extra_conf.py $HOME/.ycm_extra_conf.py-$timestamp
-cp -v ./lib/plugin/ycm/ycm_extra_conf.py $HOME/.ycm_extra_conf.py
+cp -v $YCM_CONF_PY $HOME/.ycm_extra_conf.py
 
 vim +PlugInstall +qa
