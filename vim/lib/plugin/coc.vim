@@ -33,7 +33,8 @@ call coc#config('suggest.snippetIndicator', "⭐︎")   " 改变代码片段的�
 call coc#config('suggest.triggerAfterInsertEnter', v:true) " 进入插入模块即触发自动补全
 " call coc#config('suggest.keepCompleteopt', v:true)
 
-" call coc#config('diagnostic.displayByAle', v:true)
+call coc#config('diagnostic.enable', v:true)
+call coc#config('diagnostic.displayByAle', v:true)
 call coc#config('diagnostic.level', "warning")
 call coc#config('diagnostic.checkCurrentLine', v:true)
 call coc#config('diagnostic.errorSign', ">>")
@@ -122,7 +123,7 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup mygroup
+augroup ld_coc_group
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')

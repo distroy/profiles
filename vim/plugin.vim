@@ -35,7 +35,7 @@ Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
 Plug 'distroy/vim-matchit'
 " Plug 'vim-syntastic/syntastic'
-" Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
 " Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
