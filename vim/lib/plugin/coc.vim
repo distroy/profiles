@@ -3,6 +3,10 @@
 "
 
 
+if version < 800
+    finish
+endif
+
 " coc-json
 " coc-vimlsp
 " coc-python
