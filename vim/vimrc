@@ -7,33 +7,20 @@ if exists('g:ld_loaded_vimrc')
     finish
 endif
 let g:ld_loaded_vimrc = 1
+let g:ld_vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
-if !exists('g:ld_user')
-    let g:ld_user = 'distroy'
-endif
-if !exists('g:ld_email')
-    let g:ld_email = 'distroy@163.com'
-endif
 
-function! s:ld_import_directory(path)
-    for l:file in split(globpath(a:path, '*.vim'), '\n')
-        execute 'source' l:file
+function s:ld_import_lib()
+    let l:base = g:ld_vim_path . '/lib/'
+    for l:idx in range(0, 100)
+        let l:path = l:base . l:idx
+        let l:idx += 1
+        if isdirectory(l:path)
+            for l:file in split(globpath(l:path, '*.vim'), '\n')
+                execute 'source' l:file
+            endfor
+        endif
     endfor
 endfunction
-
-function! s:ld_import_lib()
-    let l:base = g:ld_vim_path . '/lib/'
-    let l:i = 0
-    while l:i <= 100
-        let l:path = l:base . l:i
-        let l:i += 1
-        if isdirectory(l:path)
-            call s:ld_import_directory(l:path)
-        endif
-    endwhile
-endfunction
-
-
-let g:ld_vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 call s:ld_import_lib()
