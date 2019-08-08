@@ -3,6 +3,10 @@
 "
 
 
+if version < 800
+    finish
+endif
+
 let g:ale_lint_on_text_changed = 'always'
 
 let g:ale_sign_column_always = 0
@@ -36,7 +40,7 @@ highlight clear ALEStyleInfoSign
 " highlight ALEStyleWarning ctermbg=Yellow
 " highlight ALEStyleInfo ctermbg=None
 
-autocmd filetype python call <SID>ld_clear_ale_highlight()
+autocmd FileType python call <SID>ld_clear_ale_highlight()
 
 function s:ld_clear_ale_highlight()
     highlight clear ALEError
