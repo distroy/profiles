@@ -13,31 +13,33 @@ if !exists('g:ld_copyright')
 endif
 
 
-autocmd BufNewFile *.[ch]pp     call s:ld_nf_c_family(0)
-autocmd BufNewFile *.[ch]       call s:ld_nf_c_family(0)
-autocmd BufNewFile *.go         call s:ld_nf_golang(0)
+augroup ld_new_files
+    autocmd BufNewFile *.[ch]pp     call s:ld_nf_c_family(0)
+    autocmd BufNewFile *.[ch]       call s:ld_nf_c_family(0)
+    autocmd BufNewFile *.go         call s:ld_nf_golang(0)
 
-autocmd BufNewFile *.java       call s:ld_nf_c_family(0)
+    autocmd BufNewFile *.java       call s:ld_nf_c_family(0)
 
-autocmd BufNewFile *.php        call s:ld_nf_php(0)
+    autocmd BufNewFile *.php        call s:ld_nf_php(0)
 
-autocmd BufNewFile *.sh         call s:ld_nf_shell(0, 'bash')
-autocmd BufNewFile *.bash       call s:ld_nf_shell(0, 'bash')
-autocmd BufNewFile *.zsh        call s:ld_nf_shell(0, 'zsh')
+    autocmd BufNewFile *.sh         call s:ld_nf_shell(0, 'bash')
+    autocmd BufNewFile *.bash       call s:ld_nf_shell(0, 'bash')
+    autocmd BufNewFile *.zsh        call s:ld_nf_shell(0, 'zsh')
 
-autocmd BufNewFile [Mm]akefile  call s:ld_nf_shell(0, '')
-autocmd BufNewFile *.mk         call s:ld_nf_shell(0, '')
+    autocmd BufNewFile [Mm]akefile  call s:ld_nf_shell(0, '')
+    autocmd BufNewFile *.mk         call s:ld_nf_shell(0, '')
 
-autocmd BufNewFile *.py         call s:ld_nf_python(0)
+    autocmd BufNewFile *.py         call s:ld_nf_python(0)
 
-autocmd BufNewFile *.js         call s:ld_nf_js(0)
-autocmd BufNewFile *.html       call s:ld_nf_html(0)
-autocmd BufNewFile *.css        call s:ld_nf_css(0)
+    autocmd BufNewFile *.js         call s:ld_nf_js(0)
+    autocmd BufNewFile *.html       call s:ld_nf_html(0)
+    autocmd BufNewFile *.css        call s:ld_nf_css(0)
 
-autocmd BufNewFile *.vim        call s:ld_nf_vim(0)
-autocmd BufNewFile *.sql        call s:ld_nf_sql(0)
+    autocmd BufNewFile *.vim        call s:ld_nf_vim(0)
+    autocmd BufNewFile *.sql        call s:ld_nf_sql(0)
 
-autocmd BufNewFile .gitignore   call s:ld_nf_git_ignore(0)
+    autocmd BufNewFile .gitignore   call s:ld_nf_git_ignore(0)
+augroup end
 
 
 function! s:ld_append(line, text)
@@ -237,6 +239,10 @@ function! s:ld_nf_vim(line)
     let l:l = a:line
 
     let l:l = s:ld_infos1(l:l, '"')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, '')
+    let l:l = s:ld_append(l:l, "let s:current_directory = fnamemodify(resolve(expand('<sfile>:p')), ':h')")
+    let l:l = s:ld_append(l:l, '')
 
     return l:l
 endfunction
