@@ -3,6 +3,6 @@
 "
 
 
-function LDCurrentFunction()
+function! ld#current_function()
     return ""
 endfunction
