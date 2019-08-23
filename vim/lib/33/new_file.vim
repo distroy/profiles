@@ -3,7 +3,7 @@
 "
 
 
-augroup ld#new_files
+augroup ld.new_files
     autocmd BufNewFile *.[ch]pp     call s:nf_c_family(0)
     autocmd BufNewFile *.[ch]       call s:nf_c_family(0)
     autocmd BufNewFile *.go         call s:nf_golang(0)
@@ -65,7 +65,7 @@ function! s:infos2(line, prefix, suffix)
     let l:prefix    = a:prefix . ' '
     let l:suffix    = ' ' . a:suffix
 
-    for l:info in g:ld#copyright
+    for l:info in g:ld.copyright
         let l:l = s:append(l:l, l:prefix . l:info. l:suffix)
     endfor
     return l:l
@@ -77,7 +77,7 @@ function! s:infos3(line, start, end, prefix)
     let l:prefix    = a:prefix . ' '
 
     let l:l = s:append(l:l, a:start)
-    for l:info in g:ld#copyright
+    for l:info in g:ld.copyright
         let l:l = s:append(l:l, l:prefix . l:info)
     endfor
     let l:l = s:append(l:l, a:end)
@@ -197,7 +197,7 @@ function! s:nf_python(line)
     let l:l = s:append(l:l, '')
     let l:l = s:append(l:l, 'def get_options():')
     let l:l = s:append(l:l, '    import optparse')
-    let l:l = s:append(l:l, '    parser = optparse.OptionParser(version = "%prog ('. g:ld#user .') 0.1")')
+    let l:l = s:append(l:l, '    parser = optparse.OptionParser(version = "%prog ('. g:ld.user .') 0.1")')
     let l:l = s:append(l:l, '')
     let l:l = s:append(l:l, '    opts, args = parser.parse_args()')
     let l:l = s:append(l:l, '    return opts, args')

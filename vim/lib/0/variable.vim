@@ -4,25 +4,25 @@
 
 
 function s:init_variable(key, def)
-    if !has_key(g:, a:key)
-        let g:[a:key] = a:def
+    if !has_key(g:ld, a:key)
+        let g:ld[a:key] = a:def
     endif
 
-    return g:[a:key]
+    return g:ld[a:key]
 endfunction
 
 
-call s:init_variable('ld#user', "distroy")
-call s:init_variable('ld#email', "distroy@163.com")
+call s:init_variable('user', "distroy")
+call s:init_variable('email', "distroy@163.com")
 
 
-if !exists('ld#copyright')
-    let ld#copyright = []
-    if exists('ld#company')
-        call add(ld#copyright, 'Copyright (C) ' . ld#company)
+if !exists('g:ld.copyright')
+    let g:ld.copyright = []
+    if exists('g:ld.company')
+        call add(g:ld.copyright, 'Copyright (C) ' . g:ld.company)
     endif
 
-    call add(ld#copyright, 'Copyright (C) ' . ld#user)
-elseif type(ld#copyright) != v:t_list
-    let ld#copyright = [ld#copyright]
+    call add(g:ld.copyright, 'Copyright (C) ' . g:ld.user)
+elseif type(g:ld.copyright) != v:t_list
+    let g:ld.copyright = [g:ld.copyright]
 endif
