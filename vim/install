@@ -11,8 +11,8 @@ source ../install
 
 WRITE_FILE=$HOME/.vimrc
 
-CLANG_FORMAT=$(find $SOURCE_DIR/lib -name clang-format)
-YCM_CONF_PY=$(find $SOURCE_DIR/lib -name ycm_extra_conf.py)
+CLANG_FORMAT=$SOURCE_DIR/share/clang-format
+YCM_CONF_PY=$SOURCE_DIR/share/ycm_extra_conf.py
 
 
 # vimrc
