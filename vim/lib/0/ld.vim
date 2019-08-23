@@ -3,5 +3,5 @@
 "
 
 
-function! ld.current_function()
+function! g:ld.current_function()
 endfunction

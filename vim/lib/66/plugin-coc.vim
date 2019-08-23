@@ -48,7 +48,7 @@ highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
 highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
 
-function! ld.current_function()
+function! g:ld.current_function()
     return get(b:, 'coc_current_function', '')
 endfunction
 

@@ -7,7 +7,7 @@ if !exists('g:lightline')
     let g:lightline = {}
 endif
 
-function s:set_lightline(...)
+function! s:set_lightline(...)
     let l:l = len(a:000)
     if l:l < 2
         return
@@ -53,4 +53,4 @@ call s:set_lightline('active', 'right', s:sl_right)
 call s:set_lightline('inactive', 'left', [ ['relativepath'] ])
 call s:set_lightline('inactive', 'right', s:sl_right)
 
-call s:set_lightline('component_function', 'ld_current_function', 'ld.current_function')
+call s:set_lightline('component_function', 'ld_current_function', 'g:ld.current_function')
