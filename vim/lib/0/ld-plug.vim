@@ -33,6 +33,10 @@ function! g:ld.plug.has(name)
     return has_key(g:ld.plug._load, l:key)
 endfunction
 
+function! g:ld.plug.reset()
+    let g:ld.plug._disable = {}
+endfunction
+
 function! g:ld.plug.disable(...)
     for l:name in s:parse_list(a:000)
         let l:key = s:get_key(l:name)

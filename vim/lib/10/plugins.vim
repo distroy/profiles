@@ -3,6 +3,8 @@
 "
 
 
+call g:ld.plug.reset()
+
 " check the plugins which use
 if version >= 800 && (has('python') || has('python3'))
     call g:ld.plug.disable('ctrlp.vim', 'tagbar')
