@@ -3,11 +3,15 @@
 "
 
 
-if exists('g:ld_loaded_vimrc')
+if !exists('ld') || type(ld) != v:t_dict
+    let ld = {}
+endif
+
+if exists('ld.loaded_vimrc')
     finish
 endif
-let g:ld_loaded_vimrc = 1
-let g:ld_vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let ld.loaded_vimrc = 1
+let ld_vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 
 function s:ld_import_lib()
