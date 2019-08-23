@@ -16,9 +16,9 @@ endif
 " set nocompatible              " be iMproved, required
 " filetype off                  " required
 
-" exec 'source' g:ld_vim_path . '/plugin/vim-plug/plug.vim'
-exec 'source' g:ld_vim_path . '/plugin/plug.vim'
-call plug#begin(g:ld_vim_path . '/plugin')
+" exec 'source' g:ld.vim_path . '/plugin/vim-plug/plug.vim'
+exec 'source' g:ld.vim_path . '/plugin/plug.vim'
+call plug#begin(g:ld.vim_path . '/plugin')
 
 
 " The following are examples of different formats supported.

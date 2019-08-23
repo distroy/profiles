@@ -3,19 +3,19 @@
 "
 
 
-if !exists('ld') || type(ld) != v:t_dict
-    let ld = {}
+if !exists('g:ld') || type(ld) != v:t_dict
+    let g:ld = {}
 endif
 
-if exists('ld.loaded_vimrc')
+if exists('g:ld.loaded_vimrc')
     finish
 endif
-let ld.loaded_vimrc = 1
-let ld_vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let g:ld.loaded_vimrc = 1
+let g:ld.vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 
 function s:ld_import_lib()
-    let l:base = g:ld_vim_path . '/lib/'
+    let l:base = g:ld.vim_path . '/lib/'
     for l:idx in range(0, 100)
         let l:path = l:base . l:idx
         let l:idx += 1
