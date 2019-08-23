@@ -3,6 +3,8 @@
 "
 
 
+if !g:ld.plug.has('vim-go') | finish | endif
+
 let g:go_template_autocreate = 0
 let g:go_fold_enable = ['block', 'import', 'varconst', 'comment', 'package_comment']
 

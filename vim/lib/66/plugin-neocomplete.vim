@@ -3,13 +3,7 @@
 "
 
 
-if !exists('g:loaded_neocomplete')
-    finish
-endif
-
-if !has('lua')
-    finish
-endif
+if !g:ld.plug.has('neocomplete.vim') | finish | endif
 
 
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!

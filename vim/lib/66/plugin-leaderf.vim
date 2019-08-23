@@ -2,9 +2,9 @@
 " Copyright (C) distroy
 "
 
-if g:ld_tagshow != 'leaderf'
-    finish
-endif
+
+if !g:ld.plug.has('LeaderF') | finish | endif
+
 
 highlight Lf_hl_match guifg = blue ctermfg = blue
 highlight Lf_hl_matchRefine  guifg = magenta ctermfg = magenta

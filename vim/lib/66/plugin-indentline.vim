@@ -3,6 +3,9 @@
 "
 
 
+if !g:ld.plug.has('indentline') | finish | endif
+
+
 " let g:indentLine_char       = '|'
 let g:indentLine_char       = '¦'
 let g:indentLine_color_term = 'DarkGray'

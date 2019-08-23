@@ -3,6 +3,8 @@
 "
 
 
+if !g:ld.plug.has('nerdtree') | finish | endif
+
 let g:NERDTreeQuitOnOpen    = 1
 let g:NERDTreeWinPos        = 'right'
 let g:NERDTreeWinSize       = 40

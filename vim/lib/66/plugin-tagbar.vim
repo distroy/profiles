@@ -3,9 +3,7 @@
 "
 
 
-if g:ld_tagshow != 'tagbar'
-    finish
-endif
+if !g:ld.plug.has('tagbar') | finish | endif
 
 
 nnoremap <silent> <F2> :TagbarToggle<CR>

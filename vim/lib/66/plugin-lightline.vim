@@ -3,6 +3,9 @@
 "
 
 
+if !g:ld.plug.has('lightline.vim') | finish | endif
+
+
 if !exists('g:lightline')
     let g:lightline = {}
 endif

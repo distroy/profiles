@@ -3,9 +3,8 @@
 "
 
 
-if !exists('g:loaded_youcompleteme')
-    finish
-endif
+if !g:ld.plug.has('YouCompleteMe') | finish | endif
+
 let s:current_directory = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 function! s:ld_get_ycm_conf()

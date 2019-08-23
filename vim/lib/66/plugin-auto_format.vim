@@ -3,6 +3,9 @@
 "
 
 
+if !g:ld.plug.has('vim-autoformat') | finish | endif
+
+
 let s:current_directory = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 nnoremap <F11> :Autoformat<CR>

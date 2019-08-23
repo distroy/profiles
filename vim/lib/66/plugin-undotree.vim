@@ -3,6 +3,9 @@
 "
 
 
+if !g:ld.plug.has('undotree') | finish | endif
+
+
 nnoremap <f4> :UndotreeToggle<cr>
 
 let g:undotree_WindowLayout = 2

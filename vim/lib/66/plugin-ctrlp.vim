@@ -3,9 +3,8 @@
 "
 
 
-if g:ld_tagshow == 'leaderf'
-    finish
-endif
+if !g:ld.plug.has('ctrlp.vim') | finish | endif
+
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
 

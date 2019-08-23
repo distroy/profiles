@@ -3,9 +3,7 @@
 "
 
 
-if version < 800
-    finish
-endif
+if !g:ld.plug.has('coc.nvim') | finish | endif
 
 " coc-json
 " coc-vimlsp

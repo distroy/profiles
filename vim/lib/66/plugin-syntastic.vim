@@ -3,6 +3,9 @@
 "
 
 
+if !g:ld.plug.has('syntastic') | finish | endif
+
+
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
