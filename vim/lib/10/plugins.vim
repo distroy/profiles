@@ -4,13 +4,24 @@
 
 
 " check the plugins which use
-if !exists('g:ld_tagshow')
-    if version >= 800 && (has('python') || has('python3'))
-        let g:ld_tagshow = 'leaderf'
-    else
-        let g:ld_tagshow = 'tagbar'
-    endif
+if version >= 800 && (has('python') || has('python3'))
+    call g:ld.plug.disable('ctrlp.vim', 'tagbar')
+else
+    call g:ld.plug.disable('LeaderF')
 endif
+
+if version <= 740
+    call g:ld.plug.disable('YouCompleteMe')
+endif
+if version < 800
+    call g:ld.plug.disable('vim-go', 'vim-gutentags', 'coc.nvim')
+endif
+if has('lua')
+    call g:ld.plug.disable('neocomplete.vim')
+endif
+
+call g:ld.plug.disable('YouCompleteMe')
+call g:ld.plug.disable('neocomplete.vim')
 
 
 function! s:add(n, ...)
@@ -48,36 +59,23 @@ call s:add('mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']})
 call s:add('groenewege/vim-less', {'for': ['less']})
 call s:add('mbbill/undotree')
 " call s:add('Raimondi/delimitMate') " auto close
-if version >= 800
-    call s:add('fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] })
-endif
+call s:add('fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] })
+" call s:add('ludovicchabant/vim-gutentags')
 
-if g:ld_tagshow == 'leaderf'
-    if has('win32')
-        call s:add('Yggdroot/LeaderF', { 'do': '.\install.bat' })
-    else
-        call s:add('Yggdroot/LeaderF', { 'do': './install.sh' })
-    endif
-else
-    call s:add('kien/ctrlp.vim')
-    call s:add('majutsushi/tagbar')
-    " call s:add('majutsushi/tagbar', {'on': 'TagbarToggle'})
-endif
+call s:add('Yggdroot/LeaderF', {
+    \ 'win': { 'do': '.\install.bat' },
+    \ 'unix': { 'do': './install.sh' },
+    \ })
 
-if version >= 800
-    " call s:add('ludovicchabant/vim-gutentags')
-endif
+call s:add('kien/ctrlp.vim')
+call s:add('majutsushi/tagbar')
+" call s:add('majutsushi/tagbar', {'on': 'TagbarToggle'})
 
-if has('lua')
-    " call s:add('Shougo/neocomplete.vim')
-endif
-if version > 740
-    " call s:add('Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' })
-endif
-if version >= 800
-    call s:add('neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' })
-    " call s:add('neoclide/coc.nvim', {'do': { -> coc#util#install()}})
-endif
+
+call s:add('Shougo/neocomplete.vim')
+call s:add('Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' })
+call s:add('neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' })
+" call s:add('neoclide/coc.nvim', {'do': { -> coc#util#install()}})
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " call s:add('a.vim', {'on': 'A'})
