@@ -13,72 +13,74 @@ if !exists('g:ld_tagshow')
 endif
 
 
-" set nocompatible              " be iMproved, required
-" filetype off                  " required
+function! s:add(n, ...)
+    if a:0 == 0
+        call g:ld.plug.add(a:n)
+    else
+        call g:ld.plug.add(a:n, a:1)
+    endif
+endfunction
 
-" exec 'source' g:ld.vim_path . '/plugin/vim-plug/plug.vim'
-exec 'source' g:ld.vim_path . '/plugin/plug.vim'
-call plug#begin(g:ld.vim_path . '/plugin')
+
+call g:ld.plug.begin()
 
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'itchyny/lightline.vim'
-" Plug 'Yggdroot/indentLine'
-Plug 'Shougo/echodoc.vim'
-Plug 'tomtom/tcomment_vim'
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
-Plug 'distroy/vim-matchit'
-" Plug 'vim-syntastic/syntastic'
-Plug 'dense-analysis/ale'
-Plug 'mattn/emmet-vim', {'for': ['html', 'xml']}
-" Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
-Plug 'posva/vim-vue', {'for': 'vue'}
-Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug 'groenewege/vim-less', {'for': ['less']}
-Plug 'mbbill/undotree'
-" Plug 'Raimondi/delimitMate' " auto close
+call s:add('tpope/vim-fugitive')
+call s:add('tpope/vim-surround')
+call s:add('tpope/vim-repeat')
+call s:add('itchyny/lightline.vim')
+" call s:add('Yggdroot/indentLine')
+call s:add('Shougo/echodoc.vim')
+call s:add('tomtom/tcomment_vim')
+call s:add('scrooloose/nerdtree', {'on': 'NERDTreeToggle'})
+call s:add('Chiel92/vim-autoformat', {'on': 'Autoformat'})
+call s:add('distroy/vim-matchit')
+" call s:add('vim-syntastic/syntastic')
+call s:add('dense-analysis/ale')
+call s:add('mattn/emmet-vim', {'for': ['html', 'xml']})
+" call s:add('jelera/vim-javascript-syntax')
+call s:add('pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']})
+call s:add('posva/vim-vue', {'for': 'vue'})
+call s:add('mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']})
+call s:add('groenewege/vim-less', {'for': ['less']})
+call s:add('mbbill/undotree')
+" call s:add('Raimondi/delimitMate') " auto close
 if version >= 800
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] }
+    call s:add('fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] })
 endif
 
 if g:ld_tagshow == 'leaderf'
     if has('win32')
-        Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+        call s:add('Yggdroot/LeaderF', { 'do': '.\install.bat' })
     else
-        Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+        call s:add('Yggdroot/LeaderF', { 'do': './install.sh' })
     endif
 else
-    Plug 'kien/ctrlp.vim'
-    Plug 'majutsushi/tagbar'
-    " Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
+    call s:add('kien/ctrlp.vim')
+    call s:add('majutsushi/tagbar')
+    " call s:add('majutsushi/tagbar', {'on': 'TagbarToggle'})
 endif
 
 if version >= 800
-    " Plug 'ludovicchabant/vim-gutentags'
+    " call s:add('ludovicchabant/vim-gutentags')
 endif
 
 if has('lua')
-    " Plugin 'Shougo/neocomplete.vim'
+    " call s:add('Shougo/neocomplete.vim')
 endif
 if version > 740
-    " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' }
+    " call s:add('Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' })
 endif
 if version >= 800
-    Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
-    " Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    call s:add('neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' })
+    " call s:add('neoclide/coc.nvim', {'do': { -> coc#util#install()}})
 endif
 
 " plugin from http://vim-scripts.org/vim/scripts.html
-" Plug 'a.vim', {'on': 'A'}
+" call s:add('a.vim', {'on': 'A'})
 
 
-call plug#end()            " required
-
-" filetype plugin indent on    " required
+call g:ld.plug.end()
