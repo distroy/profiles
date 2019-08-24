@@ -61,7 +61,7 @@ class Log(object):
 
     def open(self):
         self.close()
-        self.__fd = os.open(self.__path, self.__file_flag, 0664)
+        self.__fd = os.open(self.__path, self.__file_flag, 0o664)
 
     def close(self):
         if self.__fd != -1:
@@ -157,12 +157,12 @@ class YcmExtraConf(object):
                 new_flags.append(new_flag)
         return new_flags
 
-    def is_header(filename):
+    def is_header(self, filename):
         extension = os.path.splitext(filename)[1]
         return extension in HEADER_EXTS
 
-    def get_compilation_info(filename):
-        if is_header(filename):
+    def get_compilation_info(self, filename):
+        if self.is_header(filename):
             basename = os.path.splitext(filename)[0]
             for extension in SOURCE_EXTS:
                 replacement_file = basename + extension
@@ -178,11 +178,11 @@ class YcmExtraConf(object):
         log.debug('kwargs: %s', str(kwargs))
 
         if self._database:
-            info = get_compilation_info(filename)
+            info = self.get_compilation_info(filename)
             if not info:
                 return None
 
-            flags = info.compiler_flags_
+            final_flags = info.compiler_flags_
             work_dir = info.compiler_working_dir_
             try:
                 final_flags.remove('-stdlib=libc++')
@@ -190,9 +190,9 @@ class YcmExtraConf(object):
                 pass
         else:
             work_dir = os.path.dirname(os.path.abspath(__file__))
-            flags = self._flags
+            final_flags = self._flags
 
-        final_flags = self.make_relative_paths(flags, work_dir)
+        final_flags = self.make_relative_paths(final_flags, work_dir)
 
         log.debug('final_flags: %s\n', str(final_flags))
 
