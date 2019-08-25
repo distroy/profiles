@@ -17,6 +17,7 @@ let g:Lf_WorkingDirectoryMode = 'A'
 let g:Lf_CommandMap = {
     \ '<Up>': ['<c-p>'],
     \ '<Down>': ['<c-n>'],
+    \ '<C-]>': ['<c-v>'],
 \ }
 
 let g:Lf_WildIgnore = {
