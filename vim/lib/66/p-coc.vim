@@ -83,8 +83,8 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
@@ -117,12 +117,8 @@ nmap <silent> <c-w>gr :<c-u>call CocAction('jumpReferences', "tab drop")<CR>
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'vertical' 'help' expand('<cword>')
-  else
+function! g:ld.help()
     call CocAction('doHover')
-  endif
 endfunction
 
 " Highlight symbol under cursor on CursorHold

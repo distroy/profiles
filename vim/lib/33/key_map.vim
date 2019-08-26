@@ -3,10 +3,6 @@
 "
 
 
-" vertical help
-nnoremap <F1> :execute printf(':vertical help %s', expand('<cword>'))<CR>
-
-
 " tab move
 nnoremap <F7> gT
 nnoremap <F8> gt

@@ -3,7 +3,7 @@
 "
 
 
-if !exists('g:ld') || type(ld) != v:t_dict
+if !exists('g:ld') || type(g:ld) != v:t_dict
     let g:ld = {}
 endif
 
@@ -13,6 +13,13 @@ endif
 let g:ld.loaded_vimrc = 1
 let g:ld.vim_path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
+function! s:init_buffer()
+    if !exists('b:ld') || type(b:ld) != v:t_dict
+        let b:ld = {}
+    endif
+endfunction
+
+autocmd BufNew,BufReadPre,BufWinEnter,BufNewFile * call <SID>init_buffer()
 
 function s:ld_import_lib()
     let l:base = g:ld.vim_path . '/lib/'
