@@ -99,23 +99,29 @@ nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " mapping keys goto
-" nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> <c-]> :<c-u>call CocAction('jumpDefinition', "tab drop")<CR>
-nmap <silent> <c-w>] :<c-u>call CocAction('jumpDefinition', "tab drop")<CR>
-nmap <silent> gd :<c-u>call CocAction('jumpDefinition')<CR>
-nmap <silent> <c-w>gd :<c-u>call CocAction('jumpDefinition', "tab drop")<CR>
-" nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gy :<c-u>call CocAction('jumpTypeDefinition')<CR>
-nmap <silent> <c-w>gy :<c-u>call CocAction('jumpTypeDefinition', "tab drop")<CR>
-" nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gi :<c-u>call CocAction('jumpImplementation')<CR>
-nmap <silent> <c-w>gi :<c-u>call CocAction('jumpImplementation', "tab drop")<CR>
-" nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gr :<c-u>call CocAction('jumpReferences')<CR>
-nmap <silent> <c-w>gr :<c-u>call CocAction('jumpReferences', "tab drop")<CR>
+function! s:goto(action, args)
+    if len(a:args) == 0 || a:args[0] != 'tab'
+        call CocAction(a:action)
+    else
+        call CocAction(a:action, 'tab drop')
+    endif
+endfunction
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nmap <silent> gd <Plug>(coc-definition)
+function! g:ld.goto.definition(...)
+    call <SID>goto('jumpDefinition', a:000)
+endfunction
+" nmap <silent> gi <Plug>(coc-implementation)
+function! g:ld.goto.implementation(...)
+    call <SID>goto('jumpImplementation', a:000)
+endfunction
+" nmap <silent> gr <Plug>(coc-references)
+function! g:ld.goto.references(...)
+    call <SID>goto('jumpReferences', a:000)
+endfunction
+" " nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gy :<c-u>call CocAction('jumpTypeDefinition')<CR>
+" nmap <silent> <c-w>gy :<c-u>call CocAction('jumpTypeDefinition', "tab drop")<CR>
 
 function! g:ld.help()
     call CocAction('doHover')

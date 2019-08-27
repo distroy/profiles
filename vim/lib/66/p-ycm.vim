@@ -65,9 +65,13 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 
 " 跳转到定义处
-autocmd FileType * nnoremap <buffer> <silent> <C-w><C-]> :<C-u>tab YcmCompleter GoTo<CR>
-autocmd FileType * nnoremap <buffer> <silent> <C-w>] :<C-u>tab YcmCompleter GoTo<CR>
-autocmd FileType * nnoremap <buffer> <silent> <C-]> :<C-u>YcmCompleter GoTo<CR>
+function! g:ld.goto.definition(...)
+    if len(a:000) == 0 || a:000[0] != 'tab'
+        YcmCompleter GoTo
+    else
+        tab YcmCompleter GoTo
+    endif
+endfunction
 
 let g:ycm_show_diagnostics_ui = 0
 let g:ycm_error_symbol = '>>'
