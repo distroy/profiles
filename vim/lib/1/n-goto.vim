@@ -17,6 +17,10 @@ function! s:goto_references(...)
     call <SID>goto('references', a:000)
 endfunction
 
+function! s:goto_rename(...)
+    call <SID>goto('rename', a:000)
+endfunction
+
 function! s:goto(name, args)
     if has_key(b:ld.goto, a:name)
         call call(b:ld.goto[a:name], a:args)
@@ -26,6 +30,7 @@ function! s:goto(name, args)
         call call(g:ld.goto[a:name], a:args)
         return
     endif
+    echoerr 'cannot goto '. name
 endfunction
 
 
@@ -39,3 +44,6 @@ nmap <silent> <c-w>gi :<c-u>call <SID>goto_implementation('tab')<CR>
 
 nmap <silent> gr :<c-u>call <SID>goto_references()<CR>
 nmap <silent> <c-w>gr :<c-u>call <SID>goto_references('tab')<CR>
+
+nmap <silent> gR :<c-u>call <SID>goto_rename()<CR>
+nmap <silent> <c-w>gR :<c-u>call <SID>goto_rename('tab')<CR>
