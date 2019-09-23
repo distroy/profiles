@@ -10,16 +10,14 @@ if !g:ld.plug.has('coc.nvim') | finish | endif
 " coc-python
 " coc-go
 
-call coc#add_extension(
-    \ 'coc-pairs',
-    \ 'coc-json',
-    \ 'coc-tsserver',
-    \ 'coc-vimlsp',
-    \ 'coc-pyls',
-    \ 'coc-go',
-    \ 'coc-ccls',
-    \ 'coc-sql',
-    \ )
+call coc#add_extension('coc-pairs')
+call coc#add_extension('coc-json')
+call coc#add_extension('coc-tsserver')
+call coc#add_extension('coc-vimlsp')
+call coc#add_extension('coc-pyls')
+call coc#add_extension('coc-go')
+call coc#add_extension('coc-ccls')
+call coc#add_extension('coc-sql')
 
 call coc#config('coc.preferences.timeout', 500)
 call coc#config('coc.preferences.rootPatterns', ['.root', '.svn', '.git', '.hg', '.project'])
