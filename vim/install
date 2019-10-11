@@ -21,6 +21,9 @@ cat >>$WRITE_FILE <<EOF
 source ${SOURCE_DIR/#$HOME/\$HOME}/vimrc
 EOF
 
+mkdir -pv $HOME/.config/nvim
+ln -sv $HOME/.vimrc $HOME/.config/nvim/init.vim
+
 timestamp=$(date +%Y%m%d%H%M%S)
 test -f $HOME/.clang-format && cp $HOME/.clang-format $HOME/.clang-format-$timestamp
 cp -v $CLANG_FORMAT $HOME/.clang-format
