@@ -29,8 +29,8 @@ call coc#config('suggest.timeout', 500)             " 调整补全超时时间
 call coc#config('suggest.enablePreview', v:false)   " 让vim 弹出预览窗口
 call coc#config('suggest.noselect', v:true)         " 补全开启时不选中第一项
 call coc#config('suggest.minTriggerInputLength', 1) " 设置最少补全触发字符数
-" call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段的提示字符⭐︎
-call coc#config('suggest.snippetIndicator', "\u2729")       " 改变代码片段的提示字符✩
+call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段的提示字符⭐︎
+" call coc#config('suggest.snippetIndicator', "\u2729")       " 改变代码片段的提示字符✩
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
 " call coc#config('suggest.keepCompleteopt', v:true)
 
