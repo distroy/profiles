@@ -16,7 +16,7 @@ call coc#add_extension('coc-tsserver')
 call coc#add_extension('coc-vimlsp')
 call coc#add_extension('coc-pyls')
 call coc#add_extension('coc-go')
-call coc#add_extension('coc-ccls')
+" call coc#add_extension('coc-ccls')
 call coc#add_extension('coc-sql')
 
 call coc#config('coc.preferences.timeout', 500)
@@ -33,6 +33,13 @@ call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段
 " call coc#config('suggest.snippetIndicator', "\u2729")       " 改变代码片段的提示字符✩
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
 " call coc#config('suggest.keepCompleteopt', v:true)
+
+call coc#config('languageserver.ccls', {
+    \   'command': "ccls",
+    \   "filetypes": ["c", "cpp", "objc", "objcpp"],
+    \   'rootPatterns': [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+    \   'initializationOptions': g:ld.ccls.init_options,
+    \ })
 
 call coc#config('diagnostic.enable', v:true)
 call coc#config('diagnostic.displayByAle', v:true)

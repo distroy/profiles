@@ -23,6 +23,10 @@ let g:ale_echo_msg_format = '[%linter%] [%severity%]% (code)%: %s'
 
 " let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
+" ccls
+let g:ale_c_ccls_init_options       = g:ld.ccls.init_options
+let g:ale_cpp_ccls_init_options     = g:ld.ccls.init_options
+let g:ale_objc_ccls_init_options    = g:ld.ccls.init_options
 
 let g:ale_set_signs = 1
 
@@ -38,7 +42,7 @@ highlight clear ALEStyleInfoSign
 " highlight ALEStyleWarning ctermbg=Yellow
 " highlight ALEStyleInfo ctermbg=None
 
-autocmd FileType python call <SID>ld_clear_ale_highlight()
+" autocmd FileType python call <SID>ld_clear_ale_highlight()
 
 function s:ld_clear_ale_highlight()
     highlight clear ALEError
