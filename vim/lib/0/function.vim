@@ -29,3 +29,9 @@ function! g:ld._namespace(o, args)
     endfor
     return l:o
 endfunction
+
+function! g:ld.cache_directory(name)
+    let l:directory = '~/.cache/' . a:name
+    let l:directory = fnamemodify(l:directory, ':p:h')
+    return l:directory
+endfunction
