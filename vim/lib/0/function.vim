@@ -31,7 +31,8 @@ function! g:ld._namespace(o, args)
 endfunction
 
 function! g:ld.cache_directory(name)
-    let l:directory = '~/.cache/' . a:name
+    let l:directory = '~/.cache'
     let l:directory = fnamemodify(l:directory, ':p:h')
+    let l:directory = l:directory . '/' . a:name
     return l:directory
 endfunction
