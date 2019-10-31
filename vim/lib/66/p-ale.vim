@@ -38,14 +38,6 @@ highlight clear ALEStyleErrorSign
 highlight clear ALEStyleWarningSign
 highlight clear ALEStyleInfoSign
 
-" highlight ALEStyleError ctermbg=Red
-" highlight ALEStyleWarning ctermbg=Yellow
-" highlight ALEStyleInfo ctermbg=None
-
-" autocmd FileType python call <SID>ld_clear_ale_highlight()
-
-function s:ld_clear_ale_highlight()
-    highlight clear ALEError
-    highlight clear ALEWarning
-    highlight clear ALEInfo
-endfunction
+highlight ALEWarning ctermbg=Blue ctermfg=White
+highlight ALEError ctermbg=Red ctermfg=White
+highlight clear ALEInfo
