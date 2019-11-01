@@ -7,6 +7,7 @@ augroup ld.new_files
     autocmd BufNewFile *.[ch]pp     call s:nf_c_family(0)
     autocmd BufNewFile *.[ch]       call s:nf_c_family(0)
     autocmd BufNewFile *.go         call s:nf_golang(0)
+    autocmd BufNewFile *.proto      call s:nf_protobuf(0)
 
     autocmd BufNewFile *.java       call s:nf_c_family(0)
 
@@ -316,4 +317,14 @@ function! s:nf_golang(line)
 
     call s:cursor(l:p, 9)
     return l:l
+endfunction
+
+function! s:nf_protobuf(line)
+    let l:l = a:line
+    let l:mod = expand('%:p:h:t')
+
+    let l:l = s:infos3(l:l, '/*', ' */', ' *')
+    let l:l = s:append(l:l, '')
+    let l:l = s:append(l:l, 'syntax = "proto2";')
+    let l:l = s:append(l:l, 'package ' . l:mod . ';')
 endfunction
