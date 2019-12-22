@@ -3,7 +3,7 @@
 "
 
 
-if !exists('g:ld') || type(g:ld) != v:t_dict
+if !exists('g:ld') || type(g:ld) != type({})
     let g:ld = {}
 endif
 

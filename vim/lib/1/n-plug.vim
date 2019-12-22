@@ -84,7 +84,7 @@ function! s:parse_list(args)
     if len(a:args) == 0
         return []
     endif
-    if len(a:args) == 1 && type(a:args[0]) == v:t_list
+    if len(a:args) == 1 && type(a:args[0]) == g:LD.T_LIST
         return a:args[0]
     endif
     return a:args

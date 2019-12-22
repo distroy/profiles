@@ -23,6 +23,6 @@ if !exists('g:ld.copyright')
     endif
 
     call add(g:ld.copyright, 'Copyright (C) ' . g:ld.user)
-elseif type(g:ld.copyright) != v:t_list
+elseif type(g:ld.copyright) != type([])
     let g:ld.copyright = [g:ld.copyright]
 endif

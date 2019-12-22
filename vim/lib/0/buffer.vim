@@ -4,7 +4,7 @@
 
 
 function! s:init_buffer()
-    if !exists('b:ld') || type(b:ld) != v:t_dict
+    if !exists('b:ld') || type(b:ld) != type({})
         let b:ld = {}
         for l:v in values(g:ld._ns_cache)
             call g:ld._namespace(b:, l:v)
