@@ -27,6 +27,7 @@ call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
 call coc#config('suggest.autoTrigger', "always")
 call coc#config('suggest.timeout', 500)             " 调整补全超时时间
 call coc#config('suggest.enablePreview', v:false)   " 让vim 弹出预览窗口
+call coc#config('suggest.enablePreselect', v:false) " 关闭neovim的预选功能
 call coc#config('suggest.noselect', v:true)         " 补全开启时不选中第一项
 call coc#config('suggest.minTriggerInputLength', 1) " 设置最少补全触发字符数
 call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段的提示字符⭐︎
