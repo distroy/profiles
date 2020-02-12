@@ -61,7 +61,7 @@ call s:add('mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']})
 call s:add('groenewege/vim-less', {'for': ['less']})
 call s:add('mbbill/undotree')
 " call s:add('Raimondi/delimitMate') " auto close
-call s:add('fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': ['go'] })
+call s:add('fatih/vim-go', { 'for': ['go'] })
 call s:add('ludovicchabant/vim-gutentags')
 
 call s:add('Yggdroot/LeaderF', {
