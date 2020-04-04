@@ -65,7 +65,7 @@ call s:add('fatih/vim-go', {
     \ 'on': 'GoUpdateBinaries',
     \ 'for': ['go'],
     \ })
-call s:add('ludovicchabant/vim-gutentags')
+" call s:add('ludovicchabant/vim-gutentags')
 
 call s:add('Yggdroot/LeaderF', {
     \ 'win': { 'do': '.\install.bat' },
