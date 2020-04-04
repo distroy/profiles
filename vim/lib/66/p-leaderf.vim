@@ -13,18 +13,27 @@ nnoremap <silent> <F2> :Leaderf bufTag<CR>
 nnoremap <silent> <c-p> :Leaderf file<CR>
 
 
-let g:Lf_WorkingDirectoryMode = 'A'
+let g:Lf_WindowPosition = 'popup'
+" let g:Lf_PopupColorscheme = 'default'
+
+" let g:Lf_PreviewCode = 1
+let g:Lf_PreviewInPopup = 1
+
+let g:Lf_WorkingDirectoryMode = 'Ac'
+
 let g:Lf_CommandMap = {
     \ '<Up>': ['<c-p>'],
     \ '<Down>': ['<c-n>'],
     \ '<C-]>': ['<c-v>'],
 \ }
 
+" let g:Lf_UseVersionControlTool = 0
 let g:Lf_WildIgnore = {
     \ 'dir': [
         \ '.svn',
         \ '.git',
         \ '.hg',
+        \ 'vendor',
         \ 'node_modules',
     \ ],
     \ 'file': [
