@@ -20,6 +20,3 @@ let s:wildignore .= ',*.jpg,*.ttf,*.TTF,*.png,*.svg'
 let s:wildignore .= ',.git,.svn,.hg'
 let s:wildignore .= ',.DS_Store'
 execute 'set wildignore+=' . s:wildignore
-
-highlight wildmenu ctermfg=black ctermbg=yellow
-highlight statusline cterm=bold ctermfg=white ctermbg=238
