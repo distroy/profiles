@@ -80,14 +80,25 @@ let g:LD.COLOR.DARK_LAVENDER   = [97, "#875faf"]
 
 function! g:ld.highlight(name, fg, bg, style)
     let l:l = ['highlight', a:name]
-    let l:l = add(l:l, 'ctermfg=' . a:fg[0])
-    let l:l = add(l:l, 'ctermbg=' . a:bg[0])
-    if a:fg[1] != ''
+
+    if type(a:fg) == g:LD.T_LIST
+        let l:l = add(l:l, 'ctermfg=' . a:fg[0])
+    else
+        let l:l = add(l:l, 'ctermfg=' . a:fg)
+    endif
+    if type(a:bg) == g:LD.T_LIST
+        let l:l = add(l:l, 'ctermbg=' . a:bg[0])
+    else
+        let l:l = add(l:l, 'ctermbg=' . a:bg)
+    endif
+
+    if type(a:fg) == g:LD.T_LIST && a:fg[1] != ''
         let l:l = add(l:l, 'guifg=' . a:fg[1])
     endif
-    if a:bg[1] != ''
+    if type(a:bg) == g:LD.T_LIST && a:bg[1] != ''
         let l:l = add(l:l, 'guibg=' . a:bg[1])
     endif
+
     if a:style != ''
         let l:l = add(l:l, 'cterm=' . a:style)
         let l:l = add(l:l, 'gui=' . a:style)
