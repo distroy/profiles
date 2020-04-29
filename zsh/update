@@ -1,0 +1,15 @@
+#! /usr/bin/env bash
+#
+# Copyright (C) distroy
+#
+
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+SOURCE_DIR="$PWD"
+source ../update
+
+
+
+cd "$SOURCE_DIR/oh-my-zsh"
+git pull
+cd "$SOURCE_DIR"
