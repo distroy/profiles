@@ -8,6 +8,8 @@ if !g:ld.plug.has('vim-go') | finish | endif
 let g:go_template_autocreate = 0
 let g:go_fold_enable = ['block', 'import', 'varconst', 'comment', 'package_comment']
 
+let g:go_doc_popup_window = 1
+let g:go_imports_autosave = 1
 let g:go_highlight_format_strings = 1
 " let g:go_highlight_variable_declarations = 1
 " let g:go_highlight_variable_assignments = 1
