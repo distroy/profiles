@@ -284,36 +284,8 @@ function! s:nf_golang(line)
     let l:l = s:append(l:l, '')
     let l:l = s:append(l:l, 'package ' . l:mod)
     let l:p = l:l
-    let l:l = s:append(l:l, '')
-    let l:l = s:append(l:l, 'import (')
-    let l:l = s:append(l:l, '    "bytes"')
-    let l:l = s:append(l:l, '    "fmt"')
-    let l:l = s:append(l:l, '    "log"')
-    let l:l = s:append(l:l, '    "math"')
-    let l:l = s:append(l:l, '    "os"')
-    let l:l = s:append(l:l, '    "strconv"')
-    let l:l = s:append(l:l, '    "strings"')
-    let l:l = s:append(l:l, '    "sync"')
-    let l:l = s:append(l:l, '    "time"')
-    if l:testing
-        let l:l = s:append(l:l, '    "testing"')
-    endif
-    let l:l = s:append(l:l, ')')
-
-    let l:l = s:append(l:l, '')
-    let l:l = s:append(l:l, "// Always reference these packages, just in case the auto-generated code below doesn't.")
-    let l:l = s:append(l:l, 'var _ = bytes.NewBuffer')
-    let l:l = s:append(l:l, 'var _ = fmt.Sprintf')
-    let l:l = s:append(l:l, 'var _ = log.New')
-    let l:l = s:append(l:l, 'var _ = math.Abs')
-    let l:l = s:append(l:l, 'var _ = os.Exit')
-    let l:l = s:append(l:l, 'var _ = strconv.Itoa')
-    let l:l = s:append(l:l, 'var _ = strings.Replace')
-    let l:l = s:append(l:l, 'var _ = sync.NewCond')
-    let l:l = s:append(l:l, 'var _ = time.Now')
-    if l:testing
-        let l:l = s:append(l:l, 'var _ = testing.Main')
-    endif
+    " let l:l = s:append(l:l, '')
+    " let l:l = s:append(l:l, 'import ()')
 
     call s:cursor(l:p, 9)
     return l:l
