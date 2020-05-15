@@ -17,8 +17,10 @@
     co = checkout
     ci = commit
     df = diff
-    lg = log --color --graph --date-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
-    lga = log --color --graph --date-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\" --all
+    # lg = log --color --graph --date-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
+    # lga = log --color --graph --date-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\" --all
+    lg = log --color --graph --topo-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
+    lga = log --color --graph --topo-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\" --all
     st = status
 [log]
     date = iso-local
