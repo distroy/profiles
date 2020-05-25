@@ -133,50 +133,11 @@ function! g:ld.goto.references(...)
 endfunction
 " " nmap <silent> gy <Plug>(coc-type-definition)
 " nmap <silent> gy :<c-u>call CocAction('jumpTypeDefinition')<CR>
+" nmap <silent> <c-w>gy :<c-u>call CocAction('jumpTypeDefinition', "tab drop")<CR>
+
 function! g:ld.goto.rename(...)
     call <SID>goto('rename', a:000)
 endfunction
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" mapping keys goto
-function! s:goto(action, args)
-    if len(a:args) == 0 || a:args[0] != 'tab'
-        call CocAction(a:action)
-    else
-        call CocAction(a:action, 'tab drop')
-    endif
-endfunction
-
-" nmap <silent> gd <Plug>(coc-definition)
-function! g:ld.goto.definition(...)
-    call <SID>goto('jumpDefinition', a:000)
-endfunction
-" nmap <silent> gi <Plug>(coc-implementation)
-function! g:ld.goto.implementation(...)
-    call <SID>goto('jumpImplementation', a:000)
-endfunction
-" nmap <silent> gr <Plug>(coc-references)
-function! g:ld.goto.references(...)
-    call <SID>goto('jumpReferences', a:000)
-endfunction
-" " nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gy :<c-u>call CocAction('jumpTypeDefinition')<CR>
-" nmap <silent> <c-w>gy :<c-u>call CocAction('jumpTypeDefinition', "tab drop")<CR>
 
 function! g:ld.help()
     call CocAction('doHover')
