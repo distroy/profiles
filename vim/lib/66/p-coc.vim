@@ -143,9 +143,6 @@ function! g:ld.help()
     call CocAction('doHover')
 endfunction
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Remap for rename current word
 " nmap <leader>rn <Plug>(coc-rename)
 command! -nargs=0 CocRename :call CocAction('rename')
@@ -160,6 +157,8 @@ augroup ld_coc_group
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
     " Update signature help on jump placeholder
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
