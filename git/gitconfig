@@ -26,6 +26,8 @@
     date = iso-local
 [push]
     default = simple
+[pull]
+    rebase = false
 [i18n]
     filesEncoding = utf-8
 [credential]
