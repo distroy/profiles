@@ -30,7 +30,7 @@ function! s:goto(name, args)
         call call(g:ld.goto[a:name], a:args)
         return
     endif
-    echoerr 'cannot goto '. name
+    echoerr 'cannot goto '. a:name
 endfunction
 
 
