@@ -4,12 +4,8 @@
 
 
 if !g:ld.plug.has('coc.nvim') | finish | endif
-if !exists('g:did_coc_loaded') | finish | endif
 
-" coc-json
-" coc-vimlsp
 " coc-python
-" coc-go
 
 call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-json')
@@ -157,9 +153,9 @@ augroup ld_coc_group
     " Setup formatexpr specified filetype(s).
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
     " Update signature help on jump placeholder
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    autocmd User CocJumpPlaceholder if exists('*CocActionAsync') | call CocActionAsync('showSignatureHelp') | endif
     " Highlight symbol under cursor on CursorHold
-    autocmd CursorHold * silent call CocActionAsync('highlight')
+    autocmd CursorHold * silent if exists('*CocActionAsync') | call CocActionAsync('highlight') | endif
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
