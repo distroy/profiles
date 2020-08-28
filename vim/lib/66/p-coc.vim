@@ -4,6 +4,7 @@
 
 
 if !g:ld.plug.has('coc.nvim') | finish | endif
+if !exists('g:did_coc_loaded') | finish | endif
 
 " coc-json
 " coc-vimlsp
