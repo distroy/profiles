@@ -12,11 +12,22 @@ else
     call g:ld.plug.disable('LeaderF')
 endif
 
+if has('nvim')
+    if !has('timers') || !has('nvim-0.2.0')
+        call g:ld.plug.disable('ale')
+    endif
+else
+    if !has('timers') || !exists('*job_start') || !exists('*ch_close_in')
+        call g:ld.plug.disable('ale')
+    endif
+endif
+
 if version <= 740
     call g:ld.plug.disable('YouCompleteMe')
 endif
 if version < 800
     call g:ld.plug.disable('vim-go', 'vim-gutentags', 'coc.nvim')
+    call g:ld.plug.disable('echodoc.vim')
 endif
 if has('lua')
     call g:ld.plug.disable('neocomplete.vim')
