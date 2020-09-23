@@ -22,5 +22,4 @@ alias tailf='tail -F'
 alias p='ps f -fj'
 alias pu='ps f -fj -u $UID -U $UID'
 
-alias history='fc -l -t "%F %T"'
 alias where='which -a'
