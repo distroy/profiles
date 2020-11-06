@@ -110,9 +110,9 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 " mapping keys goto
 function! s:goto(action, args)
     if len(a:args) == 0 || a:args[0] != 'tab'
-        call CocAction(a:action)
+        call CocActionAsync(a:action)
     else
-        call CocAction(a:action, 'tab drop')
+        call CocActionAsync(a:action, 'tab drop')
     endif
 endfunction
 
@@ -129,20 +129,20 @@ function! g:ld.goto.references(...)
     call <SID>goto('jumpReferences', a:000)
 endfunction
 " " nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gy :<c-u>call CocAction('jumpTypeDefinition')<CR>
-" nmap <silent> <c-w>gy :<c-u>call CocAction('jumpTypeDefinition', "tab drop")<CR>
+" nmap <silent> gy :<c-u>call CocActionAsync('jumpTypeDefinition')<CR>
+" nmap <silent> <c-w>gy :<c-u>call CocActionAsync('jumpTypeDefinition', "tab drop")<CR>
 
 function! g:ld.goto.rename(...)
     call <SID>goto('rename', a:000)
 endfunction
 
 function! g:ld.help()
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
 endfunction
 
 " Remap for rename current word
 " nmap <leader>rn <Plug>(coc-rename)
-command! -nargs=0 CocRename :call CocAction('rename')
+command! -nargs=0 CocRename :call CocActionAsync('rename')
 
 " Remap for format selected region
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -151,7 +151,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 augroup ld_coc_group
     autocmd!
     " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
     " Update signature help on jump placeholder
     autocmd User CocJumpPlaceholder if exists('*CocActionAsync') | call CocActionAsync('showSignatureHelp') | endif
     " Highlight symbol under cursor on CursorHold
@@ -173,13 +173,13 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
 " Use `:Format` to format current buffer
-command! -nargs=0 CocFormat :call CocAction('format')
+command! -nargs=0 CocFormat :call CocActionAsync('format')
 
 " Use `:Fold` to fold current buffer
-command! -nargs=? CocFold :call CocAction('fold', <f-args>)
+command! -nargs=? CocFold :call CocActionAsync('fold', <f-args>)
 
 " use `:OR` for organize import of current buffer
-command! -nargs=0 CocOR :call CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 CocOR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
