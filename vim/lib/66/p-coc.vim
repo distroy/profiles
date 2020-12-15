@@ -32,13 +32,6 @@ call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
 " call coc#config('suggest.keepCompleteopt', v:true)
 
-call coc#config('languageserver.ccls', {
-    \   'command': "ccls",
-    \   "filetypes": ["c", "cpp", "objc", "objcpp"],
-    \   'rootPatterns': [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-    \   'initializationOptions': g:ld.ccls.init_options,
-    \ })
-
 call coc#config('diagnostic.enable', v:true)
 call coc#config('diagnostic.displayByAle', v:true)
 call coc#config('diagnostic.level', "warning")
@@ -49,6 +42,13 @@ highlight CocErrorSign ctermfg=Black ctermbg=Red guifg=#ff0000
 highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
 highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
+
+call coc#config('languageserver.ccls', {
+    \   'command': "ccls",
+    \   "filetypes": ["c", "cpp", "objc", "objcpp"],
+    \   'rootPatterns': [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+    \   'initializationOptions': g:ld.ccls.init_options,
+    \ })
 
 function! g:ld.current_function()
     return get(b:, 'coc_current_function', '')

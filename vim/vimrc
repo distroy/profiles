@@ -17,7 +17,6 @@ function s:ld_import_lib()
     let l:base = g:ld.vim_path . '/lib/'
     for l:idx in range(0, 100)
         let l:path = l:base . l:idx
-        let l:idx += 1
         if isdirectory(l:path)
             for l:file in split(globpath(l:path, '*.vim'), '\n')
                 execute 'source' l:file
