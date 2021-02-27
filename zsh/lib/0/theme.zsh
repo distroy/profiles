@@ -19,7 +19,7 @@ function __ld_right_prompt() {
     r=$1
     h=$(hostname -I 2>/dev/null || echo %m)
     c=`((r == 0)) && echo $FG[243] || echo $FG[009]`
-    echo "$c%D{%Y-%d-%mT%H:%M:%S}[%?] %n@$h:%l%{$reset_color%}%"
+    echo "$c%D{%Y-%m-%dT%H:%M:%S}[%?] %n@$h:%l%{$reset_color%}%"
 }
 
 
