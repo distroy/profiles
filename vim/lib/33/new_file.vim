@@ -88,8 +88,10 @@ endfunction
 
 function! s:nf_js(line)
     let l:l = a:line
+    let l:l = s:append(l:l, '#! /usr/bin/env node')
     let l:l = s:infos3(l:l, '/*', ' */', ' *')
     let l:l = s:append(l:l, '')
+    let l:l = s:append(l:l, '"use strict";')
 
     return l:l
 endfunction
