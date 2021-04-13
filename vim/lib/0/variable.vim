@@ -14,15 +14,4 @@ endfunction
 
 call s:init_variable('user', "distroy")
 call s:init_variable('email', "distroy@163.com")
-
-
-if !exists('g:ld.copyright')
-    let g:ld.copyright = []
-    if exists('g:ld.company')
-        call add(g:ld.copyright, 'Copyright (C) ' . g:ld.company)
-    endif
-
-    call add(g:ld.copyright, 'Copyright (C) ' . g:ld.user)
-elseif type(g:ld.copyright) != type([])
-    let g:ld.copyright = [g:ld.copyright]
-endif
+call s:init_variable('copyright', [])

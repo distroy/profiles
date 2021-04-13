@@ -49,6 +49,27 @@ function! s:cursor(row, ...)
     endif
 endfunction
 
+function! s:get_copyright()
+    let l:copyright = []
+    if exists('g:ld.copyright')
+        if type(g:ld.copyright) != g:LD.T_LIST
+            return [g:ld.copyright]
+        endif
+
+        let l:copyright = g:ld.copyright
+    endif
+
+    if len(l:copyright) > 0
+        return l:copyright
+    endif
+
+    if exists('g:ld.company')
+        call add(l:copyright, 'Copyright (C) ' . g:ld.company)
+    endif
+    call add(l:copyright, 'Copyright (C) ' . g:ld.user)
+
+    return l:copyright
+endfunction
 
 function! s:delete(line)
     delete
@@ -66,7 +87,7 @@ function! s:infos2(line, prefix, suffix)
     let l:prefix    = a:prefix . ' '
     let l:suffix    = ' ' . a:suffix
 
-    for l:info in g:ld.copyright
+    for l:info in s:get_copyright()
         let l:l = s:append(l:l, l:prefix . l:info. l:suffix)
     endfor
     return l:l
@@ -78,7 +99,7 @@ function! s:infos3(line, start, end, prefix)
     let l:prefix    = a:prefix . ' '
 
     let l:l = s:append(l:l, a:start)
-    for l:info in g:ld.copyright
+    for l:info in s:get_copyright()
         let l:l = s:append(l:l, l:prefix . l:info)
     endfor
     let l:l = s:append(l:l, a:end)
