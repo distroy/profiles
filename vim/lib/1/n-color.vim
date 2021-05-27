@@ -5,9 +5,10 @@
 
 let g:LD.COLOR = {}
 
+let g:LD.COLOR.NONE            = ['NONE', ""]
+
 let g:LD.COLOR.BLACK           = [16, "#000000"]
 let g:LD.COLOR.WHITE           = [231, "#ffffff"]
-let g:LD.COLOR.NONE            = ["NONE", ""]
 
 let g:LD.COLOR.BROWN           = ['Brown', "a52a2a"]
 let g:LD.COLOR.LIGHT_GRAY      = ['LightGray', "#d3d3d3"]
