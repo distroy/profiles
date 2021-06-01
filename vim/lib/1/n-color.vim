@@ -6,6 +6,7 @@
 let g:LD.COLOR = {}
 
 let g:LD.COLOR.NONE            = ['NONE', ""]
+let g:LD.COLOR.NULL            = ['', ""]
 
 let g:LD.COLOR.BLACK           = [16, "#000000"]
 let g:LD.COLOR.WHITE           = [231, "#ffffff"]
@@ -82,15 +83,15 @@ let g:LD.COLOR.DARK_LAVENDER   = [97, "#875faf"]
 function! g:ld.highlight(name, fg, bg, style)
     let l:l = ['highlight', a:name]
 
-    if type(a:fg) == g:LD.T_LIST
-        let l:l = add(l:l, 'ctermfg=' . a:fg[0])
-    else
+    if type(a:fg) != g:LD.T_LIST
         let l:l = add(l:l, 'ctermfg=' . a:fg)
+    elseif a:fg[0] != ''
+        let l:l = add(l:l, 'ctermfg=' . a:fg[0])
     endif
-    if type(a:bg) == g:LD.T_LIST
-        let l:l = add(l:l, 'ctermbg=' . a:bg[0])
-    else
+    if type(a:bg) != g:LD.T_LIST
         let l:l = add(l:l, 'ctermbg=' . a:bg)
+    elseif a:bg[0] != ''
+        let l:l = add(l:l, 'ctermbg=' . a:bg[0])
     endif
 
     if type(a:fg) == g:LD.T_LIST && a:fg[1] != ''
@@ -104,6 +105,7 @@ function! g:ld.highlight(name, fg, bg, style)
         let l:l = add(l:l, 'cterm=' . a:style)
         let l:l = add(l:l, 'gui=' . a:style)
     endif
+
     let l:cmd = join(l:l, ' ')
     execute l:cmd
 endfunction
