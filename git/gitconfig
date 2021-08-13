@@ -43,3 +43,5 @@
 [difftool "tmerge"]
     path = D:/App/TortoiseMerge/cyggit-diff.sh
     cmd = \"D:/App/TortoiseMerge/cyggit-diff.sh\" \"$LOCAL\" \"$REMOTE\"
+[url "git@github.com:"]
+	insteadOf = https://github.com/
