@@ -21,7 +21,7 @@ endfunction
 
 function! g:ld._save_ns_cache(args)
     let l:args = a:args
-    if l:args[0] == 'ld'
+    if len(l:args) > 0 && l:args[0] == 'ld'
         let g:ld._ns_cache[join(l:args, '.')] = l:args
     endif
 endfunction
@@ -47,7 +47,7 @@ function! g:ld.namespace(...)
         if type(l:args[0]) != type('')
             return
         endif
-        let l:args = g:ld.split(l:args[0], '.')
+        let l:args = g:ld.split(l:args[0], '\.')
     endif
 
     let l:first = l:args[0]
@@ -89,12 +89,27 @@ function! g:ld._namespace(o, args)
 endfunction
 
 function! g:ld.setnx(...)
-    if len(a:000) < 3
+    if len(a:000) < 2
+        echoerr 'g:ld.setnx must have at least 2 parameters'
         return
     endif
-    let l:path = a:000[:-3]
-    let l:key = a:000[-2]
-    let l:value = a:000[-1]
+
+    if len(a:000) > 2
+        let l:path = a:000[:-3]
+        let l:key = a:000[-2]
+        let l:value = a:000[-1]
+    else
+        let l:value = a:000[1]
+        let l:args = g:ld.split(a:000[0], '\.')
+        if len(l:args) > 1
+            let l:path = l:args[:-2]
+            let l:key = l:args[-1]
+        else
+            let l:path = 'g:'
+            let l:key = l:args[0]
+        endif
+    endif
+
     let l:obj = g:ld.namespace(l:path)
     if !has_key(l:obj, l:key)
         let l:obj[l:key] = l:value
@@ -102,12 +117,27 @@ function! g:ld.setnx(...)
 endfunction
 
 function! g:ld.set(...)
-    if len(a:000) < 3
+    if len(a:000) < 2
+        echoerr 'g:ld.setnx must have at least 2 parameters'
         return
     endif
-    let l:path = a:000[:-3]
-    let l:key = a:000[-2]
-    let l:value = a:000[-1]
+
+    if len(a:000) > 2
+        let l:path = a:000[:-3]
+        let l:key = a:000[-2]
+        let l:value = a:000[-1]
+    else
+        let l:value = a:000[1]
+        let l:args = g:ld.split(a:000[0], '\.')
+        if len(l:args) > 1
+            let l:path = l:args[:-2]
+            let l:key = l:args[-1]
+        else
+            let l:path = 'g:'
+            let l:key = l:args[0]
+        endif
+    endif
+
     let l:obj = g:ld.namespace(l:path)
     let l:obj[l:key] = l:value
 endfunction

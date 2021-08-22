@@ -49,6 +49,20 @@ function! s:cursor(row, ...)
     endif
 endfunction
 
+function! s:get_username()
+    if exists('g:ld.user')
+        return g:ld.user
+    endif
+
+    let l:cmd = 'git config user.name'
+    let l:out = system(l:cmd)
+    if v:shell_error == 0
+        return trim(l:out)
+    endif
+
+    return g:ld.default.user
+endfunction
+
 function! s:get_copyright()
     let l:copyright = []
     if exists('g:ld.copyright')
@@ -66,7 +80,9 @@ function! s:get_copyright()
     if exists('g:ld.company')
         call add(l:copyright, 'Copyright (C) ' . g:ld.company)
     endif
-    call add(l:copyright, 'Copyright (C) ' . g:ld.user)
+
+    let l:user = s:get_username()
+    call add(l:copyright, 'Copyright (C) ' . l:user)
 
     return l:copyright
 endfunction
