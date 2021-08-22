@@ -68,7 +68,7 @@ call s:add('mattn/emmet-vim', {'for': ['html', 'xml']})
 " call s:add('jelera/vim-javascript-syntax')
 call s:add('pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']})
 call s:add('posva/vim-vue', {'for': 'vue'})
-call s:add('mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']})
+call s:add('MaxMEllon/vim-jsx-pretty', {'for': ['javascript', 'javascript.jsx']})
 call s:add('groenewege/vim-less', {'for': ['less']})
 call s:add('mbbill/undotree')
 " call s:add('Raimondi/delimitMate') " auto close
