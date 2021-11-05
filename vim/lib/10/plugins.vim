@@ -74,7 +74,7 @@ call s:add('mbbill/undotree')
 " call s:add('Raimondi/delimitMate') " auto close
 call s:add('fatih/vim-go', {
     \ 'on': 'GoUpdateBinaries',
-    \ 'for': ['go'],
+    \ 'for': ['go', 'gomod'],
     \ })
 " call s:add('ludovicchabant/vim-gutentags')
 
@@ -89,7 +89,9 @@ call s:add('majutsushi/tagbar')
 
 
 call s:add('Shougo/neocomplete.vim')
-call s:add('Valloric/YouCompleteMe', { 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer' })
+call s:add('Valloric/YouCompleteMe', {
+    \ 'do': './install.py --enable-coverage --ts-completer --clang-completer --go-completer'
+    \ })
 call s:add('neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' })
 " call s:add('neoclide/coc.nvim', {'do': { -> coc#util#install()}})
 
