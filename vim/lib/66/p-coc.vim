@@ -43,6 +43,15 @@ highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
 highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
 
+" go
+call coc#config('go', {
+    \   'checkForUpdates': "enable",
+    \   'goplsOptions': {
+    \       'completeUnimported': g:LD.TRUE,
+    \   },
+    \ })
+
+" cpp
 call coc#config('languageserver.ccls', {
     \   'command': "ccls",
     \   "filetypes": ["c", "cpp", "objc", "objcpp"],
@@ -50,6 +59,7 @@ call coc#config('languageserver.ccls', {
     \   'initializationOptions': g:ld.ccls.init_options,
     \ })
 
+" current function
 function! g:ld.current_function()
     return get(b:, 'coc_current_function', '')
 endfunction
