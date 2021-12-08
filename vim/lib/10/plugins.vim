@@ -74,7 +74,7 @@ call s:add('mbbill/undotree')
 " call s:add('Raimondi/delimitMate') " auto close
 call s:add('fatih/vim-go', {
     \ 'on': 'GoUpdateBinaries',
-    \ 'for': ['go', 'gomod'],
+    \ 'for': ['go', 'gomod', 'gosum'],
     \ })
 " call s:add('ludovicchabant/vim-gutentags')
 
