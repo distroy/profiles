@@ -35,6 +35,7 @@ endif
 
 call g:ld.plug.disable('YouCompleteMe')
 call g:ld.plug.disable('neocomplete.vim')
+" call g:ld.plug.disable('vim-go')
 
 
 function! s:add(n, ...)

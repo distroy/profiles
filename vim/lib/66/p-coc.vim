@@ -18,8 +18,11 @@ call coc#add_extension('coc-sql')
 
 call coc#config('coc.preferences.timeout', 500)
 call coc#config('coc.preferences.rootPatterns', ['.root', '.svn', '.git', '.hg', '.project'])
-call coc#config('coc.preferences.formatOnType', v:true)
 call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
+call coc#config('coc.preferences.formatOnType', v:true)
+call coc#config('coc.preferences.formatOnSaveFiletypes', [
+    \   'go',
+    \ ])
 
 call coc#config('suggest.autoTrigger', "always")
 call coc#config('suggest.timeout', 500)             " 调整补全超时时间
@@ -44,20 +47,15 @@ highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
 
 " go
-call coc#config('go', {
-    \   'checkForUpdates': "enable",
-    \   'goplsOptions': {
-    \       'completeUnimported': g:LD.TRUE,
-    \   },
-    \ })
+call coc#config('go.checkForUpdates', "enable")
+call coc#config('go.goplsOptions.completeUnimported', v:true)
+call coc#config('go.goplsOptions.semanticTokens', v:true)
 
 " cpp
-call coc#config('languageserver.ccls', {
-    \   'command': "ccls",
-    \   "filetypes": ["c", "cpp", "objc", "objcpp"],
-    \   'rootPatterns': [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-    \   'initializationOptions': g:ld.ccls.init_options,
-    \ })
+call coc#config('languageserver.ccls.command', "ccls")
+call coc#config('languageserver.ccls.filetypes', ["c", "cpp", "objc", "objcpp"])
+call coc#config('languageserver.ccls.rootPatterns', [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"])
+call coc#config('languageserver.ccls.initializationOptions', g:ld.ccls.init_options)
 
 " current function
 function! g:ld.current_function()
