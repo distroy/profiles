@@ -20,9 +20,7 @@ call coc#config('coc.preferences.timeout', 500)
 call coc#config('coc.preferences.rootPatterns', ['.root', '.svn', '.git', '.hg', '.project'])
 call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
 call coc#config('coc.preferences.formatOnType', v:true)
-call coc#config('coc.preferences.formatOnSaveFiletypes', [
-    \   'go',
-    \ ])
+" call coc#config('coc.preferences.formatOnSaveFiletypes', ['go'])
 
 call coc#config('suggest.autoTrigger', "always")
 call coc#config('suggest.timeout', 500)             " 调整补全超时时间
