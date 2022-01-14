@@ -46,12 +46,19 @@ function ld_cd_like() {
     max_depth=$(( max_depth > 0 ? max_depth : 1 ))
     min_depth=$(( min_depth > 0 ? min_depth : 1 ))
 
-    local key="$1"
     local dirs="$(find -L "${root_dir[@]}" -maxdepth $max_depth -mindepth $min_depth -type d -not -name '.*' | sort -f)"
 
+    local argi=0
+    local argv=( "$@" )
+    local key=
     local errmsg=
     local dir=
     while (( 1 )); do
+        if (( $argi < ${#argv[@]} )); then
+            (( argi++ ))
+            key="${argv[$argi]}"
+        fi
+
         if [[ "$key" == "" ]]; then
             ld_cd_like_echo_directories $(echo $dirs)
             if [[ "$errmsg" != "" ]]; then
@@ -93,7 +100,7 @@ function ld_cd_like() {
         key=""
         local lines=$(echo "$dir" | wc -l)
         if [[ "$lines" == "0" || "$dir" == "" ]]; then
-            errmsg="Match nothing, "
+            errmsg="Match nothing!"
             continue
         fi
         if (( lines == 1 )); then
