@@ -5,7 +5,7 @@
 
 alias top='top -d 1'
 
-alias ls='ls --color=auto --escape --time-style=+%F\ %T'
+alias ls='ls --color=auto --escape --time-style=+%FT%T%z'
 alias la='ls -a'
 alias ll='ls -l'
 alias l.='ls -d .*'

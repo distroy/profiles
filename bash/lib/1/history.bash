@@ -3,4 +3,4 @@
 #
 
 
-export HISTTIMEFORMAT="%F %T "
+export HISTTIMEFORMAT="%FT%T%z "
