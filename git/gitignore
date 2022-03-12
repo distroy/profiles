@@ -1,6 +1,11 @@
 # git ignore
 .*
 !.gitignore
+!.gitlab-ci.yml
 
 tags
 Session.vim
+
+# python
+*.pyc
+__pycache__/
