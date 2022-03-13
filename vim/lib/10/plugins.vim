@@ -32,6 +32,9 @@ endif
 if has('lua')
     call g:ld.plug.disable('neocomplete.vim')
 endif
+if executable('node') <= 0
+    call g:ld.plug.disable('coc.nvim')
+endif
 
 call g:ld.plug.disable('YouCompleteMe')
 call g:ld.plug.disable('neocomplete.vim')
