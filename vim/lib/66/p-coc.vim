@@ -22,6 +22,11 @@ call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
 call coc#config('coc.preferences.formatOnType', v:true)
 " call coc#config('coc.preferences.formatOnSaveFiletypes', ['go'])
 
+call coc#config('coc.preferences.extensionUpdateCheck', v:true)
+" call coc#config('coc.preferences.silentAutoupdate', v:true)
+call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
+call coc#config('coc.preferences.messageLevel', "more")
+
 call coc#config('suggest.autoTrigger', "always")
 call coc#config('suggest.timeout', 500)             " 调整补全超时时间
 call coc#config('suggest.enablePreview', v:false)   " 让vim 弹出预览窗口
