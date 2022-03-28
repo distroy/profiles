@@ -215,7 +215,7 @@ function! s:nf_shell(line, shell)
 
     if a:shell == 'bash'
         let l:l = s:append(l:l, '')
-        let l:l = s:append(l:l, 'SOURCE_DIR="$(dirname "$(readlink -f ${BASH_SOURCE[0]})")"')
+        let l:l = s:append(l:l, 'SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)"')
         let l:l = s:append(l:l, '')
     endif
 
