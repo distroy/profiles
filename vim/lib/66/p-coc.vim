@@ -22,7 +22,7 @@ call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
 call coc#config('coc.preferences.formatOnType', v:true)
 " call coc#config('coc.preferences.formatOnSaveFiletypes', ['go'])
 
-call coc#config('coc.preferences.extensionUpdateCheck', v:true)
+" call coc#config('coc.preferences.extensionUpdateCheck', v:true)
 " call coc#config('coc.preferences.silentAutoupdate', v:true)
 call coc#config('coc.preferences.currentFunctionSymbolAutoUpdate', v:true)
 call coc#config('coc.preferences.messageLevel', "more")
@@ -50,7 +50,7 @@ highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
 
 " go
-call coc#config('go.checkForUpdates', "enable")
+" call coc#config('go.checkForUpdates', "enable")
 " call coc#config('go.goplsOptions.completeUnimported', v:true)
 " call coc#config('go.goplsOptions.semanticTokens', v:true)
 
