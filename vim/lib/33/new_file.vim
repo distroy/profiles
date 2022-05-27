@@ -223,14 +223,35 @@ function! s:nf_shell(line, shell)
 endfunction
 
 
+function! s:nf_python_test(line)
+    let l:l = a:line
+    let l:l = s:append(l:l, 'import unittest')
+    let l:l = s:append(l:l, '')
+    let l:p = l:l
+    let l:l = s:append(l:l, '')
+    let l:l = s:append(l:l, 'if __name__ == "__main__":')
+    let l:l = s:append(l:l, '    unittest.main()')
+
+    let l:l = s:delete(l:l)
+    call s:cursor(l:p)
+    return l:l
+endfunction
+
+
 function! s:nf_python(line)
     let l:l = a:line
+
+    let l:testing = expand('%:t') =~ 'test_.*\.py'
 
     let l:l = s:append(l:l, '#! /usr/bin/env python3')
     let l:l = s:append(l:l, '# -*- coding: utf-8 -*-')
     let l:l = s:infos1(l:l, '#')
     let l:l = s:append(l:l, '')
     let l:l = s:append(l:l, '')
+    if l:testing
+        return s:nf_python_test(l:l)
+    endif
+
     let l:l = s:append(l:l, 'import traceback')
     let l:l = s:append(l:l, 'import sys')
     let l:l = s:append(l:l, 'import optparse')
@@ -318,17 +339,17 @@ endfunction
 
 function! s:nf_golang(line)
     let l:l = a:line
-    let l:testing = expand('%:t') =~ '.*_test.go'
+    " let l:testing = expand('%:t') =~ '.*_test\.go'
     let l:mod = expand('%:p:h:t')
 
     let l:l = s:infos3(l:l, '/*', ' */', ' *')
     let l:l = s:append(l:l, '')
     let l:l = s:append(l:l, 'package ' . l:mod)
-    let l:p = l:l
+    " let l:p = l:l
     " let l:l = s:append(l:l, '')
     " let l:l = s:append(l:l, 'import ()')
 
-    call s:cursor(l:p, 9)
+    " call s:cursor(l:p, 9)
     return l:l
 endfunction
 
