@@ -13,6 +13,19 @@
     autocrlf = input
     quotepath = false
     editor = vim
+[log]
+    date = iso-local
+[push]
+    default = simple
+[pull]
+    rebase = false
+[fetch]
+    prune = true
+[i18n]
+    filesEncoding = utf-8
+[credential]
+    # helper = cache
+    helper = cache --timeout=28800
 [alias]
     co = checkout
     ci = commit
@@ -22,17 +35,6 @@
     lg = log --color --graph --topo-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
     lga = log --color --graph --topo-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\" --all
     st = status
-[log]
-    date = iso-local
-[push]
-    default = simple
-[pull]
-    rebase = false
-[i18n]
-    filesEncoding = utf-8
-[credential]
-    # helper = cache
-    helper = cache --timeout=28800
 [diff]
     guitool = tmerge
 [merge]
@@ -44,4 +46,4 @@
     path = D:/App/TortoiseMerge/cyggit-diff.sh
     cmd = \"D:/App/TortoiseMerge/cyggit-diff.sh\" \"$LOCAL\" \"$REMOTE\"
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+    insteadOf = https://github.com/
