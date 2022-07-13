@@ -50,9 +50,9 @@ highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
 
 " go
-" call coc#config('go.checkForUpdates', "enable")
-" call coc#config('go.goplsOptions.completeUnimported', v:true)
-" call coc#config('go.goplsOptions.semanticTokens', v:true)
+call coc#config('go.checkForUpdates', "enable")
+call coc#config('go.goplsOptions.completeUnimported', v:true)
+call coc#config('go.goplsOptions.semanticTokens', v:true)
 
 " cpp
 call coc#config('languageserver.ccls.command', "ccls")
