@@ -1,14 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright (C) distroy
 #
 
 
-import commands
+import subprocess
 import os
 import platform
 import re
 import sys
+import typing
 
 
 def get_tty_size(w=25, h=80):
@@ -17,11 +18,12 @@ def get_tty_size(w=25, h=80):
             import fcntl
             import termios
             import struct
-            cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+            return struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
         except:
-            return
+            return None
         return cr
-    cr = ioctl_gwinsz(0) or ioctl_gwinsz(1) or ioctl_gwinsz(2)
+    # cr = ioctl_gwinsz(0) or ioctl_gwinsz(1) or ioctl_gwinsz(2)
+    cr = ioctl_gwinsz(1) or ioctl_gwinsz(2)
     import os
     if not cr:
         try:
@@ -36,30 +38,36 @@ def get_tty_size(w=25, h=80):
     return int(cr[1]), int(cr[0])
 
 
-def get_str_width(s):
-    u = s.decode('utf-8')
+def get_str_width(s: str) -> typing.Tuple[int, int]:
+    # u = s.decode('utf-8')
+    u = s
+    # b = bytes(s, 'utf-8')
+    # u = str(b, 'utf-8')
     w = 0
     for uchar in u:
         w += get_uchar_width(uchar)
     return len(s), w
 
 
-def get_width_str(s, width):
+def get_width_str(s, width) -> str:
     # return s[: width]
-    u = s.decode('utf-8')
+    # u = s.decode('utf-8')
+    u = s
+    # b = bytes(s, 'utf-8')
+    # u = str(b, 'utf-8')
     w = 0
     l = 0
     for uchar in u:
         w += get_uchar_width(uchar)
-        if w <= width:
-            l += 1
         if w >= width:
             break
+        l += 1
     u = u[:l]
-    return u.encode('utf-8')
+    # return u.encode('utf-8')
+    return u
 
 
-def get_uchar_width(uchar):
+def get_uchar_width(uchar: str) -> int:
     # if unicode is a chinese
     if uchar >= u'\u4e00' and uchar <= u'\u9fa5':
         return 2
@@ -243,7 +251,7 @@ class Psforest(object):
 
         args = getattr(self, '_get_exec_args')(sys.argv[1:])
         cmd = ' '.join(args)
-        (ret, output) = commands.getstatusoutput(cmd)
+        (ret, output) = subprocess.getstatusoutput(cmd)
         if ret != 0:
             self.__stderr('command: %s\r\n%s', cmd, output)
             return ret
@@ -293,13 +301,13 @@ class PsforestDarwin(Psforest):
         '/usr/libexec/',
     )
 
-    __CMD_REPLACE = [ {
+    __CMD_REPLACE = [{
         'fr': re.compile(r'\A/usr/local/Cellar/python(?:\S*/)*versions/([0-9.]+)/\S+/python\Z', re.IGNORECASE),
         'to': r'python\g<1>',
     }, {
         'fr': re.compile(r'\A/system/library/frameworks/python(?:\S*/)*versions/([0-9.]+)/\S+/python\Z', re.IGNORECASE),
         'to': r'python\g<1>',
-    } ]
+    }]
 
     _opt_all_proc = False
 
