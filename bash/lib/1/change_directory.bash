@@ -55,7 +55,6 @@ function ld_cd_like() {
     while (( 1 )); do
         if (( $argi < ${#argv[@]} )); then
             key="${argv[$argi]}"
-            echo $argi  $key
             (( argi++ ))
         fi
 
