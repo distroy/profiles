@@ -92,19 +92,22 @@ set shortmess+=c
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-    \   pumvisible() ? "\<C-n>" :
+    \   coc#pum#visible() ? coc#pum#next(1) :
     \   <SID>check_back_space() ? "\<TAB>" :
     \   coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
 inoremap <silent><expr> <Down>
-    \   pumvisible() ? "\<C-n>" :
+    \   coc#pum#visible() ? coc#pum#next(1) :
     \   <SID>check_back_space() ? "\<TAB>" :
     \   coc#refresh()
-inoremap <expr><Up> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><Up> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+
 
 function! s:check_back_space() abort
     let l:col = col('.') - 1
-    return !l:col || getline('.')[l:col - 1]  =~# '\s'
+    return !l:col || getline('.')[l:col - 1]  =~ '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
@@ -112,7 +115,9 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm() :
+"     \   "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
