@@ -103,8 +103,8 @@ inoremap <silent><expr> <Down>
 inoremap <expr><Up> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+    let l:col = col('.') - 1
+    return !l:col || getline('.')[l:col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
