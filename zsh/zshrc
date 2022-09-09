@@ -20,21 +20,27 @@ source "$ZSH/oh-my-zsh.sh"
 unset ZSH
 unset DISABLE_AUTO_UPDATE
 
+declare i j
 
-function _ld_main() {
-    local i j
-    for (( i = 0; i <= 100; ++i )); do
-        if [ ! -d $LD_ZSH/lib/$i ]; then
+# source $HOME/.profile.d
+if [ -d $HOME/.profile.d ]; then
+    for i in $HOME/.profile.d/*.sh; do
+        if [ ! -r "$i" ]; then
             continue
         fi
-        for j in $LD_ZSH/lib/$i/*.zsh; do
-            source "$j"
-        done
+        source "$i"
     done
-}
+fi
 
-_ld_main
+# source $LD_ZSH/lib/{0-100}/*.zsh
+for (( i = 0; i <= 100; ++i )); do
+    if [ ! -d $LD_ZSH/lib/$i ]; then
+        continue
+    fi
+    for j in $LD_ZSH/lib/$i/*.zsh; do
+        source "$j"
+    done
+done
 
-
-unset -f _ld_main
+unset i j
 popd &>/dev/null
