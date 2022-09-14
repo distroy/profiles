@@ -33,10 +33,13 @@ call coc#config('suggest.enablePreview', v:false)   " 让vim 弹出预览窗口
 call coc#config('suggest.enablePreselect', v:false) " 关闭neovim的预选功能
 call coc#config('suggest.noselect', v:true)         " 补全开启时不选中第一项
 call coc#config('suggest.minTriggerInputLength', 1) " 设置最少补全触发字符数
-call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段的提示字符⭐︎
+call coc#config('suggest.snippetIndicator', "*") " 改变代码片段的提示字符*
+" call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段的提示字符⭐︎
 " call coc#config('suggest.snippetIndicator', "\u2729")       " 改变代码片段的提示字符✩
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
 " call coc#config('suggest.keepCompleteopt', v:true)
+
+highlight CocMenuSel ctermbg=238
 
 call coc#config('diagnostic.enable', v:true)
 call coc#config('diagnostic.displayByAle', v:true)
@@ -44,6 +47,7 @@ call coc#config('diagnostic.level', "warning")
 call coc#config('diagnostic.checkCurrentLine', v:true)
 call coc#config('diagnostic.errorSign', ">>")
 call coc#config('diagnostic.warningSign', ">>")
+
 highlight CocErrorSign ctermfg=Black ctermbg=Red guifg=#ff0000
 highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
 highlight default link CocErrorHighlight none
@@ -107,7 +111,7 @@ inoremap <expr><Up> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 function! s:check_back_space() abort
     let l:col = col('.') - 1
-    return !l:col || getline('.')[l:col - 1]  =~ '\s'
+    return !l:col || getline('.')[l:col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
