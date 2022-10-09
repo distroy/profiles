@@ -15,6 +15,7 @@
     editor = vim
 [log]
     date = iso-local
+    # date = format:%FT%T%z
 [push]
     default = simple
 [pull]
@@ -32,7 +33,7 @@
     df = diff
     # lg = log --color --graph --date-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
     # lga = log --color --graph --date-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\" --all
-    lg = log --color --graph --topo-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
+    lg  = log --color --graph --topo-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\"
     lga = log --color --graph --topo-order --pretty=\"format:%C(red)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cd) %C(bold blue)<%an>%C(reset)\" --all
     st = status
 [diff]
