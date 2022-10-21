@@ -10,3 +10,4 @@ source ../update
 
 
 vim +PlugUpdate +qa
+vim +GoUpdateBinaries +qa
