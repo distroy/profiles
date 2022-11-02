@@ -7,6 +7,7 @@ if !g:ld.plug.has('coc.nvim') | finish | endif
 
 " coc-python
 
+call coc#add_extension('coc-marketplace')
 call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-json')
 call coc#add_extension('coc-tsserver')
