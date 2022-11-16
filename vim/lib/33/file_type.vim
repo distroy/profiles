@@ -18,8 +18,8 @@ set foldnestmax=20
 autocmd BufRead * normal zR
 
 
-autocmd FileType html       setlocal foldmethod=indent
-autocmd FileType python     setlocal foldmethod=indent
+" autocmd FileType html       setlocal foldmethod=indent
+" autocmd FileType python     setlocal foldmethod=indent
 
 
 " set file type
