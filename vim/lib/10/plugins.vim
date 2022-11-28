@@ -92,6 +92,8 @@ call s:add('kien/ctrlp.vim')
 call s:add('majutsushi/tagbar')
 " call s:add('majutsushi/tagbar', {'on': 'TagbarToggle'})
 
+call s:add('pseewald/vim-anyfold')
+
 
 call s:add('Shougo/neocomplete.vim')
 call s:add('Valloric/YouCompleteMe', {
