@@ -7,6 +7,7 @@ if !g:ld.plug.has('vim-anyfold') | finish | endif
 
 
 autocmd Filetype vim AnyFoldActivate
+autocmd Filetype yaml AnyFoldActivate
 autocmd Filetype html AnyFoldActivate
 autocmd Filetype python AnyFoldActivate
 " highlight Folded term=NONE cterm=NONE
