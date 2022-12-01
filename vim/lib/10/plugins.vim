@@ -69,6 +69,12 @@ call s:add('Chiel92/vim-autoformat', {'on': 'Autoformat'})
 call s:add('andymass/vim-matchup')
 " call s:add('vim-syntastic/syntastic')
 call s:add('dense-analysis/ale')
+call s:add('preservim/vim-markdown', {'for': ['markdown']})
+call s:add('iamcco/markdown-preview.nvim', {
+    \ 'for': ['markdown', 'vim-plug'],
+    \ 'on': ['MarkdownPreview'],
+    \ 'do': { -> mkdp#util#install() },
+    \ })
 call s:add('mattn/emmet-vim', {'for': ['html', 'xml']})
 " call s:add('jelera/vim-javascript-syntax')
 call s:add('pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx', 'typescript']})
