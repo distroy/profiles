@@ -41,6 +41,7 @@ call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块
 " call coc#config('suggest.keepCompleteopt', v:true)
 
 highlight CocMenuSel ctermbg=238
+highlight CocListLine ctermbg=238
 
 call coc#config('diagnostic.enable', v:true)
 call coc#config('diagnostic.displayByAle', v:true)
