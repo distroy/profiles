@@ -8,21 +8,21 @@
 # ANSI Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white 49=default
 
-# LD_COLOR_RED="\e[31;1m"
-# LD_COLOR_GREEN="\e[32;1m"
-# LD_COLOR_YELLO="\e[33;1m"
-# LD_COLOR_BLUE="\e[34;1m"
-# LD_COLOR_MAGENTA="\e[35;1m"
-# LD_COLOR_CYAN="\e[36;1m"
-# LD_COLOR_RESET="\e[0m"
+# LD_COLOR_RED=$'\E[31;1m'
+# LD_COLOR_GREEN=$'\E[32;1m'
+# LD_COLOR_YELLO=$'\E[33;1m'
+# LD_COLOR_BLUE=$'\E[34;1m'
+# LD_COLOR_MAGENTA=$'\E[35;1m'
+# LD_COLOR_CYAN=$'\E[36;1m'
+# LD_COLOR_RESET=$'\E[0m'
 
-LD_COLOR_RED=$'\E[31;1m'
-LD_COLOR_GREEN=$'\E[32;1m'
-LD_COLOR_YELLO=$'\E[33;1m'
-LD_COLOR_BLUE=$'\E[34;1m'
-LD_COLOR_MAGENTA=$'\E[35;1m'
-LD_COLOR_CYAN=$'\E[36;1m'
-LD_COLOR_RESET=$'\E[0m'
+LD_COLOR_RED=$'\033[31;1m'
+LD_COLOR_GREEN=$'\033[32;1m'
+LD_COLOR_YELLO=$'\033[33;1m'
+LD_COLOR_BLUE=$'\033[34;1m'
+LD_COLOR_MAGENTA=$'\033[35;1m'
+LD_COLOR_CYAN=$'\033[36;1m'
+LD_COLOR_RESET=$'\033[0m'
 
 
 ld_printf() { printf "$@"; printf "%s" "${LD_COLOR_RESET}";     }
