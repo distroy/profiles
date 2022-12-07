@@ -10,17 +10,10 @@ if !exists('g:lightline')
     let g:lightline = {}
 endif
 
-if has('mac')
-    call g:ld.setnx('lightline', 'separator', 'left', "\u25ba") " ►
-    call g:ld.setnx('lightline', 'separator', 'right', "\u25c4") " ◄
-    call g:ld.setnx('lightline', 'subseparator', 'left', "\u00bb") " »
-    call g:ld.setnx('lightline', 'subseparator', 'right', "\u00ab") " «
-else
-    call g:ld.setnx('lightline', 'separator', 'left', "\ue0b0")
-    call g:ld.setnx('lightline', 'separator', 'right', "\ue0b2")
-    call g:ld.setnx('lightline', 'subseparator', 'left', "\ue0b1")
-    call g:ld.setnx('lightline', 'subseparator', 'right', "\ue0b3")
-endif
+call g:ld.setnx('lightline', 'separator', 'left', "\u25ba") " ►
+call g:ld.setnx('lightline', 'separator', 'right', "\u25c4") " ◄
+call g:ld.setnx('lightline', 'subseparator', 'left', "\u00bb") " »
+call g:ld.setnx('lightline', 'subseparator', 'right', "\u00ab") " «
 
 " call g:ld.setnx('component', 'filename', '%f')
 let s:sl_right = [ ['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'] ]
@@ -43,6 +36,7 @@ let s:name = 'default'
 let s:theme = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 
 " normal
+
 let s:theme.normal.left = [ [ s:color('DARKEST_BLUE'), s:color('MEDIUM_CYAN') ], [ s:color('WHITE'), s:color('GRAY4')] ]
 let s:theme.normal.middle = [ [ s:color('GRAY7'), s:color('GRAY2') ] ]
 let s:theme.normal.right = [ [ s:color('GRAY2'), s:color('TEAL') ], [ s:color('WHITE'), s:color('GRAY7') ], [ s:color('GRAY10'), s:color('GRAY5') ] ]
