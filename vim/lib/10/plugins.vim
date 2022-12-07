@@ -34,6 +34,7 @@ if has('lua')
 endif
 if executable('node') <= 0
     call g:ld.plug.disable('coc.nvim')
+    call g:ld.plug.disable('markdown-preview.nvim')
 endif
 
 call g:ld.plug.disable('YouCompleteMe')
@@ -73,7 +74,7 @@ call s:add('preservim/vim-markdown', {'for': ['markdown']})
 call s:add('iamcco/markdown-preview.nvim', {
     \ 'for': ['markdown', 'vim-plug'],
     \ 'on': ['MarkdownPreview'],
-    \ 'do': { -> mkdp#util#install() },
+    \ 'do': 'cd app && yarn install',
     \ })
 call s:add('mattn/emmet-vim', {'for': ['html', 'xml']})
 " call s:add('jelera/vim-javascript-syntax')
