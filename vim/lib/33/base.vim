@@ -5,6 +5,10 @@
 
 set number
 
+" mouse
+set mouse= " default: nvi
+" set selectmode=key,cmd
+
 " cursor
 set cursorline
 set scrolloff=5
