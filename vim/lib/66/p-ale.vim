@@ -15,6 +15,9 @@ let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_warning_str = 'Warn'
 let g:ale_echo_msg_format = '[%linter%] [%severity%]% (code)%: %s'
 
+let g:ale_virtualtext_cursor = 0
+
+
 " let g:ale_open_list = 1
 " let g:ale_keep_list_window_open = 1
 
