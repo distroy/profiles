@@ -24,7 +24,7 @@ declare i j
 
 # source $HOME/.profile.d
 if [ -d $HOME/.profile.d ]; then
-    for i in $HOME/.profile.d/*.sh; do
+    for i in $HOME/.profile.d/*.zsh; do
         if [ ! -r "$i" ]; then
             continue
         fi
