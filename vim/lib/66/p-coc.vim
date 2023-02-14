@@ -16,6 +16,7 @@ call coc#add_extension('coc-pyright')
 call coc#add_extension('coc-go')
 " call coc#add_extension('coc-ccls')
 call coc#add_extension('coc-sql')
+call coc#add_extension('coc-java')
 
 call coc#config('coc.preferences.timeout', 500)
 call coc#config('coc.preferences.rootPatterns', ['.root', '.svn', '.git', '.hg', '.project'])
@@ -65,6 +66,11 @@ call coc#config('languageserver.ccls.command', "ccls")
 call coc#config('languageserver.ccls.filetypes', ["c", "cpp", "objc", "objcpp"])
 call coc#config('languageserver.ccls.rootPatterns', [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"])
 call coc#config('languageserver.ccls.initializationOptions', g:ld.ccls.init_options)
+
+" java
+call coc#config('java.trace.server', "verbose")
+call coc#config('java.import.maven.enabled', v:true)
+call coc#config('java.maven.downloadSources', v:true)
 
 " current function
 function! g:ld.current_function()
