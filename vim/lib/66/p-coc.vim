@@ -17,6 +17,7 @@ call coc#add_extension('coc-go')
 " call coc#add_extension('coc-ccls')
 call coc#add_extension('coc-sql')
 call coc#add_extension('coc-java')
+call coc#add_extension('coc-protobuf')
 
 call coc#config('coc.preferences.timeout', 500)
 call coc#config('coc.preferences.rootPatterns', ['.root', '.svn', '.git', '.hg', '.project'])
