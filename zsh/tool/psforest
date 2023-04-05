@@ -114,7 +114,7 @@ class Psforest(object):
 
     def __init_tty(self):
         if sys.stdout.isatty():
-            self.__ttyw, self.__ttyh = get_tty_size(None, None)
+            self.__ttyw, self.__ttyh = get_tty_size()
         else:
             self.__ttyw = None
             self.__ttyh = None
@@ -153,7 +153,7 @@ class Psforest(object):
             else:
                 buff.append('    ')
         if len(depth):
-            buff.append(' \_ ')
+            buff.append(' \\_ ')
         return ''.join(buff)
 
     def __make_tree(self):
@@ -295,8 +295,10 @@ class PsforestDarwin(Psforest):
 
     __EXEC_FILTER = (
         '/Applications/',
+        '/Library/Apple/System/Library/CoreServices/',
         '/Library/Application Support/',
         '/Library/Frameworks/',
+        '/System/Applications/',
         '/System/Library/',
         '/usr/libexec/',
     )
