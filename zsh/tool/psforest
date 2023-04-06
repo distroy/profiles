@@ -299,6 +299,7 @@ class PsforestDarwin(Psforest):
         '/Library/Application Support/',
         '/Library/Frameworks/',
         '/System/Applications/',
+        '/System/Cryptexes',
         '/System/Library/',
         '/usr/libexec/',
     )
