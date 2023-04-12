@@ -10,11 +10,7 @@ alias la='ls -a'
 alias ll='ls -l'
 alias l.='ls -d .*'
 
-if type nvim &> /dev/null; then
-    alias vi='nvim'
-else
-    alias vi='vim'
-fi
+alias vi='vim'
 alias vs='vi -S'
 
 alias tailf='tail -F'
