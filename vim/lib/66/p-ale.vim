@@ -33,6 +33,10 @@ let g:ale_objc_ccls_init_options    = g:ld.ccls.init_options
 
 let g:ale_set_signs = 1
 
+let g:ale_linters_ignore = {
+    \ 'go': ["gopls"],
+    \ }
+
 highlight clear ALEErrorSignLineNr
 highlight clear ALEWarningSignLineNr
 highlight clear ALEInfoSignLineNr
