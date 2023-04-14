@@ -11,6 +11,7 @@ let g:go_fold_enable = ['block', 'import', 'varconst', 'comment', 'package_comme
 let g:go_doc_popup_window = 1
 let g:go_imports_autosave = 1
 let g:go_fmt_autosave = 1
+let g:go_mod_fmt_autosave = 1
 
 let g:go_highlight_format_strings = 1
 let g:go_highlight_variable_declarations = 0
