@@ -276,7 +276,7 @@ class Psforest(object):
 
 
 class PsforestDarwin(Psforest):
-    _RIGHT_FIELDS = ('STARTED', '%CPU')
+    _RIGHT_FIELDS = ('STARTED', '%CPU', '%MEM', 'RSS')
 
     _DEFAULT_ARGS = [
         'ps',
@@ -287,6 +287,8 @@ class PsforestDarwin(Psforest):
         '-osess',
         '-otty',
         '-o%cpu',
+        # '-o%mem',
+        '-orss',
         '-ostat',
         '-ostart',
         '-ocputime',
