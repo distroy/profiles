@@ -9,16 +9,6 @@ LD_BASH=$(pwd)
 
 declare i j
 
-# source $HOME/.profile.d
-if [ -d $HOME/.profile.d ]; then
-    for i in $HOME/.profile.d/*.sh; do
-        if [ ! -r "$i" ]; then
-            continue
-        fi
-        source "$i"
-    done
-fi
-
 # source $LD_BASH/lib/{0-100}/*.bash
 for (( i = 0; i <= 100; ++i )); do
     if [ ! -d "$LD_BASH/lib/$i" ]; then
@@ -33,6 +23,16 @@ done
 for i in $LD_BASH/completion/*.bash; do
     source "$i"
 done
+
+# source $HOME/.profile.d
+if [ -d $HOME/.profile.d ]; then
+    for i in $HOME/.profile.d/*.sh; do
+        if [ ! -r "$i" ]; then
+            continue
+        fi
+        source "$i"
+    done
+fi
 
 unset i j
 popd &>/dev/null

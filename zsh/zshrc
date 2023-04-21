@@ -22,16 +22,6 @@ unset DISABLE_AUTO_UPDATE
 
 declare i j
 
-# source $HOME/.profile.d
-if [ -d $HOME/.profile.d ]; then
-    for i in $HOME/.profile.d/*.zsh; do
-        if [ ! -r "$i" ]; then
-            continue
-        fi
-        source "$i"
-    done
-fi
-
 # source $LD_ZSH/lib/{0-100}/*.zsh
 for (( i = 0; i <= 100; ++i )); do
     if [ ! -d $LD_ZSH/lib/$i ]; then
@@ -41,6 +31,16 @@ for (( i = 0; i <= 100; ++i )); do
         source "$j"
     done
 done
+
+# source $HOME/.profile.d
+if [ -d $HOME/.profile.d ]; then
+    for i in $HOME/.profile.d/*.zsh; do
+        if [ ! -r "$i" ]; then
+            continue
+        fi
+        source "$i"
+    done
+fi
 
 unset i j
 popd &>/dev/null
