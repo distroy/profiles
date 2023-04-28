@@ -24,6 +24,8 @@ for i in $LD_BASH/completion/*.bash; do
     source "$i"
 done
 
+popd &>/dev/null
+
 # source $HOME/.profile.d
 if [ -d $HOME/.profile.d ]; then
     for i in $HOME/.profile.d/*.sh; do
@@ -35,4 +37,3 @@ if [ -d $HOME/.profile.d ]; then
 fi
 
 unset i j
-popd &>/dev/null

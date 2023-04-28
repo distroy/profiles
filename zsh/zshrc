@@ -32,6 +32,8 @@ for (( i = 0; i <= 100; ++i )); do
     done
 done
 
+popd &>/dev/null
+
 # source $HOME/.profile.d
 if [ -d $HOME/.profile.d ]; then
     for i in $HOME/.profile.d/*.zsh; do
@@ -43,4 +45,3 @@ if [ -d $HOME/.profile.d ]; then
 fi
 
 unset i j
-popd &>/dev/null
