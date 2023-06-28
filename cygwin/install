@@ -8,8 +8,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 SOURCE_DIR="$PWD"
 
 
-function ld_link()
-{
+function ld_link() {
     local src="$1"
     local dst="$2"
 

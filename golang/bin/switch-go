@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+#
+# Copyright (C) distroy
+#
+
+
+if [[ "$LD_SWITCH_GO_ROOT" == "" ]]; then
+    ld_msgr "please set then env variable *LD_SWITCH_GO_ROOT*"
+    exit 1
+fi
+cd "${LD_SWITCH_GO_ROOT}"
+
+if [ ! -d "$1" ]; then
+    echo "should switch to:" $(find . -maxdepth 1 -name 'go*.*' | sed -e 's/\.\///g' | sort) >&2
+    exit 1
+else
+    rm -rv "go"
+    ln -sv "$1" "go"
+fi

@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Copyright (C) distroy
+#
+
+
+SOURCE_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"; pwd)"
+
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+SOURCE_DIR="$PWD"
+WRITE_DIR="$HOME/.profile.d"
+WRITE_FILE="$WRITE_DIR/golang.sh"
+
+mkdir -pv "$WRITE_DIR"
+mkdir -pv $HOME/local/golang/bin
+
+ln -sv $SOURCE_DIR/bin/* $HOME/local/golang/bin
+
+
+# golang.sh
+cat >>$WRITE_FILE <<EOF
+
+# export GOPROXY=https://goproxy.io,direct
+export GOPROXY=https://goproxy.cn,direct
+# export GOPRIVATE=git.garena.com
+export GOFLAGS=-mod=mod
+
+export PATH=\$HOME/local/golang/bin:\$PATH
+EOF
