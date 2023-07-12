@@ -18,6 +18,7 @@ let g:Lf_WindowPosition = 'popup'
 
 " let g:Lf_PreviewCode = 1
 let g:Lf_PreviewInPopup = 1
+let g:Lf_PopupPreviewPosition = 'top'
 
 let g:Lf_WorkingDirectoryMode = 'Ac'
 
