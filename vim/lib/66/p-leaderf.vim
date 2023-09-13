@@ -13,6 +13,8 @@ nnoremap <silent> <F2> :Leaderf bufTag<CR>
 nnoremap <silent> <c-p> :Leaderf file<CR>
 
 
+let g:Lf_NumberOfCache = 64
+
 let g:Lf_WindowPosition = 'popup'
 " let g:Lf_PopupColorscheme = 'default'
 
