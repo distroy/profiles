@@ -9,5 +9,4 @@ SOURCE_DIR="$PWD"
 source ../update
 
 
-vim +PlugUpdate +qa
-vim +GoUpdateBinaries +qa
+vim +PlugUpdate +GoUpdateBinaries
