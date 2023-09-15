@@ -1,0 +1,7 @@
+# git ignore
+.*
+!.gitignore
+
+
+!*.vim
+Session.vim
