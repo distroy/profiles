@@ -35,15 +35,27 @@ alias go-test='go test -gcflags="all=-l"'
 function __ld_golang_test_loop_run() (
     local dir="$1"
     local code=0
+    local concurrency="$LD_GO_TEST_CONCURRENCY"
     local line
-    local r
     local tmp
+    local r
+    local i
+
     if [[ "$dir" == "" ]]; then
         dir="."
     elif [[ "$dir" != "." && "$dir" != ".*" && "$dir" != "/*" ]]; then
         dir="./$dir"
     fi
-    ld_msgg "$dir"
+
+    if (( concurrency == 0 )); then
+        concurrency=1
+    fi
+    mkfifo __ld_golang_test_concurrency         # 创建一个命名管道
+    exec 200<>__ld_golang_test_concurrency      # 将命名管道绑定到 fd 200
+    for (( i = 0; i < concurrency; i++ )); do   # 写入并发数的内容
+        echo >&200
+    done
+
     find "$dir" -type d | grep -E -v '\/(vendor|\..*)(\/|$)' | while read line; do
         ld_msgg "=== RUN directory: $line"
         tmp=$(find "$line" -name '*.go' -maxdepth 1 | wc -l)
@@ -51,16 +63,24 @@ function __ld_golang_test_loop_run() (
             ld_msgy "=== SKIP directory: $line [no Go files]"
             continue
         fi
+        # 从管道里读取消息。如果管道没有消息会阻塞，以此来控制并发数
+        read -u200
+        {
 
-        go-test -v "$line"
-        r="$?"
-        if (( r == 0 )); then
-            ld_msgg "=== PASS directory: $line"
-        else
-            code="$r"
-            ld_msgr "=== FAIL directory: $line [exit code $r]"
-        fi
+            go-test -v "$line"
+            r="$?"
+            if (( r == 0 )); then
+                ld_msgg "=== PASS directory: $line"
+            else
+                code="$r"
+                ld_msgr "=== FAIL directory: $line [exit code $r]"
+            fi
+            # 处理结束写回消息。防止下次执行被阻塞
+            echo >&200
+        } &
     done
+
+    wait
     exit $code
 )
 alias go-test-loop=__ld_golang_test_loop_run
