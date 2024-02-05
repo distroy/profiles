@@ -34,11 +34,11 @@ alias go-test='go test -gcflags="all=-l"'
 
 function __ld_golang_test_loop_run() (
     local dir="$1"
+    local concurrency="$2"
     local code=0
-    local concurrency="$LD_GO_TEST_CONCURRENCY"
+    local fifo
     local line
     local tmp
-    local r
     local i
 
     if [[ "$dir" == "" ]]; then
@@ -48,10 +48,21 @@ function __ld_golang_test_loop_run() (
     fi
 
     if (( concurrency == 0 )); then
+        concurrency="$LD_GO_TEST_CONCURRENCY"
+    fi
+    if (( concurrency == 0 )); then
         concurrency=1
     fi
-    mkfifo __ld_golang_test_concurrency         # 创建一个命名管道
-    exec 200<>__ld_golang_test_concurrency      # 将命名管道绑定到 fd 200
+    for (( ; ; )); do
+        fifo=$(mktemp -u -t 'ld-golang-test-loop.XXXXXXXX')
+        mkfifo "$fifo"
+        tmp="$?"
+        if (( tmp == 0 )); then
+            echo "fifo: $fifo"
+            break
+        fi
+    done
+    exec 200<>"$fifo"
     for (( i = 0; i < concurrency; i++ )); do   # 写入并发数的内容
         echo >&200
     done
@@ -68,12 +79,12 @@ function __ld_golang_test_loop_run() (
         {
 
             go-test -v "$line"
-            r="$?"
-            if (( r == 0 )); then
+            tmp="$?"
+            if (( tmp == 0 )); then
                 ld_msgg "=== PASS DIRECTORY: $line"
             else
-                code="$r"
-                ld_msgr "=== FAIL DIRECTORY: $line [exit code $r]"
+                code="$tmp"
+                ld_msgr "=== FAIL DIRECTORY: $line [exit code $tmp]"
             fi
             # 处理结束写回消息。防止下次执行被阻塞
             echo >&200
@@ -81,6 +92,7 @@ function __ld_golang_test_loop_run() (
     done
 
     wait
+    rm "$fifo"
     if (( code == 0 )); then
         ld_msgg "=== ALL DONE"
     else
