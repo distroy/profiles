@@ -57,10 +57,10 @@ function __ld_golang_test_loop_run() (
     done
 
     find "$dir" -type d | grep -E -v '\/(vendor|\..*)(\/|$)' | while read line; do
-        ld_msgg "=== RUN directory: $line"
+        ld_msgg "=== RUN DIRECTORY: $line"
         tmp=$(find "$line" -name '*.go' -maxdepth 1 | wc -l)
         if (( tmp == 0 )); then
-            ld_msgy "=== SKIP directory: $line [no Go files]"
+            ld_msgy "=== SKIP DIRECTORY: $line [no Go files]"
             continue
         fi
         # 从管道里读取消息。如果管道没有消息会阻塞，以此来控制并发数
@@ -70,10 +70,10 @@ function __ld_golang_test_loop_run() (
             go-test -v "$line"
             r="$?"
             if (( r == 0 )); then
-                ld_msgg "=== PASS directory: $line"
+                ld_msgg "=== PASS DIRECTORY: $line"
             else
                 code="$r"
-                ld_msgr "=== FAIL directory: $line [exit code $r]"
+                ld_msgr "=== FAIL DIRECTORY: $line [exit code $r]"
             fi
             # 处理结束写回消息。防止下次执行被阻塞
             echo >&200
@@ -81,6 +81,11 @@ function __ld_golang_test_loop_run() (
     done
 
     wait
+    if (( code == 0 )); then
+        ld_msgg "=== ALL DONE"
+    else
+        ld_msgr "=== ALL DONE [exit code $code]"
+    fi
     exit $code
 )
 alias go-test-loop=__ld_golang_test_loop_run
