@@ -58,11 +58,12 @@ function __ld_golang_test_loop_run() (
         mkfifo "$fifo"
         tmp="$?"
         if (( tmp == 0 )); then
-            echo "fifo: $fifo"
+            # echo "fifo: $fifo"
             break
         fi
     done
     exec 200<>"$fifo"
+    rm "$fifo"
     for (( i = 0; i < concurrency; i++ )); do   # 写入并发数的内容
         echo >&200
     done
@@ -92,7 +93,6 @@ function __ld_golang_test_loop_run() (
     done
 
     wait
-    rm "$fifo"
     if (( code == 0 )); then
         ld_msgg "=== ALL DONE"
     else
