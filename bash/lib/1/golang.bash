@@ -16,6 +16,7 @@ function __ld_golang_version_switch() (
     fi
     cd "${LD_GO_SWITCH_ROOT}"
 
+    go version
     if [ ! -d "$1" ]; then
         echo "should switch to:" $(find . -maxdepth 1 -name 'go*.*' | sed -e 's/\.\///g' | sort) >&2
         exit 1
