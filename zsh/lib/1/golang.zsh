@@ -57,11 +57,49 @@ function __ld_golang_test_loop_run() (
             break
         fi
     done
+
+    init_childs=( )
+    run_childs=( )
+
+    clear_resource() {
+        local pid
+        for pid in "${init_childs[@]}"; do
+            ps -p $pid > /dev/null
+            if (( $? != 0 )); then
+                kill $pid
+            fi
+        done
+        for pid in "${run_childs[@]}"; do
+            ps -p $pid > /dev/null
+            if (( $? != 0 )); then
+                kill $pid
+            fi
+        done
+        rm "$fifo"
+    }
+
+    TRAPINT() {
+        ld_msgr "TRAPINT() called: ^C was pressed"
+        clear_resource
+        exit 1
+    }
+    # TRAPQUIT() {
+    #     ld_msgb "TRAPQUIT() called: ^\\ was pressed"
+    # }
+    TRAPTERM() {
+        ld_msgr "TRAPTERM() called: a 'kill' command was aimed at this program's process ID"
+        clear_resource
+        exit 1
+    }
+    # TRAPEXIT() {
+    #     ld_msgb "TRAPEXIT() called: happens at the end of the script no matter what"
+    # }
+
     for (( i = 0; i < concurrency; i++ )); do   # 写入并发数的内容
         echo > "$fifo" &
+        init_childs+=$!
     done
 
-    childs=( )
     find "$dir" -type d | grep -E -v '\/(vendor|\..*)(\/|$)' | while read line; do
         ld_msgg "=== RUN DIRECTORY: $line"
         tmp=$(find "$line" -maxdepth 1 -name '*.go' | wc -l)
@@ -72,6 +110,8 @@ function __ld_golang_test_loop_run() (
         # 从管道里读取消息。如果管道没有消息会阻塞，以此来控制并发数
         read < "$fifo"
         (
+            unset TRAPINT
+            unset TRAPTERM
             go-test -v "$line"
             r="$?"
             if (( r == 0 )); then
@@ -83,13 +123,13 @@ function __ld_golang_test_loop_run() (
             echo > "$fifo"
             exit $r
         ) &
-        childs+=$!
+        run_childs+=$!
     done
 
     # 所有任务执行完成了，还有一个任务在写回消息
     read < "$fifo"
     code=0
-    for pid in "${childs[@]}"; do
+    for pid in "${run_childs[@]}"; do
         wait "$pid"
         r="$?"
         if (( r != 0 )); then
