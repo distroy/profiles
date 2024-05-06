@@ -11,7 +11,9 @@ function __ld_git_prompt_info() {
             echo "$ZSH_THEME_GIT_PROMPT_NO_CHECK"
         }
     fi
-    git_prompt_info "$@"
+    # git_prompt_info "$@"
+    local dirty="$(parse_git_dirty)"
+    __ld_git_ps1 "${ZSH_THEME_GIT_PROMPT_PREFIX//\%/%%}%s${dirty//\%/%%}${ZSH_THEME_GIT_PROMPT_SUFFIX//\%/%%}"
 }
 
 function __ld_right_prompt() {
