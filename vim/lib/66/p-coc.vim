@@ -46,8 +46,10 @@ call coc#config('suggest.snippetIndicator', "*") " 改变代码片段的提示�
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
 " call coc#config('suggest.keepCompleteopt', v:true)
 
-highlight CocMenuSel ctermbg=238
-highlight CocListLine ctermbg=238
+" highlight CocMenuSel ctermbg=238
+" highlight CocListLine ctermbg=238
+call g:ld.highlight('CocMenuSel', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
+call g:ld.highlight('CocListLine', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
 
 call coc#config('diagnostic.enable', v:true)
 call coc#config('diagnostic.displayByAle', v:true)
