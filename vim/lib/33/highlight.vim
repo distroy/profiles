@@ -37,7 +37,7 @@ highlight Comment ctermfg=blue
 
 " highlight Folded ctermbg=darkgray ctermfg=darkgreen
 
-call g:ld.highlight('Normal', g:LD.COLOR.WHITE, g:LD.COLOR.GREY0, "NONE")
+call g:ld.highlight('Normal', g:LD.COLOR.WHITE, g:LD.COLOR.BLACK, "NONE")
 call g:ld.highlight('LineNr', g:LD.COLOR.GRAY7, g:LD.COLOR.GRAY1, "NONE")
 call g:ld.highlight('Comment', g:LD.COLOR.GRAY_PURPLE, g:LD.COLOR.NONE, "NONE")
 call g:ld.highlight('Directory', g:LD.COLOR.LIGHT_BLUE, g:LD.COLOR.NONE, "NONE")
@@ -46,6 +46,9 @@ call g:ld.highlight('Folded', g:LD.COLOR.MINT, g:LD.COLOR.GRAY3, "NONE")
 " call g:ld.highlight('StatusLine', g:LD.COLOR.WHITE, g:LD.COLOR.GREY0, "NONE")
 call g:ld.highlight('Pmenu', g:LD.COLOR.WHITE, g:LD.COLOR.GRAY3, "NONE")
 call g:ld.highlight('PmenuSel', g:LD.COLOR.HOT_PINK, g:LD.COLOR.GRAY1, "NONE")
+call g:ld.highlight('NormalFloat', '', g:LD.COLOR.GRAY3, "NONE")
+" call g:ld.highlight('FloatBorder', g:LD.COLOR.WHITE, g:LD.COLOR.GRAY0, "NONE")
+
 
 " nvim color
 call g:ld.highlight('Visual', 'NONE', g:LD.COLOR.NVIM.NvimDarkGrey4, "")

@@ -46,10 +46,8 @@ call coc#config('suggest.snippetIndicator', "*") " 改变代码片段的提示�
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
 " call coc#config('suggest.keepCompleteopt', v:true)
 
-" highlight CocMenuSel ctermbg=238
-" highlight CocListLine ctermbg=238
-call g:ld.highlight('CocMenuSel', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
-call g:ld.highlight('CocListLine', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
+call coc#config('signature.enable', v:true)
+call coc#config('signature.triggerSignatureWait', 500) " unit: ms
 
 call coc#config('diagnostic.enable', v:true)
 call coc#config('diagnostic.displayByAle', v:true)
@@ -57,6 +55,18 @@ call coc#config('diagnostic.level', "warning")
 call coc#config('diagnostic.checkCurrentLine', v:true)
 call coc#config('diagnostic.errorSign', ">>")
 call coc#config('diagnostic.warningSign', ">>")
+
+" call coc#config('diagnostic.floatConfig.border', v:true)
+" call coc#config('hover.floatConfig.border', v:true)
+" call coc#config('signature.floatConfig.border', v:true)
+" call coc#config('suggest.floatConfig.border', v:true)
+" call coc#config('suggest.floatConfig.rounded', v:true)
+
+" highlight CocMenuSel ctermbg=238
+" highlight CocListLine ctermbg=238
+call g:ld.highlight('CocMenuSel', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
+call g:ld.highlight('CocListLine', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
+call g:ld.highlight('CocFloating', '', g:LD.COLOR.GRAY4, "NONE")
 
 highlight CocErrorSign ctermfg=Black ctermbg=Red guifg=#ff0000
 highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
