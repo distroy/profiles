@@ -66,7 +66,7 @@ call coc#config('diagnostic.warningSign', ">>")
 " highlight CocListLine ctermbg=238
 call g:ld.highlight('CocMenuSel', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
 call g:ld.highlight('CocListLine', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
-call g:ld.highlight('CocFloating', '', g:LD.COLOR.GRAY4, "NONE")
+call g:ld.highlight('CocFloating', '', g:LD.COLOR.GRAY2, "NONE")
 
 highlight CocErrorSign ctermfg=Black ctermbg=Red guifg=#ff0000
 highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b

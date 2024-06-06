@@ -6,8 +6,10 @@
 if !g:ld.plug.has('LeaderF') | finish | endif
 
 
-highlight Lf_hl_match guifg = blue ctermfg = blue
-highlight Lf_hl_matchRefine  guifg = magenta ctermfg = magenta
+" highlight Lf_hl_match guifg = blue ctermfg = blue
+" highlight Lf_hl_matchRefine  guifg = magenta ctermfg = magenta
+call g:ld.highlight('Lf_hl_match', ['blue', "#667bff"], '', "")
+call g:ld.highlight('Lf_hl_matchRefine', ['magenta', '#fa80f7'], '', "")
 
 nnoremap <silent> <F2> :Leaderf bufTag<CR>
 nnoremap <silent> <c-p> :Leaderf file<CR>
