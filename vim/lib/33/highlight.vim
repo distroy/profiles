@@ -60,6 +60,7 @@ call g:ld.highlight('Folded', '', ['DarkGray', g:LD.COLOR.NVIM.NvimDarkGrey3], "
 
 call g:ld.highlight('Statement', [11, '#fffe64'], '', "BOLD")
 call g:ld.highlight('Operator', [11, '#fffe64'], '', "BOLD")
+call g:ld.highlight('PreProc', [81, '#ff80ff'], '', "")
 call g:ld.highlight('Type', [121, '#5fffac'], '', "BOLD")
 call g:ld.highlight('Function', [14, '#9ce8ff'], '', "BOLD")
 call g:ld.highlight('Identifier', [14, '#9ce8ff'], '', "BOLD")
