@@ -55,6 +55,7 @@ call g:ld.highlight('Visual', 'NONE', g:LD.COLOR.NVIM.NvimDarkGrey4, "")
 call g:ld.highlight('CursorLine', g:LD.COLOR.NONE, g:LD.COLOR.NONE, "NONE")
 call g:ld.highlight('CursorLineNr', [3, '#ffff00'], ['darkred', '#bb1111'], "BOLD")
 
+call g:ld.highlight('Special', [224, '#ffd5d7'], g:LD.COLOR.NONE, "NONE")
 call g:ld.highlight('SpecialKey', ['darkgray', '#666666'], g:LD.COLOR.NONE, "NONE")
 call g:ld.highlight('Whitespace', ['darkgray', '#666666'], g:LD.COLOR.NONE, "NONE")
 call g:ld.highlight('ColorColumn', 'NONE', g:LD.COLOR.NVIM.NvimDarkGrey4, "")
