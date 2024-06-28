@@ -99,6 +99,7 @@ endfunction
 " call g:ld.setnx("key", "value")
 " call g:ld.setnx("key0.key1. ... .keyN", "value")
 " call g:ld.setnx("key0", "key1", ..., "keyN", "value")
+" call g:ld.setnx("b:key", "value")
 " call g:ld.setnx("b:key0.key1. ... .keyN", "value")
 " call g:ld.setnx(b:, "key0", "key1", ..., "keyN", "value")
 " call g:ld.setnx("b:", "key0", "key1", ..., "keyN", "value")
@@ -118,6 +119,13 @@ function! g:ld.setnx(...)
         if len(l:args) > 1
             let l:path = l:args[:-2]
             let l:key = l:args[-1]
+        elseif l:args[0][1] == ':'
+            if len(l:args[0]) > 2
+                let l:key = l:args[0][2:]
+                let l:path = l:args[0][:1]
+            else
+                let l:args = l:args[1:]
+            endif
         else
             let l:path = 'g:'
             let l:key = l:args[0]
@@ -131,8 +139,12 @@ function! g:ld.setnx(...)
 endfunction
 
 " call g:ld.set("key", "value")
+" call g:ld.set("key0.key1. ... .keyN", "value")
 " call g:ld.set("key0", "key1", ..., "keyN", "value")
+" call g:ld.set("b:key", "value")
+" call g:ld.set("b:key0.key1. ... .keyN", "value")
 " call g:ld.set(b:, "key0", "key1", ..., "keyN", "value")
+" call g:ld.set("b:", "key0", "key1", ..., "keyN", "value")
 function! g:ld.set(...)
     if len(a:000) < 2
         echoerr 'g:ld.set must have at least 2 parameters'
@@ -149,6 +161,13 @@ function! g:ld.set(...)
         if len(l:args) > 1
             let l:path = l:args[:-2]
             let l:key = l:args[-1]
+        elseif l:args[0][1] == ':'
+            if len(l:args[0]) > 2
+                let l:key = l:args[0][2:]
+                let l:path = l:args[0][:1]
+            else
+                let l:args = l:args[1:]
+            endif
         else
             let l:path = 'g:'
             let l:key = l:args[0]
