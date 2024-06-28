@@ -21,7 +21,6 @@ call coc#add_extension('coc-protobuf')
 call coc#add_extension('coc-git')
 " call coc#add_extension('coc-tabnine')
 
-" call coc#config('git.addGBlameToVirtualText', v:true)
 
 call coc#config('coc.preferences.timeout', 500)
 call coc#config('coc.preferences.rootPatterns', ['.root', '.svn', '.git', '.hg', '.project'])
@@ -44,17 +43,22 @@ call coc#config('suggest.snippetIndicator', "*") " 改变代码片段的提示�
 " call coc#config('suggest.snippetIndicator', "\u2b50\ufe0e") " 改变代码片段的提示字符⭐︎
 " call coc#config('suggest.snippetIndicator', "\u2729")       " 改变代码片段的提示字符✩
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
-" call coc#config('suggest.keepCompleteopt', v:true)
+call coc#config('suggest.removeDuplicateItems', v:true)
 
 call coc#config('signature.enable', v:true)
 call coc#config('signature.triggerSignatureWait', 500) " unit: ms
 
+call coc#config('colors.enable', v:true)
+
 call coc#config('diagnostic.enable', v:true)
 call coc#config('diagnostic.displayByAle', v:true)
-call coc#config('diagnostic.level', "warning")
+" call coc#config('diagnostic.level', "warning")
+" call coc#config('diagnostic.signPriority', 10)
+call coc#config('diagnostic.refreshOnInsertMode', v:true)
 call coc#config('diagnostic.checkCurrentLine', v:true)
 call coc#config('diagnostic.errorSign', ">>")
 call coc#config('diagnostic.warningSign', ">>")
+call coc#config('diagnostic.showDeprecated', v:true)
 
 " call coc#config('diagnostic.floatConfig.border', v:true)
 " call coc#config('hover.floatConfig.border', v:true)
@@ -73,6 +77,10 @@ highlight CocErrorSign ctermfg=Black ctermbg=Red guifg=#ff0000
 highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
 highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
+
+" git
+" call coc#config('git.signPriority', 10)
+" call coc#config('git.addGBlameToVirtualText', v:true)
 
 " go
 call coc#config('go.checkForUpdates', "enable")
