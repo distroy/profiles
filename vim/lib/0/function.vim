@@ -26,6 +26,14 @@ function! g:ld._save_ns_cache(args)
     endif
 endfunction
 
+" let l:o = g:ld.namespace("ld", "goto")
+" let l:o = g:ld.namespace(["ld", "goto"])
+" let l:o = g:ld.namespace("ld.goto")
+" let l:o = g:ld.namespace("b:ld.goto")
+" let l:o = g:ld.namespace("b:", "ld", "goto")
+" let l:o = g:ld.namespace(["b:", "ld", "goto"])
+" let l:o = g:ld.namespace(b:, "ld", "goto")
+" let l:o = g:ld.namespace([b:, "ld", "goto"])
 function! g:ld.namespace(...)
     let l:args = a:000
     if len(l:args) == 0
@@ -88,6 +96,13 @@ function! g:ld._namespace(o, args)
     return l:o
 endfunction
 
+" call g:ld.setnx("key", "value")
+" call g:ld.setnx("key0.key1. ... .keyN", "value")
+" call g:ld.setnx("key0", "key1", ..., "keyN", "value")
+" call g:ld.setnx("b:key", "value")
+" call g:ld.setnx("b:key0.key1. ... .keyN", "value")
+" call g:ld.setnx(b:, "key0", "key1", ..., "keyN", "value")
+" call g:ld.setnx("b:", "key0", "key1", ..., "keyN", "value")
 function! g:ld.setnx(...)
     if len(a:000) < 2
         echoerr 'g:ld.setnx must have at least 2 parameters'
@@ -104,6 +119,13 @@ function! g:ld.setnx(...)
         if len(l:args) > 1
             let l:path = l:args[:-2]
             let l:key = l:args[-1]
+        elseif l:args[0][1] == ':'
+            if len(l:args[0]) > 2
+                let l:key = l:args[0][2:]
+                let l:path = l:args[0][:1]
+            else
+                let l:args = l:args[1:]
+            endif
         else
             let l:path = 'g:'
             let l:key = l:args[0]
@@ -116,9 +138,16 @@ function! g:ld.setnx(...)
     endif
 endfunction
 
+" call g:ld.set("key", "value")
+" call g:ld.set("key0.key1. ... .keyN", "value")
+" call g:ld.set("key0", "key1", ..., "keyN", "value")
+" call g:ld.set("b:key", "value")
+" call g:ld.set("b:key0.key1. ... .keyN", "value")
+" call g:ld.set(b:, "key0", "key1", ..., "keyN", "value")
+" call g:ld.set("b:", "key0", "key1", ..., "keyN", "value")
 function! g:ld.set(...)
     if len(a:000) < 2
-        echoerr 'g:ld.setnx must have at least 2 parameters'
+        echoerr 'g:ld.set must have at least 2 parameters'
         return
     endif
 
@@ -132,6 +161,13 @@ function! g:ld.set(...)
         if len(l:args) > 1
             let l:path = l:args[:-2]
             let l:key = l:args[-1]
+        elseif l:args[0][1] == ':'
+            if len(l:args[0]) > 2
+                let l:key = l:args[0][2:]
+                let l:path = l:args[0][:1]
+            else
+                let l:args = l:args[1:]
+            endif
         else
             let l:path = 'g:'
             let l:key = l:args[0]

@@ -8,7 +8,6 @@ if !g:ld.plug.has('LeaderF') | finish | endif
 
 " highlight Lf_hl_match guifg = blue ctermfg = blue
 " highlight Lf_hl_matchRefine  guifg = magenta ctermfg = magenta
-
 call g:ld.highlight('Lf_hl_match', ['blue', '#6a76fc'], '', "NONE")
 call g:ld.highlight('Lf_hl_matchRefine', ['magenta', '#ff7cfd'], '', "NONE")
 
