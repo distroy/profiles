@@ -341,6 +341,7 @@ function! s:nf_golang(line)
     let l:l = a:line
     " let l:testing = expand('%:t') =~ '.*_test\.go'
     let l:mod = expand('%:p:h:t')
+    let l:mod = substitute(l:mod, '[^0-9A-Za-z]', '_', 'g')
 
     let l:l = s:infos3(l:l, '/*', ' */', ' *')
     let l:l = s:append(l:l, '')
