@@ -15,7 +15,19 @@ alias vs='vi -S'
 
 alias tailf='tail -F'
 
-alias p='ps f -fj'
-alias pu='ps f -fj -u $UID -U $UID'
-
 alias where='which -a'
+
+case $OSTYPE in
+darwin*)
+    alias p="$LD_BASH/../zsh/tool/psforest"
+    alias pu='p -u $UID -U $UID'
+    ;;
+cygwin)
+    alias p="$LD_BASH/../zsh/tool/psforest"
+    alias pu='p'
+    ;;
+*)
+    alias p='ps f -fj'
+    alias pu='p -u $UID -U $UID'
+    ;;
+esac
