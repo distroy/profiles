@@ -20,6 +20,7 @@ call coc#add_extension('coc-java')
 call coc#add_extension('coc-protobuf')
 call coc#add_extension('coc-git')
 " call coc#add_extension('coc-tabnine')
+call coc#add_extension('coc-yaml')
 
 
 call coc#config('coc.preferences.timeout', 500)
