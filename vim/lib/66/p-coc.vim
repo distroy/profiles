@@ -71,6 +71,8 @@ call coc#config('pyright.inlayHints.functionReturnTypes', v:false)
 call coc#config('pyright.inlayHints.variableTypes', v:false)
 call coc#config('pyright.inlayHints.parameterTypes', v:false)
 
+call coc#config('javascript.suggestionActions.enabled', v:false)
+
 " highlight CocMenuSel ctermbg=238
 " highlight CocListLine ctermbg=238
 call g:ld.highlight('CocMenuSel', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
