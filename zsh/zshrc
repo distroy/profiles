@@ -34,8 +34,18 @@ done
 
 popd &>/dev/null
 
+setopt no_nomatch
 # source $HOME/.profile.d
 if [ -d $HOME/.profile.d ]; then
+    for i in $HOME/.profile.d/*.sh; do
+        if [ ! -r "$i" ]; then
+            continue
+        fi
+        if [ -r "${i/.sh/.zsh}" ]; then
+            continue
+        fi
+        source "$i"
+    done
     for i in $HOME/.profile.d/*.zsh; do
         if [ ! -r "$i" ]; then
             continue
