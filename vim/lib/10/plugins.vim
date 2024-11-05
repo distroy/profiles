@@ -35,10 +35,12 @@ endif
 if executable('node') <= 0
     call g:ld.plug.disable('coc.nvim')
     call g:ld.plug.disable('markdown-preview.nvim')
+else
+    call g:ld.plug.disable('YouCompleteMe')
+    call g:ld.plug.disable('neocomplete.vim')
+    call g:ld.plug.disable('vim-autoformat')
 endif
 
-call g:ld.plug.disable('YouCompleteMe')
-call g:ld.plug.disable('neocomplete.vim')
 " call g:ld.plug.disable('vim-go')
 
 

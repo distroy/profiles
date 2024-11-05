@@ -209,6 +209,8 @@ command! -nargs=0 CocRename :call CocActionAsync('rename')
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+nnoremap <F11> :CocFormat<CR>
+
 augroup ld_coc_group
     autocmd!
     " Setup formatexpr specified filetype(s).
