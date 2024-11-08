@@ -19,6 +19,7 @@ let g:Lf_NumberOfCache = 64
 
 let g:Lf_WindowPosition = 'popup'
 " let g:Lf_PopupColorscheme = 'default'
+let g:Lf_TabpagePosition = 2
 
 " let g:Lf_PreviewCode = 1
 let g:Lf_PreviewInPopup = 1
