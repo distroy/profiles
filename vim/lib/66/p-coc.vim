@@ -5,8 +5,6 @@
 
 if !g:ld.plug.has('coc.nvim') | finish | endif
 
-" coc-python
-
 call coc#add_extension('coc-marketplace')
 call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-json')
@@ -17,7 +15,7 @@ call coc#add_extension('coc-go')
 " call coc#add_extension('coc-ccls')
 call coc#add_extension('coc-sql')
 call coc#add_extension('coc-java')
-call coc#add_extension('coc-protobuf')
+" call coc#add_extension('coc-protobuf')
 call coc#add_extension('coc-git')
 " call coc#add_extension('coc-tabnine')
 call coc#add_extension('coc-yaml')
@@ -67,12 +65,6 @@ call coc#config('diagnostic.showDeprecated', v:true)
 " call coc#config('suggest.floatConfig.border', v:true)
 " call coc#config('suggest.floatConfig.rounded', v:true)
 
-call coc#config('pyright.inlayHints.functionReturnTypes', v:false)
-call coc#config('pyright.inlayHints.variableTypes', v:false)
-call coc#config('pyright.inlayHints.parameterTypes', v:false)
-
-call coc#config('javascript.suggestionActions.enabled', v:false)
-
 " highlight CocMenuSel ctermbg=238
 " highlight CocListLine ctermbg=238
 call g:ld.highlight('CocMenuSel', '', [238, g:LD.COLOR.NVIM.NvimDarkGrey4], '')
@@ -85,7 +77,15 @@ highlight CocWarningSign ctermfg=Black ctermbg=Yellow guifg=#ff922b
 highlight default link CocErrorHighlight none
 highlight default link CocWarningHighlight none
 
-" git
+" python
+call coc#config('pyright.inlayHints.functionReturnTypes', v:false)
+call coc#config('pyright.inlayHints.variableTypes', v:false)
+call coc#config('pyright.inlayHints.parameterTypes', v:false)
+
+" javascript
+call coc#config('javascript.suggestionActions.enabled', v:false)
+
+" " git
 " call coc#config('git.signPriority', 10)
 " call coc#config('git.addGBlameToVirtualText', v:true)
 
@@ -94,16 +94,33 @@ call coc#config('go.checkForUpdates', "enable")
 call coc#config('go.goplsOptions.completeUnimported', v:true)
 call coc#config('go.goplsOptions.semanticTokens', v:true)
 
-" cpp
-call coc#config('languageserver.ccls.command', "ccls")
-call coc#config('languageserver.ccls.filetypes', ["c", "cpp", "objc", "objcpp"])
-call coc#config('languageserver.ccls.rootPatterns', [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"])
-call coc#config('languageserver.ccls.initializationOptions', g:ld.ccls.init_options)
-
 " java
 call coc#config('java.trace.server', "verbose")
 call coc#config('java.import.maven.enabled', v:true)
 call coc#config('java.maven.downloadSources', v:true)
+
+" language server begin
+let s:language_server = {}
+function s:set_language_server(lang, config)
+    let s:language_server[a:lang] = a:config
+    call coc#config('languageserver', s:language_server)
+endfunction
+
+" cpp
+call s:set_language_server('ccls', {
+    \   'command': "ccls",
+    \   'filetypes': ["c", "cpp", "objc", "objcpp"],
+    \   'rootPatterns': [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+    \   'initializationOptions': g:ld.ccls.init_options,
+    \ })
+
+" protobuf
+" go install github.com/lasorda/protobuf-language-server@latest
+call s:set_language_server('proto', {
+    \   'command': "protobuf-language-server",
+    \   'filetypes': ["proto"],
+    \ })
+
 
 " current function
 function! g:ld.current_function()
