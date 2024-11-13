@@ -23,6 +23,9 @@ augroup ld.new_files
     autocmd BufNewFile *.py         call s:nf_python(0)
 
     autocmd BufNewFile *.js         call s:nf_js(0)
+    autocmd BufNewFile *.jsx        call s:nf_jsx(0, v:true)
+    autocmd BufNewFile *.ts         call s:nf_jsx(0, v:false)
+    autocmd BufNewFile *.tsx        call s:nf_jsx(0, v:false)
     autocmd BufNewFile *.html       call s:nf_html(0)
     autocmd BufNewFile *.css        call s:nf_css(0)
 
@@ -160,6 +163,18 @@ function! s:nf_css(line)
     let l:l = a:line
     let l:l = s:infos3(l:l, '/*', ' */', ' *')
     let l:l = s:append(l:l, '')
+
+    return l:l
+endfunction
+
+
+function! s:nf_jsx(line, strict)
+    let l:l = a:line
+    let l:l = s:infos3(l:l, '/*', ' */', ' *')
+    let l:l = s:append(l:l, '')
+    if a:strict
+        let l:l = s:append(l:l, '"use strict";')
+    endif
 
     return l:l
 endfunction
