@@ -25,7 +25,31 @@ function __ld_golang_version_switch() (
         ln -sv "$1" "go"
     fi
 )
+
+function __ld_golang_version_download() (
+    if [[ "$LD_GO_SWITCH_ROOT" == "" ]]; then
+        ld_msgr "please set then env variable *LD_GO_SWITCH_ROOT*"
+        exit 1
+    fi
+    cd "${LD_GO_SWITCH_ROOT}"
+    test -d package || mkdir -v package
+    cd package
+
+    local url="$1"
+    local zfile="$(basename "$url")"
+    local vname="${zfile/.darwin*/}"
+
+    ld_msg_exec rm -rfv "$zfile"
+    ld_msg_exec rm -rf "../$vname"
+    ld_msg_exec rm -rf "./go"
+    ld_msg_exec wget "$url" \
+        && ld_msg_exec tar zxf "$zfile" \
+        && ld_msg_exec mv -v ./go "../$vname"
+    exit $?
+)
+
 alias go-switch=__ld_golang_version_switch
+alias go-download=__ld_golang_version_download
 
 # export GOPROXY=https://goproxy.io,direct
 # export GOPRIVATE=
