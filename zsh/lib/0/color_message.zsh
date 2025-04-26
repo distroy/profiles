@@ -41,3 +41,9 @@ ld_msgy() { ld_msgy_ "$@"; echo; }
 ld_msgb() { ld_msgb_ "$@"; echo; }
 ld_msgm() { ld_msgm_ "$@"; echo; }
 ld_msgc() { ld_msgc_ "$@"; echo; }
+
+ld_msg_exec() {
+    ld_msgg "$@"
+    "$@"
+    return $?
+}
