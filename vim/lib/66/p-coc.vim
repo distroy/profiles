@@ -43,6 +43,7 @@ call coc#config('suggest.snippetIndicator', "*") " 改变代码片段的提示�
 " call coc#config('suggest.snippetIndicator', "\u2729")       " 改变代码片段的提示字符✩
 call coc#config('suggest.triggerAfterInsertEnter', v:true)  " 进入插入模块即触发自动补全
 call coc#config('suggest.removeDuplicateItems', v:true)
+call coc#config('suggest.virtualText', v:true)
 
 call coc#config('signature.enable', v:true)
 call coc#config('signature.triggerSignatureWait', 500) " unit: ms
