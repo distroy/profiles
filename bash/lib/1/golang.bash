@@ -35,9 +35,13 @@ function __ld_golang_version_download() (
     test -d package || mkdir -v package
     cd package
 
+    local ret
     local url="$1"
     local zfile="$(basename "$url")"
-    local vname="${zfile/.darwin*/}"
+    local vname="${zfile}"
+    vname="${vname/.darwin*/}"
+    vname="${vname/.linux*/}"
+    vname="${vname/.windows*/}"
 
     ld_msg_exec rm -rfv "$zfile"
     ld_msg_exec rm -rf "../$vname"
@@ -45,6 +49,14 @@ function __ld_golang_version_download() (
     ld_msg_exec wget "$url" \
         && ld_msg_exec tar zxf "$zfile" \
         && ld_msg_exec mv -v ./go "../$vname"
+    ret=$?
+    if (( ret != 0 )); then
+        exit $ret
+    fi
+
+    cd "../$vname"
+    ld_msgg "find ./src -name '*.go' | xargs chmod -w"
+    find ./src -name '*.go' | xargs chmod -w
     exit $?
 )
 
