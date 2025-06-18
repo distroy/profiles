@@ -310,6 +310,9 @@ class PsforestDarwin(Psforest):
         'fr': re.compile(r'\A/usr/local/Cellar/python(?:\S*/)*versions/([0-9.]+)/\S+/python\Z', re.IGNORECASE),
         'to': r'python\g<1>',
     }, {
+        'fr': re.compile(r'\A/opt/homebrew/Cellar/python(?:\S*/)*versions/([0-9.]+)/\S+/python\Z', re.IGNORECASE),
+        'to': r'python\g<1>',
+    }, {
         'fr': re.compile(r'\A/system/library/frameworks/python(?:\S*/)*versions/([0-9.]+)/\S+/python\Z', re.IGNORECASE),
         'to': r'python\g<1>',
     }]
