@@ -43,7 +43,7 @@ call g:ld.highlight('Comment', [146, '#afb0d9'], g:LD.COLOR.NONE, "NONE")
 call g:ld.highlight('Directory', g:LD.COLOR.LIGHT_BLUE, g:LD.COLOR.NONE, "NONE")
 call g:ld.highlight('Folded', 158, [239, g:LD.COLOR.NVIM.NvimDarkGrey3], "NONE")
 
-" call g:ld.highlight('StatusLine', g:LD.COLOR.WHITE, g:LD.COLOR.GREY0, "NONE")
+call g:ld.highlight('StatusLine', g:LD.COLOR.WHITE, g:LD.COLOR.GREY0, "NONE")
 call g:ld.highlight('Pmenu', g:LD.COLOR.WHITE, g:LD.COLOR.GRAY3, "NONE")
 call g:ld.highlight('PmenuSel', g:LD.COLOR.HOT_PINK, g:LD.COLOR.GRAY1, "NONE")
 call g:ld.highlight('NormalFloat', '', g:LD.COLOR.GRAY3, "NONE")

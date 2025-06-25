@@ -37,7 +37,10 @@ function __ld_golang_version_download() (
 
     local url="$1"
     local zfile="$(basename "$url")"
-    local vname="${zfile/.darwin*/}"
+    local vname="${zfile}"
+    vname="${vname/.darwin*/}"
+    vname="${vname/.linux*/}"
+    vname="${vname/.windows*/}"
 
     ld_msg_exec rm -rfv "$zfile"
     ld_msg_exec rm -rf "../$vname"

@@ -10,6 +10,7 @@ autocmd Filetype vim AnyFoldActivate
 autocmd Filetype yaml AnyFoldActivate
 autocmd Filetype html AnyFoldActivate
 autocmd Filetype python AnyFoldActivate
+autocmd Filetype proto AnyFoldActivate
 " highlight Folded term=NONE cterm=NONE
 
 let g:anyfold_fold_display  = 0
