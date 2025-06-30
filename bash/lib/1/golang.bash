@@ -37,15 +37,22 @@ function __ld_golang_version_download() (
 
     local url="$1"
     local zfile="$(basename "$url")"
-    local vname="${zfile/.darwin*/}"
+    local vname="${zfile}"
+    vname="${vname/.darwin*/}"
+    vname="${vname/.linux*/}"
+    vname="${vname/.windows*/}"
 
     ld_msg_exec rm -rfv "$zfile"
+    ld_msg_exec chmod +w "../$vname" -R
     ld_msg_exec rm -rf "../$vname"
     ld_msg_exec rm -rf "./go"
     ld_msg_exec wget "$url" \
         && ld_msg_exec tar zxf "$zfile" \
         && ld_msg_exec mv -v ./go "../$vname"
-    exit $?
+    local ret=$?
+    (( ret != 0 )) && exit $?
+    ld_msgg "find \"../$vname\" -name '*.go' | xargs chmod -w"
+    find "../$vname" -name '*.go' | xargs chmod -w
 )
 
 alias go-switch=__ld_golang_version_switch
