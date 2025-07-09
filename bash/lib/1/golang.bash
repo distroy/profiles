@@ -44,19 +44,18 @@ function __ld_golang_version_download() (
     vname="${vname/.windows*/}"
 
     ld_msg_exec rm -rfv "$zfile"
+    ld_msg_exec chmod +w "../$vname" -R
     ld_msg_exec rm -rf "../$vname"
     ld_msg_exec rm -rf "./go"
     ld_msg_exec wget "$url" \
         && ld_msg_exec tar zxf "$zfile" \
         && ld_msg_exec mv -v ./go "../$vname"
     ret=$?
-    if (( ret != 0 )); then
-        exit $ret
-    fi
+    (( ret != 0 )) && exit $?
 
-    cd "../$vname"
-    ld_msgg "find ./src -name '*.go' | xargs chmod -w"
-    find ./src -name '*.go' | xargs chmod -w
+    cd ".."
+    ld_msgg "find ./$vname/src -name '*.go' | xargs chmod -w"
+    find ./$vname/src -name '*.go' | xargs chmod -w
     exit $?
 )
 
