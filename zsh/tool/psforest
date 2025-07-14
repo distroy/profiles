@@ -300,9 +300,11 @@ class PsforestDarwin(Psforest):
         '/Library/Apple/System/Library/CoreServices/',
         '/Library/Application Support/',
         '/Library/Frameworks/',
+        '/Library/Sentinel/',
         '/System/Applications/',
         '/System/Cryptexes',
         '/System/Library/',
+        '/System/iOSSupport/',
         '/usr/libexec/',
     )
 
