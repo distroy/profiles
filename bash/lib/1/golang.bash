@@ -35,6 +35,7 @@ function __ld_golang_version_download() (
     test -d package || mkdir -v package
     cd package
 
+    local ret
     local url="$1"
     local zfile="$(basename "$url")"
     local vname="${zfile}"
@@ -49,10 +50,13 @@ function __ld_golang_version_download() (
     ld_msg_exec wget "$url" \
         && ld_msg_exec tar zxf "$zfile" \
         && ld_msg_exec mv -v ./go "../$vname"
-    local ret=$?
+    ret=$?
     (( ret != 0 )) && exit $?
-    ld_msgg "find \"../$vname\" -name '*.go' | xargs chmod -w"
-    find "../$vname" -name '*.go' | xargs chmod -w
+
+    cd ".."
+    ld_msgg "find ./$vname/src -name '*.go' | xargs chmod -w"
+    find ./$vname/src -name '*.go' | xargs chmod -w
+    exit $?
 )
 
 alias go-switch=__ld_golang_version_switch
