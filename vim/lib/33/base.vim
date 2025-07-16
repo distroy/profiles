@@ -26,6 +26,7 @@ set textwidth=0
 
 
 autocmd BufWritePre * call <SID>trim_tail_space()
+autocmd TabClosed * tabprevious
 
 function! s:trim_tail_space()
     let l:pos = getpos('.')
