@@ -11,6 +11,8 @@ autocmd Filetype yaml AnyFoldActivate
 autocmd Filetype html AnyFoldActivate
 autocmd Filetype python AnyFoldActivate
 autocmd Filetype proto AnyFoldActivate
+autocmd Filetype sh AnyFoldActivate
+autocmd Filetype zsh AnyFoldActivate
 " highlight Folded term=NONE cterm=NONE
 
 let g:anyfold_fold_display  = 0
