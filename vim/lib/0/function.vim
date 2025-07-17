@@ -132,10 +132,13 @@ function! g:ld.setnx(...)
         endif
     endif
 
+    " echo l:path
     let l:obj = g:ld.namespace(l:path)
     if !has_key(l:obj, l:key)
         let l:obj[l:key] = l:value
+        return l:value
     endif
+    return l:obj[l:key]
 endfunction
 
 " call g:ld.set("key", "value")
@@ -176,6 +179,7 @@ function! g:ld.set(...)
 
     let l:obj = g:ld.namespace(l:path)
     let l:obj[l:key] = l:value
+    return l:value
 endfunction
 
 function! g:ld.cache_directory(name)
