@@ -3,11 +3,16 @@
 "
 
 
-autocmd! TabNew * call <SID>on_creating()
-autocmd! TabEnter * call <SID>after_enter()
-autocmd! TabClosed * call <SID>after_closed()
+augroup ld_tab_histroy
+    autocmd!
+    autocmd TabNew * call <SID>on_creating()
+    autocmd TabEnter * call <SID>after_enter()
+    autocmd TabClosed * call <SID>after_closed()
+augroup end
 
-let s:tab = g:ld.namespace('g:ld.tab')
+" function! s:log(evt)
+"     echomsg a:evt . ' ' . tabpagenr()
+" endfunction
 
 function! s:on_creating()
     " `on_creating` should be called before `after_enter`
@@ -43,8 +48,8 @@ endfunction
 
 function! s:after_closed()
     let l:n = tabpagenr()
-    let l:i = 0
     let l:histories = s:get_histories()
+    let l:i = 0
     while l:i < len(l:histories)
         let l:v = l:histories[l:i]
         if l:v == l:n
@@ -68,3 +73,5 @@ endfunction
 function! s:get_max_history()
     return max([g:ld.setnx(g:ld.namespace('g:ld.tab'), 'max_history', 100), 10])
 endfunction
+
+call s:get_histories()

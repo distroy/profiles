@@ -12,7 +12,7 @@ function! s:init_buffer()
     endif
 endfunction
 
-augroup ld.init_buffer
+augroup ld_init_buffer
     autocmd!
     autocmd BufNew * call <SID>init_buffer()
     autocmd BufReadPre * call <SID>init_buffer()

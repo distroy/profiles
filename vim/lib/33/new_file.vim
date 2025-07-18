@@ -3,7 +3,7 @@
 "
 
 
-augroup ld.new_files
+augroup ld_new_file
     autocmd BufNewFile *.[ch]pp     call s:nf_c_family(0)
     autocmd BufNewFile *.[ch]       call s:nf_c_family(0)
     autocmd BufNewFile *.go         call s:nf_golang(0)
