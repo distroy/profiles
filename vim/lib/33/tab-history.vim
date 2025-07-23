@@ -8,11 +8,25 @@ augroup ld_tab_histroy
     autocmd TabNew * call <SID>on_creating()
     autocmd TabEnter * call <SID>after_enter()
     autocmd TabClosed * call <SID>after_closed()
+
+    " autocmd TabNew * call <SID>log('TabNew')
+    " autocmd TabEnter * call <SID>log('TabEnter')
+    " autocmd TabClosed * call <SID>log('TabClosed')
+    " autocmd TabLeave * call <SID>log('TabLeave')
+    "
+    " autocmd BufAdd * call <SID>log('BufAdd')
+    " autocmd BufNew * call <SID>log('BufNew')
+    " autocmd BufReadPre * call <SID>log('BufReadPre')
+    " autocmd BufRead * call <SID>log('BufRead')
+    " autocmd BufReadPost * call <SID>log('BufReadPost')
+    " autocmd BufLeave * call <SID>log('BufLeave')
+    " autocmd BufEnter * call <SID>log('BufEnter')
+    " autocmd BufWinEnter * call <SID>log('BufWinEnter')
 augroup end
 
-" function! s:log(evt)
-"     echomsg a:evt . ' ' . tabpagenr()
-" endfunction
+function! s:log(evt)
+    echomsg a:evt . ' ' . tabpagenr()
+endfunction
 
 function! s:on_creating()
     " `on_creating` should be called before `after_enter`
