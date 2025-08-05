@@ -26,15 +26,17 @@ if version <= 740
     call g:ld.plug.disable('YouCompleteMe')
 endif
 if version < 800
-    call g:ld.plug.disable('vim-go', 'vim-gutentags', 'coc.nvim')
+    call g:ld.plug.disable('vim-go', 'vim-gutentags')
     call g:ld.plug.disable('echodoc.vim')
 endif
 if has('lua')
     call g:ld.plug.disable('neocomplete.vim')
 endif
 if executable('node') <= 0
-    call g:ld.plug.disable('coc.nvim')
     call g:ld.plug.disable('markdown-preview.nvim')
+endif
+if executable('node') <= 0 || version < 900
+    call g:ld.plug.disable('coc.nvim')
 else
     call g:ld.plug.disable('YouCompleteMe')
     call g:ld.plug.disable('neocomplete.vim')
