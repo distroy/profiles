@@ -35,8 +35,11 @@ endif
 if executable('node') <= 0
     call g:ld.plug.disable('markdown-preview.nvim')
 endif
-if executable('node') <= 0 || version < 900
+if executable('node') <= 0 || has('nvim') && version < 800 || version < 900
     call g:ld.plug.disable('coc.nvim')
+    if !has('nvim') && version < 900
+        call g:ld.plug.disable('YouCompleteMe')
+    endif
 else
     call g:ld.plug.disable('YouCompleteMe')
     call g:ld.plug.disable('neocomplete.vim')
