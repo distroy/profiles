@@ -3,7 +3,8 @@
 #
 
 
-export GREP_COLOR='1;32'
+# version >= 2.5.3
+export GREP_COLORS='mt=1;32'
 
 
 # is x grep argument available?
