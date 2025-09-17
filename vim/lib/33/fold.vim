@@ -10,8 +10,11 @@ set foldnestmax=20
 " set foldlevel=1
 
 
+augroup ld_fold
+autocmd FileType * set foldmethod=syntax
 " autocmd FileType html       setlocal foldmethod=indent
 " autocmd FileType python     setlocal foldmethod=indent
+augroup end
 
 
 call ld.setnx('ld.fold', {})
