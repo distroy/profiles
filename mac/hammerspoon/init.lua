@@ -1,3 +1,4 @@
+-- hammerspoon: https://www.hammerspoon.org/
 
 local shiftPressedTime = 0
 
