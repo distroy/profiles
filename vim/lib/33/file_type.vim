@@ -11,7 +11,9 @@ autocmd FileType * set formatoptions-=cro
 set noautoindent
 
 
-autocmd BufRead * normal zR
+augroup ld_file_type
+    autocmd BufNew * normal zR
+augroup end
 
 
 " set file type
